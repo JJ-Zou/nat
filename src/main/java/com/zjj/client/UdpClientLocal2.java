@@ -17,11 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
 
-public class UdpClient {
+public class UdpClientLocal2 {
     private static final String SERVE_IP = "39.105.65.104";
-    private static final int LOCAL_PORT = 10001;
+    private static final int LOCAL_PORT = 10022;
     private static final int SERVER_PORT = 10000;
-    private static final String ID = "zz";
+    private static final String ID = "test22";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();

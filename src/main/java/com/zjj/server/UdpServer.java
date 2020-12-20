@@ -8,11 +8,12 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.zjj.proto.CtrlMessage.*;
 
 public class UdpServer {
     private static final String SERVE_IP = "127.0.0.1";
@@ -56,19 +57,116 @@ public class UdpServer {
             Channel channel = ctx.channel();
             String addressString = InetUtils.toAddressString(msg.sender());
             ByteBuf content = msg.content();
-            String message = content.toString(CharsetUtil.UTF_8);
-            System.out.println("接收到消息： " + message);
-            String id = message.split(":")[0];
-            String[] split = id.split("@");
-            if (!ADDRESS_MAP.containsKey(split[0])) {
-                System.out.println("将 " + split[0] + " 的地址放入 ADDRESS_MAP");
-                ADDRESS_MAP.put(split[0], addressString);
-                System.out.println("ADDRESS_MAP: " + ADDRESS_MAP);
+            MultiMessage multiMessage = MultiMessage.parseFrom(content.nioBuffer());
+            switch (multiMessage.getMultiType()) {
+                case CTRL_INFO:
+                    processCtrlInfo(multiMessage.getCtrlInfo(), addressString, channel);
+                    break;
+                case SERVER_ACK:
+                    break;
+                case PSP_MESSAGE:
+                    break;
+                case UNRECOGNIZED:
+                    break;
+                default:
+                    break;
             }
-            if (ADDRESS_MAP.containsKey(split[1])) {
-                System.out.println("向 " + split[0] + " 发送 " + split[1] + " 的UDP地址");
-                sendIpAddress(channel, addressString, split[1] + "#" + ADDRESS_MAP.get(split[1]));
+//            System.out.println(ctrlInfo.getType());
+//            String message = content.toString(CharsetUtil.UTF_8);
+//            System.out.println("接收到 " + addressString + " 消息： " + message);
+//            String id = message.split(":")[0];
+//            String[] split = id.split("@");
+//            if (!ADDRESS_MAP.containsKey(split[0])) {
+//                System.out.println("将 " + split[0] + " 的地址放入 ADDRESS_MAP");
+//                ADDRESS_MAP.put(split[0], addressString);
+//                System.out.println("ADDRESS_MAP: " + ADDRESS_MAP);
+//            }
+//            if (ADDRESS_MAP.containsKey(split[1])) {
+//                System.out.println("向 " + split[0] + " 发送 " + split[1] + " 的UDP地址");
+//                sendIpAddress(channel, addressString, split[1] + "#" + ADDRESS_MAP.get(split[1]));
+//            }
+        }
+
+        private void processCtrlInfo(CtrlInfo ctrlInfo, String addressString, Channel channel) {
+            switch (ctrlInfo.getType()) {
+                case REGISTER:
+                    registerHandler(addressString, ctrlInfo.getLocalId());
+                    break;
+                case REQ_ADDR:
+                    routeHandler(addressString, ctrlInfo.getOppositeId(), ctrlInfo.getLocalId(), channel);
+                    routeHandler(ADDRESS_MAP.get(ctrlInfo.getOppositeId()), ctrlInfo.getLocalId(), ctrlInfo.getOppositeId(), channel);
+                    break;
+                case UPDATE_ADDR:
+                    updateAddrHandler(ctrlInfo);
+                    break;
+                case NOTIFY_ACK:
+                    notifyClientSendMsg(ctrlInfo, channel);
+                    break;
+                case UNRECOGNIZED:
+                    break;
+                default:
+                    break;
             }
+        }
+
+        private void notifyClientSendMsg(CtrlInfo ctrlInfo, Channel channel) {
+            String receiveId = ctrlInfo.getLocalId();
+            String sendId = ctrlInfo.getOppositeId();
+            ServerAck serverAck = ServerAck.newBuilder()
+                    .setType(ServerAck.AckType.NOTIFY_SEND)
+                    .setMessage(sendId + "@" + receiveId)
+                    .build();
+            MultiMessage ack = MultiMessage.newBuilder()
+                    .setMultiType(MultiMessage.MultiType.SERVER_ACK)
+                    .setServerAck(serverAck)
+                    .build();
+            byte[] bytes = ack.toByteArray();
+            ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
+            DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(ADDRESS_MAP.get(sendId)));
+            channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
+                if (f.isSuccess()) {
+                    System.out.println("请求 " + sendId + " 给 " + receiveId + " 的Nat发送一条消息!");
+                } else {
+                    System.out.println(packet + " 发送失败");
+                }
+            });
+        }
+
+        private void updateAddrHandler(CtrlInfo ctrlInfo) {
+            String oppositeId = ctrlInfo.getOppositeId();
+            String address = ctrlInfo.getMessage();
+            System.out.println("更新用户 " + oppositeId + " 的通信地址 " + address);
+            ADDRESS_MAP.put(oppositeId, address);
+        }
+
+        private void routeHandler(String addressString, String oppositeId, String localId, Channel channel) {
+            if (!ADDRESS_MAP.containsKey(oppositeId)) {
+                System.out.println("对方用户未注册");
+                return;
+            }
+            ServerAck serverAck = ServerAck.newBuilder()
+                    .setType(ServerAck.AckType.ACK_ADDR)
+                    .setMessage(oppositeId + "@" + ADDRESS_MAP.get(oppositeId))
+                    .build();
+            MultiMessage ack = MultiMessage.newBuilder()
+                    .setMultiType(MultiMessage.MultiType.SERVER_ACK)
+                    .setServerAck(serverAck)
+                    .build();
+            byte[] bytes = ack.toByteArray();
+            ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
+            DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
+            channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
+                if (f.isSuccess()) {
+                    System.out.println("将 " + oppositeId + " 的地址 " + ADDRESS_MAP.get(oppositeId) + " 发送给 " + localId + "@" + addressString);
+                } else {
+                    System.err.println("向 " + localId + " 发送地址失败");
+                }
+            });
+        }
+
+        private void registerHandler(String addressString, String localId) {
+            System.out.println("缓存用户 " + localId + " 的通信地址" + addressString);
+            ADDRESS_MAP.put(localId, addressString);
         }
 
         private void sendIpAddress(Channel channel, String addressString, String message) {

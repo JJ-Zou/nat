@@ -87,11 +87,21 @@ public class UdpClient1 {
             ByteBuf content = msg.content();
             String message = content.toString(CharsetUtil.UTF_8);
             System.out.println("接收到消息： " + message);
-            String[] split = message.split("#");
-            if (OTHER_ID.equals(split[0]) && !ADDRESS_MAP.containsKey(split[0])) {
-                System.out.println("将 " + split[0] + " 的地址放入 ADDRESS_MAP");
-                ADDRESS_MAP.put(split[0], split[1]);
-                System.out.println("ADDRESS_MAP: " + ADDRESS_MAP);
+            if (addressString.equals(InetUtils.toAddressString(SERVER_ADDRESS))) {
+                String[] split = message.split("#");
+                if (OTHER_ID.equals(split[0]) && !ADDRESS_MAP.containsKey(split[0])) {
+                    System.out.println("将 " + split[0] + " 的地址放入 ADDRESS_MAP");
+                    ADDRESS_MAP.put(split[0], split[1]);
+                    System.out.println("ADDRESS_MAP: " + ADDRESS_MAP);
+                }
+            } else {
+                String id = message.split(":")[0];
+                String[] split = id.split("@");
+                if (!addressString.equals(ADDRESS_MAP.get(split[0]))) {
+                    System.out.println("将 " + split[0] + " 的地址放入 ADDRESS_MAP");
+                    ADDRESS_MAP.put(split[0], addressString);
+                    System.out.println("ADDRESS_MAP: " + ADDRESS_MAP);
+                }
             }
         }
     }

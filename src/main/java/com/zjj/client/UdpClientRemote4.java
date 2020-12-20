@@ -17,13 +17,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
 
-public class UdpClient {
+public class UdpClientRemote4 {
     private static final String SERVE_IP = "39.105.65.104";
-    private static final int LOCAL_PORT = 10001;
-    private static final int SERVER_PORT = 10000;
-    private static final String ID = "zz";
+    private static final String LOCAL_IP = "192.168.0.108";
+    //    private static final String LOCAL_IP = "172.20.10.6";
+    private static final int LOCAL_PORT = 10004;
+    private static final int SERVER_PORT = 20000;
+    private static final int SERVER_PORT1 = 30000;
+    private static final String ID = "test4";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
+    private static final InetSocketAddress SERVER_ADDRESS1 = new InetSocketAddress(SERVE_IP, SERVER_PORT1);
+    private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
@@ -42,7 +47,8 @@ public class UdpClient {
             ChannelFuture future = bootstrap.bind(LOCAL_PORT).sync();
             channel = future.channel();
             System.out.println("客户端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
-            register();
+            register(SERVER_ADDRESS);
+            register(SERVER_ADDRESS1);
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
@@ -86,7 +92,7 @@ public class UdpClient {
         });
     }
 
-    private static void register() {
+    private static void register(InetSocketAddress address) {
         CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
                 .setType(CtrlInfo.CtrlType.REGISTER)
                 .setLocalId(ID)
@@ -97,7 +103,7 @@ public class UdpClient {
                 .build();
         byte[] bytes = ctrl.toByteArray();
         ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
-        DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
+        DatagramPacket packet = new DatagramPacket(byteBuf, address);
         channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
             if (f.isSuccess()) {
                 System.out.println("发送注册消息。");
@@ -200,6 +206,7 @@ public class UdpClient {
         private void processServerAck(ServerAck serverAck, String addressString, Channel channel) {
             switch (serverAck.getType()) {
                 case OK:
+                    System.out.println(addressString + " : " + serverAck.getMessage());
                     break;
                 case ACK_ADDR:
                     String oppositeId = processAckAddr(serverAck.getMessage());

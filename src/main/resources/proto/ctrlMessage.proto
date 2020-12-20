@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_package = "com.zjj.proto";
+option java_outer_classname = "CtrlMessage";
+
+message MultiMessage {
+  enum MultiType {
+    CTRL_INFO = 0;
+    SERVER_ACK = 1;
+    PSP_MESSAGE = 2;
+  }
+  MultiType multiType = 1;
+  oneof MultiBody {
+    CtrlInfo ctrlInfo = 2;
+    ServerAck serverAck = 3;
+    P2PMessage p2PMessage = 4;
+  }
+}
+message CtrlInfo {
+  enum CtrlType {
+    REGISTER = 0;
+    REQ_ADDR = 1;
+    UPDATE_ADDR = 2;
+    NOTIFY_ACK = 3;
+  }
+  CtrlType type = 1;
+  string localId = 2;
+  string oppositeId = 3;
+  string message = 4;
+}
+
+message ServerAck {
+  enum AckType {
+    OK = 0;
+    ACK_ADDR = 1;
+    NOTIFY_SEND = 2;
+  }
+  AckType type = 1;
+  string message = 2;
+}
+
+message P2PMessage {
+  enum MsgType {
+    SAVE_ADDR = 0;
+    HEART_BEAT = 1;
+    CHAT = 2;
+  }
+  MsgType type = 1;
+  string message = 2;
+}
+
+//protoc -I=src/main/resources/proto --java_out=src/main/java ctrlMessage.proto
