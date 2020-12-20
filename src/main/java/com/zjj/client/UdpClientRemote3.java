@@ -12,6 +12,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,6 +26,7 @@ public class UdpClientRemote3 {
     private static final int SERVER_PORT = 20000;
     private static final int SERVER_PORT1 = 30000;
     private static final String ID = "test3";
+    private static String natId;
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress SERVER_ADDRESS1 = new InetSocketAddress(SERVE_IP, SERVER_PORT1);
@@ -56,8 +58,8 @@ public class UdpClientRemote3 {
                 if ("q!".equals(input)) {
                     break;
                 } else if ("nat".equals(split[0])) {
-                    String oppositeId = split[1].substring(1);
-                    requestForNat(oppositeId);
+                    natId = split[1].substring(1);
+                    requestForNat(natId);
                 } else if ("chat".equals(split[0])) {
                     sendMessage(split[1].substring(1), split[2]);
                 }
@@ -160,6 +162,7 @@ public class UdpClientRemote3 {
         private void processP2pMessage(P2PMessage p2PMessage, String addressString, Channel channel) {
             switch (p2PMessage.getType()) {
                 case SAVE_ADDR:
+                    System.out.println("UDP穿透成功！");
                     processSaveAddr(p2PMessage.getMessage(), addressString);
                     break;
                 case HEART_BEAT:
@@ -179,6 +182,10 @@ public class UdpClientRemote3 {
         }
 
         private void processSaveAddr(String id, String addressString) {
+            if (Objects.equals(addressString, ADDRESS_MAP.get(id))) {
+                System.out.println(id + " 的地址未变化");
+                return;
+            }
             System.out.println("收到" + id + "的地址" + addressString + ", 加入缓存");
             ADDRESS_MAP.put(id, addressString);
             CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
@@ -274,9 +281,14 @@ public class UdpClientRemote3 {
 
         private String processAckAddr(String addr) {
             String[] split = addr.split("@");
-            System.out.println("收到" + split[0] + "的地址" + split[1] + ", 加入缓存");
-            ADDRESS_MAP.put(split[0], split[1]);
+            if (Objects.equals(split[1], ADDRESS_MAP.get(split[0]))) {
+                System.out.println(split[0] + " 的地址已缓存");
+            } else {
+                System.out.println("收到" + split[0] + "的地址" + split[1] + ", 加入缓存");
+                ADDRESS_MAP.put(split[0], split[1]);
+            }
             return split[0];
+
         }
     }
 }
