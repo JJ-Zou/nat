@@ -178,7 +178,7 @@ public class UdpServer {
 
         private void registerHandler(String addressString, String localId) {
             if (Objects.equals(addressString, ADDRESS_MAP.get(localId))) {
-                System.out.println(localId + " 的地址为变化");
+                System.out.println(localId + " 的地址未变化");
                 return;
             }
             System.out.println("缓存用户 " + localId + " 的通信地址" + addressString);
