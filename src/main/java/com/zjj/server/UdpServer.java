@@ -16,10 +16,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.zjj.proto.CtrlMessage.*;
 
 public class UdpServer {
-    private static final String SERVE_IP = "127.0.0.1";
-    private static final int PORT = 10000;
+    //    private static final String SERVE_IP = "127.0.0.1";
+    private static final int PORT = 20000;
+    private static final int PORT2 = 30000;
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
-    private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, PORT);
+    private static final Map<Integer, Channel> CHANNEL_MAP = new ConcurrentHashMap<>();
+//    private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, PORT);
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -36,9 +38,11 @@ public class UdpServer {
                 });
         try {
             ChannelFuture future = bootstrap.bind(PORT).sync();
+            ChannelFuture future1 = bootstrap.bind(PORT2).sync();
             Channel channel = future.channel();
-            System.out.println("服务端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
+            Channel channel1 = future1.channel();
             channel.closeFuture().syncUninterruptibly();
+            channel1.closeFuture().syncUninterruptibly();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -49,7 +53,9 @@ public class UdpServer {
     private static class UdpChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            System.out.println(ctx.channel() + " active");
+            InetSocketAddress localAddress = (InetSocketAddress) ctx.channel().localAddress();
+            System.out.println("服务端绑定成功！" + InetUtils.toAddressString(localAddress));
+            CHANNEL_MAP.put(localAddress.getPort(), ctx.channel());
         }
 
         @Override
@@ -71,26 +77,24 @@ public class UdpServer {
                 default:
                     break;
             }
-//            System.out.println(ctrlInfo.getType());
-//            String message = content.toString(CharsetUtil.UTF_8);
-//            System.out.println("接收到 " + addressString + " 消息： " + message);
-//            String id = message.split(":")[0];
-//            String[] split = id.split("@");
-//            if (!ADDRESS_MAP.containsKey(split[0])) {
-//                System.out.println("将 " + split[0] + " 的地址放入 ADDRESS_MAP");
-//                ADDRESS_MAP.put(split[0], addressString);
-//                System.out.println("ADDRESS_MAP: " + ADDRESS_MAP);
-//            }
-//            if (ADDRESS_MAP.containsKey(split[1])) {
-//                System.out.println("向 " + split[0] + " 发送 " + split[1] + " 的UDP地址");
-//                sendIpAddress(channel, addressString, split[1] + "#" + ADDRESS_MAP.get(split[1]));
-//            }
         }
 
         private void processCtrlInfo(CtrlInfo ctrlInfo, String addressString, Channel channel) {
             switch (ctrlInfo.getType()) {
                 case REGISTER:
                     registerHandler(addressString, ctrlInfo.getLocalId());
+                    ServerAck build = ServerAck.newBuilder()
+                            .setType(ServerAck.AckType.OK)
+                            .setMessage(addressString)
+                            .build();
+                    MultiMessage message = MultiMessage.newBuilder()
+                            .setMultiType(MultiMessage.MultiType.SERVER_ACK)
+                            .setServerAck(build)
+                            .build();
+                    byte[] bytes = message.toByteArray();
+                    ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
+                    DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
+                    channel.writeAndFlush(packet);
                     break;
                 case REQ_ADDR:
                     routeHandler(addressString, ctrlInfo.getOppositeId(), ctrlInfo.getLocalId(), channel);

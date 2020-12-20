@@ -127,7 +127,7 @@ public class UdpClientRemote3 {
         DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(ADDRESS_MAP.get(oppositeId)));
         channel.writeAndFlush(packet).addListener((ChannelFutureListener) future -> {
             if (future.isSuccess()) {
-                System.out.println(message + " send to" + oppositeId + " success!");
+                System.out.println(message + " send to " + oppositeId + " success!");
             } else {
                 System.err.println(message + " send fail!");
             }
@@ -196,9 +196,9 @@ public class UdpClientRemote3 {
             DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
             channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
                 if (f.isSuccess()) {
-                    System.out.println("请求更新 " + id + " 的地址为 " + addressString + "。");
+                    System.out.println("请求服务器更新 " + id + " 的地址为 " + addressString + "。");
                 } else {
-                    System.err.println("请求更新地址发送失败。");
+                    System.err.println("请求服务器更新地址发送失败。");
                 }
             });
         }
