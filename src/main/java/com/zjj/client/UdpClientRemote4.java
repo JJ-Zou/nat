@@ -17,16 +17,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
 
-public class UdpClient1 {
+public class UdpClientRemote4 {
     private static final String SERVE_IP = "39.105.65.104";
     private static final String LOCAL_IP = "192.168.0.108";
-    //    private static final String LOCAL_IP = "127.0.0.1";
-//    private static final String LOCAL_IP = "172.20.10.6";
-    private static final int LOCAL_PORT = 10002;
-    private static final int SERVER_PORT = 10000;
-    private static final String ID = "zjj";
+    //    private static final String LOCAL_IP = "172.20.10.6";
+    private static final int LOCAL_PORT = 10004;
+    private static final int SERVER_PORT = 20000;
+    private static final int SERVER_PORT1 = 30000;
+    private static final String ID = "test4";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
+    private static final InetSocketAddress SERVER_ADDRESS1 = new InetSocketAddress(SERVE_IP, SERVER_PORT1);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
 
@@ -46,7 +47,8 @@ public class UdpClient1 {
             ChannelFuture future = bootstrap.bind(LOCAL_PORT).sync();
             channel = future.channel();
             System.out.println("客户端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
-            register();
+            register(SERVER_ADDRESS);
+            register(SERVER_ADDRESS1);
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
@@ -90,7 +92,7 @@ public class UdpClient1 {
         });
     }
 
-    private static void register() {
+    private static void register(InetSocketAddress address) {
         CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
                 .setType(CtrlInfo.CtrlType.REGISTER)
                 .setLocalId(ID)
@@ -101,7 +103,7 @@ public class UdpClient1 {
                 .build();
         byte[] bytes = ctrl.toByteArray();
         ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
-        DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
+        DatagramPacket packet = new DatagramPacket(byteBuf, address);
         channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
             if (f.isSuccess()) {
                 System.out.println("发送注册消息。");
@@ -125,7 +127,7 @@ public class UdpClient1 {
         DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(ADDRESS_MAP.get(oppositeId)));
         channel.writeAndFlush(packet).addListener((ChannelFutureListener) future -> {
             if (future.isSuccess()) {
-                System.out.println(message + " send to" + oppositeId + " success!");
+                System.out.println(message + " send to " + oppositeId + " success!");
             } else {
                 System.err.println(message + " send fail!");
             }
@@ -194,9 +196,9 @@ public class UdpClient1 {
             DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
             channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
                 if (f.isSuccess()) {
-                    System.out.println("请求更新 " + id + " 的地址为 " + addressString + "。");
+                    System.out.println("请求服务器更新 " + id + " 的地址为 " + addressString + "。");
                 } else {
-                    System.err.println("请求更新地址发送失败。");
+                    System.err.println("请求服务器更新地址发送失败。");
                 }
             });
         }
@@ -204,7 +206,7 @@ public class UdpClient1 {
         private void processServerAck(ServerAck serverAck, String addressString, Channel channel) {
             switch (serverAck.getType()) {
                 case OK:
-                    System.out.println(serverAck.getMessage());
+                    System.out.println(addressString + " : " + serverAck.getMessage());
                     break;
                 case ACK_ADDR:
                     String oppositeId = processAckAddr(serverAck.getMessage());

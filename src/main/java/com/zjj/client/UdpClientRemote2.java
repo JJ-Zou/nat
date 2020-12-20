@@ -17,14 +17,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
 
-public class UdpClient1 {
-    private static final String SERVE_IP = "39.105.65.104";
+public class UdpClientRemote2 {
+    private static final String SERVE_IP = "127.0.0.1";
     private static final String LOCAL_IP = "192.168.0.108";
-    //    private static final String LOCAL_IP = "127.0.0.1";
-//    private static final String LOCAL_IP = "172.20.10.6";
+    //    private static final String LOCAL_IP = "172.20.10.6";
     private static final int LOCAL_PORT = 10002;
     private static final int SERVER_PORT = 10000;
-    private static final String ID = "zjj";
+    private static final String ID = "test2";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
