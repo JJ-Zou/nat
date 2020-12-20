@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
@@ -83,18 +84,8 @@ public class UdpServer {
             switch (ctrlInfo.getType()) {
                 case REGISTER:
                     registerHandler(addressString, ctrlInfo.getLocalId());
-                    ServerAck build = ServerAck.newBuilder()
-                            .setType(ServerAck.AckType.OK)
-                            .setMessage(addressString)
-                            .build();
-                    MultiMessage message = MultiMessage.newBuilder()
-                            .setMultiType(MultiMessage.MultiType.SERVER_ACK)
-                            .setServerAck(build)
-                            .build();
-                    byte[] bytes = message.toByteArray();
-                    ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
-                    DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
-                    channel.writeAndFlush(packet);
+                    serverAckPublicAddr(addressString, channel);
+//                    routeHandler(addressString, ctrlInfo.getLocalId(), ctrlInfo.getLocalId(), channel);
                     break;
                 case REQ_ADDR:
                     routeHandler(addressString, ctrlInfo.getOppositeId(), ctrlInfo.getLocalId(), channel);
@@ -111,6 +102,21 @@ public class UdpServer {
                 default:
                     break;
             }
+        }
+
+        private void serverAckPublicAddr(String addressString, Channel channel) {
+            ServerAck build = ServerAck.newBuilder()
+                    .setType(ServerAck.AckType.OK)
+                    .setMessage(addressString)
+                    .build();
+            MultiMessage message = MultiMessage.newBuilder()
+                    .setMultiType(MultiMessage.MultiType.SERVER_ACK)
+                    .setServerAck(build)
+                    .build();
+            byte[] bytes = message.toByteArray();
+            ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
+            DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
+            channel.writeAndFlush(packet);
         }
 
         private void notifyClientSendMsg(CtrlInfo ctrlInfo, Channel channel) {
@@ -139,8 +145,10 @@ public class UdpServer {
         private void updateAddrHandler(CtrlInfo ctrlInfo) {
             String oppositeId = ctrlInfo.getOppositeId();
             String address = ctrlInfo.getMessage();
-            System.out.println("更新用户 " + oppositeId + " 的通信地址 " + address);
-            ADDRESS_MAP.put(oppositeId, address);
+            if (!Objects.equals(address, ADDRESS_MAP.get(oppositeId))) {
+                System.out.println("更新用户 " + oppositeId + " 的通信地址 " + address);
+                ADDRESS_MAP.put(oppositeId, address);
+            }
         }
 
         private void routeHandler(String addressString, String oppositeId, String localId, Channel channel) {
@@ -169,6 +177,10 @@ public class UdpServer {
         }
 
         private void registerHandler(String addressString, String localId) {
+            if (Objects.equals(addressString, ADDRESS_MAP.get(localId))) {
+                System.out.println(localId + " 的地址为变化");
+                return;
+            }
             System.out.println("缓存用户 " + localId + " 的通信地址" + addressString);
             ADDRESS_MAP.put(localId, addressString);
         }
