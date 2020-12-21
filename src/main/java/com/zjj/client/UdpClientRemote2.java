@@ -1,5 +1,6 @@
 package com.zjj.client;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.utils.InetUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -9,6 +10,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+import io.netty.util.CharsetUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
@@ -18,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
 
+@Slf4j
 public class UdpClientRemote2 {
     private static final String SERVE_IP = "127.0.0.1";
     private static final String LOCAL_IP = "192.168.0.108";
@@ -146,7 +150,14 @@ public class UdpClientRemote2 {
             Channel channel = ctx.channel();
             String addressString = InetUtils.toAddressString(msg.sender());
             ByteBuf content = msg.content();
-            MultiMessage multiMessage = MultiMessage.parseFrom(content.nioBuffer());
+            MultiMessage multiMessage;
+            try {
+                multiMessage = MultiMessage.parseFrom(content.nioBuffer());
+            } catch (InvalidProtocolBufferException e) {
+                System.out.println(content);
+                System.out.println(content.toString(CharsetUtil.UTF_8));
+                return;
+            }
             switch (multiMessage.getMultiType()) {
                 case CTRL_INFO:
                     break;
