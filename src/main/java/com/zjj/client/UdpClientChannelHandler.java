@@ -65,31 +65,12 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         if (log.isInfoEnabled()) {
                             log.info("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
                         }
-                        PRIVATE_ADDR_MAP.put(id,
-                                privateInetAddr);
-                        if (log.isInfoEnabled()) {
-                            log.info("收到 {} 的公网地址 {} 加入缓存", id, addressString);
-                        }
-                        PUBLIC_ADDR_MAP.put(id,
-                                addressString);
-                        MultiMessage publicInetAck = ProtoUtils.createMultiInetCommand(id, msg.sender().getHostString(), msg.sender().getPort(), true);
-                        ByteBuf byteBuf = Unpooled.wrappedBuffer(publicInetAck.toByteArray());
-                        DatagramPacket publicInetAckPacket = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
-                        channel.writeAndFlush(publicInetAckPacket).addListener(f -> {
-                            if (f.isSuccess()) {
-                                if (log.isInfoEnabled()) {
-                                    log.error("向 {} 发送公网地址 {}", id, addressString);
-                                }
-                            } else {
-                                log.error("向 {} 发送公网地址失败", id);
-                            }
-                        });
+                        PRIVATE_ADDR_MAP.put(id, privateInetAddr);
                         break;
                     case PUBLIC:
                         String id1 = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
                         if (log.isInfoEnabled()) {
-                            log.info("{} 经过NAT后的公网地址: {}", id1, publicInetAddr);
                             log.info("收到 {} 的公网地址 {} 加入缓存", id1, publicInetAddr);
                         }
                         PUBLIC_ADDR_MAP.put(id1, publicInetAddr);
@@ -97,6 +78,30 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     case UNRECOGNIZED:
                     default:
                         break;
+                }
+                break;
+            case REQ:
+                Req req = multiMessage.getReq();
+                if (log.isInfoEnabled()) {
+                    log.info("收到 {} 的连接请求, 从 {} 到 {} 的穿透成功", req.getFrom(), req.getFrom(), req.getTo());
+                }
+                DatagramPacket packet
+                        = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(req.getTo(), req.getFrom()).toByteArray()),
+                        InetUtils.toInetSocketAddress(addressString));
+                channel.writeAndFlush(packet).addListener(f -> {
+                    if (f.isSuccess()) {
+                        if (log.isInfoEnabled()) {
+                            log.info("尝试建立从 {} 到 {} 的穿透", req.getTo(), req.getFrom());
+                        }
+                    } else {
+                        log.error("请求发送失败");
+                    }
+                });
+                break;
+            case ACK:
+                Ack ack = multiMessage.getAck();
+                if (log.isInfoEnabled()) {
+                    log.info("收到 {} 的连接请求, 从 {} 到 {} 的穿透成功", ack.getFrom(), ack.getFrom(), ack.getTo());
                 }
                 break;
             case CTRL_INFO:

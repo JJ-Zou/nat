@@ -13,10 +13,12 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import static com.zjj.proto.CtrlMessage.*;
@@ -43,6 +45,7 @@ public class UdpClientRemote2 {
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_HOST_NAME, LOCAL_PORT);
 
+    @SneakyThrows
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
@@ -68,7 +71,10 @@ public class UdpClientRemote2 {
                     break;
                 } else if ("nat".equals(split[0])) {
                     oppositeId = split[1].substring(1);
-                    requestForNat();
+                    requestForOppositeAddr();
+                    TimeUnit.SECONDS.sleep(2);
+                    attemptPrivateConnect();
+//                    requestForNat();
                 } else if ("chat".equals(split[0])) {
                     sendMessage(split[1].substring(1), split[2]);
                 }
@@ -77,6 +83,37 @@ public class UdpClientRemote2 {
         } finally {
             group.shutdownGracefully();
         }
+    }
+
+    private static void attemptPrivateConnect() {
+        String privateAddrStr = UdpClientChannelHandler.PRIVATE_ADDR_MAP.get(oppositeId);
+        DatagramPacket packet
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReq(ID, oppositeId).toByteArray()),
+                InetUtils.toInetSocketAddress(privateAddrStr));
+        channel.writeAndFlush(packet).addListener(f -> {
+            if (f.isSuccess()) {
+                if (log.isInfoEnabled()) {
+                    log.info("请求与 {} 的私网 {} 建立连接", oppositeId, privateAddrStr);
+                }
+            } else {
+                log.error("请求发送失败");
+            }
+        });
+    }
+
+    private static void requestForOppositeAddr() {
+        DatagramPacket packet
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReqAddr(oppositeId).toByteArray()),
+                SERVER_ADDRESS);
+        channel.writeAndFlush(packet).addListener(f -> {
+            if (f.isSuccess()) {
+                if (log.isInfoEnabled()) {
+                    log.info("请求 {} 的地址", oppositeId);
+                }
+            } else {
+                log.error("请求地址失败");
+            }
+        });
     }
 
     private static void requestForNat() {
@@ -103,9 +140,9 @@ public class UdpClientRemote2 {
     }
 
     private static void sendPrivateAddr() {
-        MultiMessage inetCommand = ProtoUtils.createMultiInetCommand(ID, LOCAL_HOST_NAME, LOCAL_PORT, false);
-        ByteBuf byteBuf = Unpooled.wrappedBuffer(inetCommand.toByteArray());
-        DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
+        DatagramPacket packet
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiInetCommand(ID, LOCAL_HOST_NAME, LOCAL_PORT, false).toByteArray()),
+                SERVER_ADDRESS);
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
