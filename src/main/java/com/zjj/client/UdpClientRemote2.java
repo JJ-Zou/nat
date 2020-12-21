@@ -16,6 +16,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -45,8 +46,11 @@ public class UdpClientRemote2 {
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_HOST_NAME, LOCAL_PORT);
 
+    private static UdpClientChannelHandler udpClientChannelHandler;
+
     @SneakyThrows
     public static void main(String[] args) {
+        udpClientChannelHandler = new UdpClientChannelHandler(ID, SERVER_ADDRESS);
         NioEventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
@@ -56,7 +60,7 @@ public class UdpClientRemote2 {
                     @Override
                     protected void initChannel(DatagramChannel ch) throws Exception {
                         ch.pipeline()
-                                .addLast(new UdpClientChannelHandler(ID, SERVER_ADDRESS))
+                                .addLast(udpClientChannelHandler)
                         ;
                     }
                 });
@@ -72,7 +76,23 @@ public class UdpClientRemote2 {
                 } else if ("nat".equals(split[0])) {
                     oppositeId = split[1].substring(1);
                     requestForOppositeAddr();
+                    long l1 = System.currentTimeMillis();
+                    while (!UdpClientChannelHandler.PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
+                        if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
+                            throw new ConnectException("与服务器连接不通畅");
+                        }
+                        TimeUnit.MILLISECONDS.sleep(5);
+                    }
+                    log.info("{}ms", System.currentTimeMillis() - l1);
                     attemptPrivateConnect();
+                    l1 = System.currentTimeMillis();
+                    while (!udpClientChannelHandler.getThrough()) {
+                        if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
+                            break;
+                        }
+                        TimeUnit.MILLISECONDS.sleep(5);
+                    }
+                    log.info("{}ms", System.currentTimeMillis() - l1);
 //                    requestForNat();
                 } else if ("chat".equals(split[0])) {
                     sendMessage(split[1].substring(1), split[2]);
@@ -86,9 +106,6 @@ public class UdpClientRemote2 {
 
     @SneakyThrows
     private static void attemptPrivateConnect() {
-        while (!UdpClientChannelHandler.PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
-            TimeUnit.NANOSECONDS.sleep(1000);
-        }
         sendReqToPeer();
         sendRedirectReqToServer();
     }
