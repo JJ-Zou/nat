@@ -51,7 +51,7 @@ public class UdpClientRemote4 {
             ChannelFuture future = bootstrap.bind(LOCAL_PORT).sync();
             channel = future.channel();
             register(SERVER_ADDRESS);
-            register(SERVER_ADDRESS1);
+//            register(SERVER_ADDRESS1);
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
