@@ -1,8 +1,17 @@
 package com.zjj.utils;
 
-import java.net.InetSocketAddress;
+import cn.hutool.core.net.NetUtil;
+
+import java.net.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
 
 public class InetUtils {
+
+    private InetUtils() {
+    }
+
     public static String toAddressString(InetSocketAddress address) {
         return address.getAddress().getHostAddress() + ":" + address.getPort();
     }
@@ -10,5 +19,64 @@ public class InetUtils {
     public static InetSocketAddress toInetSocketAddress(String addressString) {
         String[] split = addressString.split(":");
         return new InetSocketAddress(split[0], Integer.parseInt(split[1]));
+    }
+
+    public static String getLocalAddress() {
+        InetAddress ret = null;
+        Collection<NetworkInterface> networkInterfaces = NetUtil.getNetworkInterfaces();
+        for (NetworkInterface networkInterface : networkInterfaces) {
+            List<InterfaceAddress> interfaceAddresses = networkInterface.getInterfaceAddresses();
+            for (InterfaceAddress interfaceAddress : interfaceAddresses) {
+                InetAddress address = interfaceAddress.getAddress();
+                if (!address.isLoopbackAddress()) {
+                    if (address.isSiteLocalAddress()) {
+                        return address.getHostAddress();
+                    } else {
+                        ret = address;
+                    }
+                }
+            }
+        }
+        if (ret != null) {
+            return ret.getHostAddress();
+        }
+        return NetUtil.getLocalhost().getHostAddress();
+    }
+
+    private static InetAddress getLocalHostLANAddress() throws UnknownHostException {
+        try {
+            InetAddress candidateAddress = null;
+            // 遍历所有的网络接口
+            for (Enumeration ifaces = NetworkInterface.getNetworkInterfaces(); ifaces.hasMoreElements(); ) {
+                NetworkInterface iface = (NetworkInterface) ifaces.nextElement();
+                // 在所有的接口下再遍历IP
+                for (Enumeration inetAddrs = iface.getInetAddresses(); inetAddrs.hasMoreElements(); ) {
+                    InetAddress inetAddr = (InetAddress) inetAddrs.nextElement();
+                    if (!inetAddr.isLoopbackAddress()) {// 排除loopback类型地址
+                        if (inetAddr.isSiteLocalAddress()) {
+                            // 如果是site-local地址，就是它了
+                            return inetAddr;
+                        } else if (candidateAddress == null) {
+                            // site-local类型的地址未被发现，先记录候选地址
+                            candidateAddress = inetAddr;
+                        }
+                    }
+                }
+            }
+            if (candidateAddress != null) {
+                return candidateAddress;
+            }
+            // 如果没有发现 non-loopback地址.只能用最次选的方案
+            InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
+            if (jdkSuppliedAddress == null) {
+                throw new UnknownHostException("The JDK InetAddress.getLocalHost() method unexpectedly returned null.");
+            }
+            return jdkSuppliedAddress;
+        } catch (Exception e) {
+            UnknownHostException unknownHostException = new UnknownHostException(
+                    "Failed to determine LAN address: " + e);
+            unknownHostException.initCause(e);
+            throw unknownHostException;
+        }
     }
 }

@@ -24,6 +24,7 @@ import static com.zjj.proto.CtrlMessage.*;
 public class UdpClientRemote3 {
     private static final String ID;
     private static final int LOCAL_PORT;
+    private static final String LOCAL_ADDR_STRING;
 
     static {
         String className = UdpClientRemote3.class.getName();
@@ -31,6 +32,7 @@ public class UdpClientRemote3 {
         String num = Pattern.compile(reg).matcher(className).replaceAll("").trim();
         ID = "test" + num;
         LOCAL_PORT = Integer.parseInt("100" + num);
+        LOCAL_ADDR_STRING = InetUtils.getLocalAddress();
     }
 
     private static final String SERVE_IP = "39.105.65.104";
@@ -38,6 +40,7 @@ public class UdpClientRemote3 {
     private static String oppositeId;
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
+    private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_ADDR_STRING, LOCAL_PORT);
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -54,7 +57,7 @@ public class UdpClientRemote3 {
                     }
                 });
         try (Scanner scanner = new Scanner(System.in);) {
-            ChannelFuture future = bootstrap.bind(LOCAL_PORT).syncUninterruptibly();
+            ChannelFuture future = bootstrap.bind(LOCAL_ADDRESS).syncUninterruptibly();
             channel = future.channel();
             register();
             while (true) {
