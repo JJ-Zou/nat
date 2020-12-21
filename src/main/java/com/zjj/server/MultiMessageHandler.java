@@ -1,6 +1,5 @@
 package com.zjj.server;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.utils.InetUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -9,47 +8,30 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
-import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.zjj.proto.CtrlMessage.*;
 
-@Slf4j
 @ChannelHandler.Sharable
-public class UdpServerChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
+@Slf4j
+public class MultiMessageHandler extends SimpleChannelInboundHandler<MultiMessage> {
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
     private static final Map<String, String> ACTUAL_ADDRESS_MAP = new ConcurrentHashMap<>();
-    private static final Map<Integer, Channel> CHANNEL_MAP = new ConcurrentHashMap<>();
+    private final String addressString;
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        InetSocketAddress localAddress = (InetSocketAddress) ctx.channel().localAddress();
-        if (log.isInfoEnabled()) {
-            log.info("服务端绑定成功！{}", InetUtils.toAddressString(localAddress));
-        }
-        CHANNEL_MAP.put(localAddress.getPort(), ctx.channel());
+    public MultiMessageHandler(String addressString) {
+        this.addressString = addressString;
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
-        Channel channel = ctx.channel();
-        String addressString = InetUtils.toAddressString(msg.sender());
-        ByteBuf content = msg.content();
-        MultiMessage multiMessage;
-        try {
-            multiMessage = MultiMessage.parseFrom(content.nioBuffer());
-        } catch (InvalidProtocolBufferException e) {
-            log.error("非protoBuf消息: {}", content.toString(CharsetUtil.UTF_8));
-            return;
-        }
+    protected void channelRead0(ChannelHandlerContext ctx, MultiMessage multiMessage) throws Exception {
         switch (multiMessage.getMultiType()) {
             case CTRL_INFO:
-                processCtrlInfo(multiMessage.getCtrlInfo(), addressString, channel);
+                processCtrlInfo(multiMessage.getCtrlInfo(), addressString, ctx.channel());
                 break;
             case SERVER_ACK:
                 break;
@@ -96,8 +78,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 .setServerAck(build)
                 .build();
         ByteBuf byteBuf = Unpooled.wrappedBuffer(message.toByteArray());
-        DatagramPacket packet = new DatagramPacket(byteBuf,
-                InetUtils.toInetSocketAddress(addressString));
+        DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
         channel.writeAndFlush(packet);
     }
 
@@ -113,8 +94,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 .setServerAck(serverAck)
                 .build();
         ByteBuf byteBuf = Unpooled.wrappedBuffer(ack.toByteArray());
-        DatagramPacket packet = new DatagramPacket(byteBuf,
-                InetUtils.toInetSocketAddress(ADDRESS_MAP.get(sendId)));
+        DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(ADDRESS_MAP.get(sendId)));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
@@ -155,8 +135,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 .setServerAck(serverAck)
                 .build();
         ByteBuf byteBuf = Unpooled.wrappedBuffer(ack.toByteArray());
-        DatagramPacket packet = new DatagramPacket(byteBuf,
-                InetUtils.toInetSocketAddress(addressString));
+        DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
@@ -181,3 +160,4 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
         ADDRESS_MAP.put(localId, addressString);
     }
 }
+

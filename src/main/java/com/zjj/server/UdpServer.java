@@ -24,7 +24,8 @@ public class UdpServer {
                     @Override
                     protected void initChannel(NioDatagramChannel ch) throws Exception {
                         ch.pipeline()
-                                .addLast(new UdpServerChannelHandler());
+                                .addLast(new UdpServerChannelHandler())
+                        ;
                     }
                 });
         try {
