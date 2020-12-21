@@ -1,5 +1,6 @@
 package com.zjj.client;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.utils.InetUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -9,6 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
@@ -146,7 +148,14 @@ public class UdpClientRemote3 {
             Channel channel = ctx.channel();
             String addressString = InetUtils.toAddressString(msg.sender());
             ByteBuf content = msg.content();
-            MultiMessage multiMessage = MultiMessage.parseFrom(content.nioBuffer());
+            MultiMessage multiMessage;
+            try {
+                multiMessage = MultiMessage.parseFrom(content.nioBuffer());
+            } catch (InvalidProtocolBufferException e) {
+                System.out.println(content);
+                System.out.println(content.toString(CharsetUtil.UTF_8));
+                return;
+            }
             switch (multiMessage.getMultiType()) {
                 case CTRL_INFO:
                     break;
