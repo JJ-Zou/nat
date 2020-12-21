@@ -17,6 +17,7 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.zjj.proto.CtrlMessage.*;
 
@@ -29,10 +30,16 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     public UdpClientChannelHandler(String localId, InetSocketAddress serverAddress) {
         this.localId = localId;
         this.serverAddress = serverAddress;
+        through = new AtomicBoolean(false);
     }
 
     static final Map<String, String> PUBLIC_ADDR_MAP = new ConcurrentHashMap<>();
     static final Map<String, String> PRIVATE_ADDR_MAP = new ConcurrentHashMap<>();
+    private volatile AtomicBoolean through;
+
+    public boolean getThrough() {
+        return through.get();
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -121,6 +128,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 if (log.isInfoEnabled()) {
                     log.info("收到 {} 的回复, {} 与 {} 穿透成功!", ack.getFrom(), ack.getFrom(), ack.getTo());
                 }
+                through.compareAndSet(false, true);
                 break;
             case REQ_REDIRECT:
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
