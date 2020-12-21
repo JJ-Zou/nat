@@ -2,6 +2,7 @@ package com.zjj.server;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.utils.InetUtils;
+import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -22,8 +23,9 @@ import static com.zjj.proto.CtrlMessage.*;
 @Slf4j
 @ChannelHandler.Sharable
 public class UdpServerChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
-    private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, String> PUBLIC_ADDR_MAP = new ConcurrentHashMap<>();
     private static final Map<String, String> ACTUAL_ADDRESS_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, String> PRIVATE_ADDR_MAP = new ConcurrentHashMap<>();
     private static final Map<Integer, Channel> CHANNEL_MAP = new ConcurrentHashMap<>();
 
     @Override
@@ -48,6 +50,41 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
             return;
         }
         switch (multiMessage.getMultiType()) {
+            case INET_COMMAND:
+                InetCommand inetCommand = multiMessage.getInetCommand();
+                switch (inetCommand.getInetType()) {
+                    case PRIVATE:
+                        String id = inetCommand.getClientId();
+                        String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
+                        if (log.isInfoEnabled()) {
+                            log.info("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
+                        }
+                        PRIVATE_ADDR_MAP.put(id,
+                                privateInetAddr);
+                        if (log.isInfoEnabled()) {
+                            log.info("收到 {} 的公网地址 {} 加入缓存", id, addressString);
+                        }
+                        PUBLIC_ADDR_MAP.put(id,
+                                addressString);
+                        MultiMessage publicInetAck = ProtoUtils.createMultiInetCommand(id, msg.sender().getHostString(), msg.sender().getPort(), true);
+                        ByteBuf byteBuf = Unpooled.wrappedBuffer(publicInetAck.toByteArray());
+                        DatagramPacket publicInetAckPacket = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
+                        channel.writeAndFlush(publicInetAckPacket).addListener(f -> {
+                            if (f.isSuccess()) {
+                                if (log.isInfoEnabled()) {
+                                    log.info("向 {} 发送公网地址 {}", id, addressString);
+                                }
+                            } else {
+                                log.error("向 {} 发送公网地址失败", id);
+                            }
+                        });
+                        break;
+                    case PUBLIC:
+                    case UNRECOGNIZED:
+                    default:
+                        break;
+                }
+                break;
             case CTRL_INFO:
                 processCtrlInfo(multiMessage.getCtrlInfo(), addressString, channel);
                 break;
@@ -71,7 +108,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case REQ_ADDR:
                 routeHandler(addressString, ctrlInfo.getOppositeId(), ctrlInfo.getLocalId(), channel);
-                routeHandler(ADDRESS_MAP.get(ctrlInfo.getOppositeId()), ctrlInfo.getLocalId(), ctrlInfo.getOppositeId(), channel);
+                routeHandler(PUBLIC_ADDR_MAP.get(ctrlInfo.getOppositeId()), ctrlInfo.getLocalId(), ctrlInfo.getOppositeId(), channel);
                 break;
             case UPDATE_ADDR:
                 updateAddrHandler(ctrlInfo);
@@ -98,7 +135,15 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
         ByteBuf byteBuf = Unpooled.wrappedBuffer(message.toByteArray());
         DatagramPacket packet = new DatagramPacket(byteBuf,
                 InetUtils.toInetSocketAddress(addressString));
-        channel.writeAndFlush(packet);
+        channel.writeAndFlush(packet).addListener(f -> {
+            if (f.isSuccess()) {
+                if (log.isInfoEnabled()) {
+                    log.info("发送OK");
+                }
+            } else {
+                log.error("发送失败");
+            }
+        });
     }
 
     private void notifyClientSendMsg(CtrlInfo ctrlInfo, Channel channel) {
@@ -114,7 +159,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 .build();
         ByteBuf byteBuf = Unpooled.wrappedBuffer(ack.toByteArray());
         DatagramPacket packet = new DatagramPacket(byteBuf,
-                InetUtils.toInetSocketAddress(ADDRESS_MAP.get(sendId)));
+                InetUtils.toInetSocketAddress(PUBLIC_ADDR_MAP.get(sendId)));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
@@ -136,19 +181,19 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
             ACTUAL_ADDRESS_MAP.put(oppositeId, address);
         }
         if (log.isInfoEnabled()) {
-            log.info("用户注册地址: {}", ADDRESS_MAP.get(oppositeId));
+            log.info("用户注册地址: {}", PUBLIC_ADDR_MAP.get(oppositeId));
             log.info("用户P2P地址: {}", ACTUAL_ADDRESS_MAP.get(oppositeId));
         }
     }
 
     private void routeHandler(String addressString, String oppositeId, String localId, Channel channel) {
-        if (!ADDRESS_MAP.containsKey(oppositeId)) {
+        if (!PUBLIC_ADDR_MAP.containsKey(oppositeId)) {
             log.error("对方用户未注册");
             return;
         }
         ServerAck serverAck = ServerAck.newBuilder()
                 .setType(ServerAck.AckType.ACK_ADDR)
-                .setMessage(oppositeId + "@" + ADDRESS_MAP.get(oppositeId))
+                .setMessage(oppositeId + "@" + PUBLIC_ADDR_MAP.get(oppositeId))
                 .build();
         MultiMessage ack = MultiMessage.newBuilder()
                 .setMultiType(MultiMessage.MultiType.SERVER_ACK)
@@ -160,7 +205,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("将 {} 的地址 {} 发送给 {}@{}", oppositeId, ADDRESS_MAP.get(oppositeId), localId, addressString);
+                    log.info("将 {} 的地址 {} 发送给 {}@{}", oppositeId, PUBLIC_ADDR_MAP.get(oppositeId), localId, addressString);
                 }
             } else {
                 log.error("向 {} 发送地址失败", localId);
@@ -169,7 +214,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
     }
 
     private void registerHandler(String addressString, String localId) {
-        if (Objects.equals(addressString, ADDRESS_MAP.get(localId))) {
+        if (Objects.equals(addressString, PUBLIC_ADDR_MAP.get(localId))) {
             if (log.isInfoEnabled()) {
                 log.info("{} 的地址未变化", localId);
             }
@@ -178,6 +223,6 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
         if (log.isInfoEnabled()) {
             log.info("缓存用户 {} 的通信地址 {}", localId, addressString);
         }
-        ADDRESS_MAP.put(localId, addressString);
+        PUBLIC_ADDR_MAP.put(localId, addressString);
     }
 }

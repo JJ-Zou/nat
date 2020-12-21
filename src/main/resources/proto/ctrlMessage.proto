@@ -5,17 +5,31 @@ option java_outer_classname = "CtrlMessage";
 
 message MultiMessage {
   enum MultiType {
-    CTRL_INFO = 0;
-    SERVER_ACK = 1;
-    PSP_MESSAGE = 2;
+    INET_COMMAND = 0;
+    CTRL_INFO = 1;
+    SERVER_ACK = 2;
+    PSP_MESSAGE = 3;
   }
   MultiType multiType = 1;
   oneof MultiBody {
-    CtrlInfo ctrlInfo = 2;
-    ServerAck serverAck = 3;
-    P2PMessage p2PMessage = 4;
+    InetCommand inetCommand = 2;
+    CtrlInfo ctrlInfo = 3;
+    ServerAck serverAck = 4;
+    P2PMessage p2PMessage = 5;
   }
 }
+
+message InetCommand {
+  enum InetType {
+    PRIVATE = 0;
+    PUBLIC = 1;
+  }
+  string clientId = 1;
+  string host = 2;
+  int32 port = 3;
+  InetType inetType = 4;
+}
+
 message CtrlInfo {
   enum CtrlType {
     REGISTER = 0;

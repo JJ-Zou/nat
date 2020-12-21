@@ -30,47 +30,62 @@ public final class CtrlMessage {
     com.zjj.proto.CtrlMessage.MultiMessage.MultiType getMultiType();
 
     /**
-     * <code>.CtrlInfo ctrlInfo = 2;</code>
+     * <code>.InetCommand inetCommand = 2;</code>
+     * @return Whether the inetCommand field is set.
+     */
+    boolean hasInetCommand();
+    /**
+     * <code>.InetCommand inetCommand = 2;</code>
+     * @return The inetCommand.
+     */
+    com.zjj.proto.CtrlMessage.InetCommand getInetCommand();
+    /**
+     * <code>.InetCommand inetCommand = 2;</code>
+     */
+    com.zjj.proto.CtrlMessage.InetCommandOrBuilder getInetCommandOrBuilder();
+
+    /**
+     * <code>.CtrlInfo ctrlInfo = 3;</code>
      * @return Whether the ctrlInfo field is set.
      */
     boolean hasCtrlInfo();
     /**
-     * <code>.CtrlInfo ctrlInfo = 2;</code>
+     * <code>.CtrlInfo ctrlInfo = 3;</code>
      * @return The ctrlInfo.
      */
     com.zjj.proto.CtrlMessage.CtrlInfo getCtrlInfo();
     /**
-     * <code>.CtrlInfo ctrlInfo = 2;</code>
+     * <code>.CtrlInfo ctrlInfo = 3;</code>
      */
     com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder getCtrlInfoOrBuilder();
 
     /**
-     * <code>.ServerAck serverAck = 3;</code>
+     * <code>.ServerAck serverAck = 4;</code>
      * @return Whether the serverAck field is set.
      */
     boolean hasServerAck();
     /**
-     * <code>.ServerAck serverAck = 3;</code>
+     * <code>.ServerAck serverAck = 4;</code>
      * @return The serverAck.
      */
     com.zjj.proto.CtrlMessage.ServerAck getServerAck();
     /**
-     * <code>.ServerAck serverAck = 3;</code>
+     * <code>.ServerAck serverAck = 4;</code>
      */
     com.zjj.proto.CtrlMessage.ServerAckOrBuilder getServerAckOrBuilder();
 
     /**
-     * <code>.P2PMessage p2PMessage = 4;</code>
+     * <code>.P2PMessage p2PMessage = 5;</code>
      * @return Whether the p2PMessage field is set.
      */
     boolean hasP2PMessage();
     /**
-     * <code>.P2PMessage p2PMessage = 4;</code>
+     * <code>.P2PMessage p2PMessage = 5;</code>
      * @return The p2PMessage.
      */
     com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage();
     /**
-     * <code>.P2PMessage p2PMessage = 4;</code>
+     * <code>.P2PMessage p2PMessage = 5;</code>
      */
     com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder();
 
@@ -129,8 +144,22 @@ public final class CtrlMessage {
               break;
             }
             case 18: {
-              com.zjj.proto.CtrlMessage.CtrlInfo.Builder subBuilder = null;
+              com.zjj.proto.CtrlMessage.InetCommand.Builder subBuilder = null;
               if (multiBodyCase_ == 2) {
+                subBuilder = ((com.zjj.proto.CtrlMessage.InetCommand) multiBody_).toBuilder();
+              }
+              multiBody_ =
+                  input.readMessage(com.zjj.proto.CtrlMessage.InetCommand.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.InetCommand) multiBody_);
+                multiBody_ = subBuilder.buildPartial();
+              }
+              multiBodyCase_ = 2;
+              break;
+            }
+            case 26: {
+              com.zjj.proto.CtrlMessage.CtrlInfo.Builder subBuilder = null;
+              if (multiBodyCase_ == 3) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -139,12 +168,12 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 2;
+              multiBodyCase_ = 3;
               break;
             }
-            case 26: {
+            case 34: {
               com.zjj.proto.CtrlMessage.ServerAck.Builder subBuilder = null;
-              if (multiBodyCase_ == 3) {
+              if (multiBodyCase_ == 4) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.ServerAck) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -153,12 +182,12 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 3;
+              multiBodyCase_ = 4;
               break;
             }
-            case 34: {
+            case 42: {
               com.zjj.proto.CtrlMessage.P2PMessage.Builder subBuilder = null;
-              if (multiBodyCase_ == 4) {
+              if (multiBodyCase_ == 5) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -167,7 +196,7 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 4;
+              multiBodyCase_ = 5;
               break;
             }
             default: {
@@ -208,32 +237,40 @@ public final class CtrlMessage {
     public enum MultiType
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>CTRL_INFO = 0;</code>
+       * <code>INET_COMMAND = 0;</code>
        */
-      CTRL_INFO(0),
+      INET_COMMAND(0),
       /**
-       * <code>SERVER_ACK = 1;</code>
+       * <code>CTRL_INFO = 1;</code>
        */
-      SERVER_ACK(1),
+      CTRL_INFO(1),
       /**
-       * <code>PSP_MESSAGE = 2;</code>
+       * <code>SERVER_ACK = 2;</code>
        */
-      PSP_MESSAGE(2),
+      SERVER_ACK(2),
+      /**
+       * <code>PSP_MESSAGE = 3;</code>
+       */
+      PSP_MESSAGE(3),
       UNRECOGNIZED(-1),
       ;
 
       /**
-       * <code>CTRL_INFO = 0;</code>
+       * <code>INET_COMMAND = 0;</code>
        */
-      public static final int CTRL_INFO_VALUE = 0;
+      public static final int INET_COMMAND_VALUE = 0;
       /**
-       * <code>SERVER_ACK = 1;</code>
+       * <code>CTRL_INFO = 1;</code>
        */
-      public static final int SERVER_ACK_VALUE = 1;
+      public static final int CTRL_INFO_VALUE = 1;
       /**
-       * <code>PSP_MESSAGE = 2;</code>
+       * <code>SERVER_ACK = 2;</code>
        */
-      public static final int PSP_MESSAGE_VALUE = 2;
+      public static final int SERVER_ACK_VALUE = 2;
+      /**
+       * <code>PSP_MESSAGE = 3;</code>
+       */
+      public static final int PSP_MESSAGE_VALUE = 3;
 
 
       public final int getNumber() {
@@ -260,9 +297,10 @@ public final class CtrlMessage {
        */
       public static MultiType forNumber(int value) {
         switch (value) {
-          case 0: return CTRL_INFO;
-          case 1: return SERVER_ACK;
-          case 2: return PSP_MESSAGE;
+          case 0: return INET_COMMAND;
+          case 1: return CTRL_INFO;
+          case 2: return SERVER_ACK;
+          case 3: return PSP_MESSAGE;
           default: return null;
         }
       }
@@ -324,9 +362,10 @@ public final class CtrlMessage {
     public enum MultiBodyCase
         implements com.google.protobuf.Internal.EnumLite,
             com.google.protobuf.AbstractMessage.InternalOneOfEnum {
-      CTRLINFO(2),
-      SERVERACK(3),
-      P2PMESSAGE(4),
+      INETCOMMAND(2),
+      CTRLINFO(3),
+      SERVERACK(4),
+      P2PMESSAGE(5),
       MULTIBODY_NOT_SET(0);
       private final int value;
       private MultiBodyCase(int value) {
@@ -344,9 +383,10 @@ public final class CtrlMessage {
 
       public static MultiBodyCase forNumber(int value) {
         switch (value) {
-          case 2: return CTRLINFO;
-          case 3: return SERVERACK;
-          case 4: return P2PMESSAGE;
+          case 2: return INETCOMMAND;
+          case 3: return CTRLINFO;
+          case 4: return SERVERACK;
+          case 5: return P2PMESSAGE;
           case 0: return MULTIBODY_NOT_SET;
           default: return null;
         }
@@ -381,94 +421,125 @@ public final class CtrlMessage {
       return result == null ? com.zjj.proto.CtrlMessage.MultiMessage.MultiType.UNRECOGNIZED : result;
     }
 
-    public static final int CTRLINFO_FIELD_NUMBER = 2;
+    public static final int INETCOMMAND_FIELD_NUMBER = 2;
     /**
-     * <code>.CtrlInfo ctrlInfo = 2;</code>
+     * <code>.InetCommand inetCommand = 2;</code>
+     * @return Whether the inetCommand field is set.
+     */
+    @java.lang.Override
+    public boolean hasInetCommand() {
+      return multiBodyCase_ == 2;
+    }
+    /**
+     * <code>.InetCommand inetCommand = 2;</code>
+     * @return The inetCommand.
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.InetCommand getInetCommand() {
+      if (multiBodyCase_ == 2) {
+         return (com.zjj.proto.CtrlMessage.InetCommand) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+    }
+    /**
+     * <code>.InetCommand inetCommand = 2;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.InetCommandOrBuilder getInetCommandOrBuilder() {
+      if (multiBodyCase_ == 2) {
+         return (com.zjj.proto.CtrlMessage.InetCommand) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+    }
+
+    public static final int CTRLINFO_FIELD_NUMBER = 3;
+    /**
+     * <code>.CtrlInfo ctrlInfo = 3;</code>
      * @return Whether the ctrlInfo field is set.
      */
     @java.lang.Override
     public boolean hasCtrlInfo() {
-      return multiBodyCase_ == 2;
+      return multiBodyCase_ == 3;
     }
     /**
-     * <code>.CtrlInfo ctrlInfo = 2;</code>
+     * <code>.CtrlInfo ctrlInfo = 3;</code>
      * @return The ctrlInfo.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.CtrlInfo getCtrlInfo() {
-      if (multiBodyCase_ == 2) {
+      if (multiBodyCase_ == 3) {
          return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
     }
     /**
-     * <code>.CtrlInfo ctrlInfo = 2;</code>
+     * <code>.CtrlInfo ctrlInfo = 3;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder getCtrlInfoOrBuilder() {
-      if (multiBodyCase_ == 2) {
+      if (multiBodyCase_ == 3) {
          return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
     }
 
-    public static final int SERVERACK_FIELD_NUMBER = 3;
+    public static final int SERVERACK_FIELD_NUMBER = 4;
     /**
-     * <code>.ServerAck serverAck = 3;</code>
+     * <code>.ServerAck serverAck = 4;</code>
      * @return Whether the serverAck field is set.
      */
     @java.lang.Override
     public boolean hasServerAck() {
-      return multiBodyCase_ == 3;
+      return multiBodyCase_ == 4;
     }
     /**
-     * <code>.ServerAck serverAck = 3;</code>
+     * <code>.ServerAck serverAck = 4;</code>
      * @return The serverAck.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.ServerAck getServerAck() {
-      if (multiBodyCase_ == 3) {
+      if (multiBodyCase_ == 4) {
          return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
     }
     /**
-     * <code>.ServerAck serverAck = 3;</code>
+     * <code>.ServerAck serverAck = 4;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.ServerAckOrBuilder getServerAckOrBuilder() {
-      if (multiBodyCase_ == 3) {
+      if (multiBodyCase_ == 4) {
          return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
     }
 
-    public static final int P2PMESSAGE_FIELD_NUMBER = 4;
+    public static final int P2PMESSAGE_FIELD_NUMBER = 5;
     /**
-     * <code>.P2PMessage p2PMessage = 4;</code>
+     * <code>.P2PMessage p2PMessage = 5;</code>
      * @return Whether the p2PMessage field is set.
      */
     @java.lang.Override
     public boolean hasP2PMessage() {
-      return multiBodyCase_ == 4;
+      return multiBodyCase_ == 5;
     }
     /**
-     * <code>.P2PMessage p2PMessage = 4;</code>
+     * <code>.P2PMessage p2PMessage = 5;</code>
      * @return The p2PMessage.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage() {
-      if (multiBodyCase_ == 4) {
+      if (multiBodyCase_ == 5) {
          return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
     }
     /**
-     * <code>.P2PMessage p2PMessage = 4;</code>
+     * <code>.P2PMessage p2PMessage = 5;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder() {
-      if (multiBodyCase_ == 4) {
+      if (multiBodyCase_ == 5) {
          return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
@@ -488,17 +559,20 @@ public final class CtrlMessage {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (multiType_ != com.zjj.proto.CtrlMessage.MultiMessage.MultiType.CTRL_INFO.getNumber()) {
+      if (multiType_ != com.zjj.proto.CtrlMessage.MultiMessage.MultiType.INET_COMMAND.getNumber()) {
         output.writeEnum(1, multiType_);
       }
       if (multiBodyCase_ == 2) {
-        output.writeMessage(2, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
+        output.writeMessage(2, (com.zjj.proto.CtrlMessage.InetCommand) multiBody_);
       }
       if (multiBodyCase_ == 3) {
-        output.writeMessage(3, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+        output.writeMessage(3, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
       }
       if (multiBodyCase_ == 4) {
-        output.writeMessage(4, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
+        output.writeMessage(4, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+      }
+      if (multiBodyCase_ == 5) {
+        output.writeMessage(5, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
       }
       unknownFields.writeTo(output);
     }
@@ -509,21 +583,25 @@ public final class CtrlMessage {
       if (size != -1) return size;
 
       size = 0;
-      if (multiType_ != com.zjj.proto.CtrlMessage.MultiMessage.MultiType.CTRL_INFO.getNumber()) {
+      if (multiType_ != com.zjj.proto.CtrlMessage.MultiMessage.MultiType.INET_COMMAND.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, multiType_);
       }
       if (multiBodyCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
+          .computeMessageSize(2, (com.zjj.proto.CtrlMessage.InetCommand) multiBody_);
       }
       if (multiBodyCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+          .computeMessageSize(3, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
       }
       if (multiBodyCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
+          .computeMessageSize(4, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+      }
+      if (multiBodyCase_ == 5) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -544,14 +622,18 @@ public final class CtrlMessage {
       if (!getMultiBodyCase().equals(other.getMultiBodyCase())) return false;
       switch (multiBodyCase_) {
         case 2:
+          if (!getInetCommand()
+              .equals(other.getInetCommand())) return false;
+          break;
+        case 3:
           if (!getCtrlInfo()
               .equals(other.getCtrlInfo())) return false;
           break;
-        case 3:
+        case 4:
           if (!getServerAck()
               .equals(other.getServerAck())) return false;
           break;
-        case 4:
+        case 5:
           if (!getP2PMessage()
               .equals(other.getP2PMessage())) return false;
           break;
@@ -573,14 +655,18 @@ public final class CtrlMessage {
       hash = (53 * hash) + multiType_;
       switch (multiBodyCase_) {
         case 2:
+          hash = (37 * hash) + INETCOMMAND_FIELD_NUMBER;
+          hash = (53 * hash) + getInetCommand().hashCode();
+          break;
+        case 3:
           hash = (37 * hash) + CTRLINFO_FIELD_NUMBER;
           hash = (53 * hash) + getCtrlInfo().hashCode();
           break;
-        case 3:
+        case 4:
           hash = (37 * hash) + SERVERACK_FIELD_NUMBER;
           hash = (53 * hash) + getServerAck().hashCode();
           break;
-        case 4:
+        case 5:
           hash = (37 * hash) + P2PMESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getP2PMessage().hashCode();
           break;
@@ -752,20 +838,27 @@ public final class CtrlMessage {
         com.zjj.proto.CtrlMessage.MultiMessage result = new com.zjj.proto.CtrlMessage.MultiMessage(this);
         result.multiType_ = multiType_;
         if (multiBodyCase_ == 2) {
+          if (inetCommandBuilder_ == null) {
+            result.multiBody_ = multiBody_;
+          } else {
+            result.multiBody_ = inetCommandBuilder_.build();
+          }
+        }
+        if (multiBodyCase_ == 3) {
           if (ctrlInfoBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
             result.multiBody_ = ctrlInfoBuilder_.build();
           }
         }
-        if (multiBodyCase_ == 3) {
+        if (multiBodyCase_ == 4) {
           if (serverAckBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
             result.multiBody_ = serverAckBuilder_.build();
           }
         }
-        if (multiBodyCase_ == 4) {
+        if (multiBodyCase_ == 5) {
           if (p2PMessageBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
@@ -825,6 +918,10 @@ public final class CtrlMessage {
           setMultiTypeValue(other.getMultiTypeValue());
         }
         switch (other.getMultiBodyCase()) {
+          case INETCOMMAND: {
+            mergeInetCommand(other.getInetCommand());
+            break;
+          }
           case CTRLINFO: {
             mergeCtrlInfo(other.getCtrlInfo());
             break;
@@ -940,35 +1037,176 @@ public final class CtrlMessage {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.InetCommand, com.zjj.proto.CtrlMessage.InetCommand.Builder, com.zjj.proto.CtrlMessage.InetCommandOrBuilder> inetCommandBuilder_;
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       * @return Whether the inetCommand field is set.
+       */
+      @java.lang.Override
+      public boolean hasInetCommand() {
+        return multiBodyCase_ == 2;
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       * @return The inetCommand.
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.InetCommand getInetCommand() {
+        if (inetCommandBuilder_ == null) {
+          if (multiBodyCase_ == 2) {
+            return (com.zjj.proto.CtrlMessage.InetCommand) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+        } else {
+          if (multiBodyCase_ == 2) {
+            return inetCommandBuilder_.getMessage();
+          }
+          return com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      public Builder setInetCommand(com.zjj.proto.CtrlMessage.InetCommand value) {
+        if (inetCommandBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          multiBody_ = value;
+          onChanged();
+        } else {
+          inetCommandBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      public Builder setInetCommand(
+          com.zjj.proto.CtrlMessage.InetCommand.Builder builderForValue) {
+        if (inetCommandBuilder_ == null) {
+          multiBody_ = builderForValue.build();
+          onChanged();
+        } else {
+          inetCommandBuilder_.setMessage(builderForValue.build());
+        }
+        multiBodyCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      public Builder mergeInetCommand(com.zjj.proto.CtrlMessage.InetCommand value) {
+        if (inetCommandBuilder_ == null) {
+          if (multiBodyCase_ == 2 &&
+              multiBody_ != com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance()) {
+            multiBody_ = com.zjj.proto.CtrlMessage.InetCommand.newBuilder((com.zjj.proto.CtrlMessage.InetCommand) multiBody_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            multiBody_ = value;
+          }
+          onChanged();
+        } else {
+          if (multiBodyCase_ == 2) {
+            inetCommandBuilder_.mergeFrom(value);
+          }
+          inetCommandBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      public Builder clearInetCommand() {
+        if (inetCommandBuilder_ == null) {
+          if (multiBodyCase_ == 2) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+            onChanged();
+          }
+        } else {
+          if (multiBodyCase_ == 2) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+          }
+          inetCommandBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      public com.zjj.proto.CtrlMessage.InetCommand.Builder getInetCommandBuilder() {
+        return getInetCommandFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.InetCommandOrBuilder getInetCommandOrBuilder() {
+        if ((multiBodyCase_ == 2) && (inetCommandBuilder_ != null)) {
+          return inetCommandBuilder_.getMessageOrBuilder();
+        } else {
+          if (multiBodyCase_ == 2) {
+            return (com.zjj.proto.CtrlMessage.InetCommand) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.InetCommand inetCommand = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.InetCommand, com.zjj.proto.CtrlMessage.InetCommand.Builder, com.zjj.proto.CtrlMessage.InetCommandOrBuilder> 
+          getInetCommandFieldBuilder() {
+        if (inetCommandBuilder_ == null) {
+          if (!(multiBodyCase_ == 2)) {
+            multiBody_ = com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+          }
+          inetCommandBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.zjj.proto.CtrlMessage.InetCommand, com.zjj.proto.CtrlMessage.InetCommand.Builder, com.zjj.proto.CtrlMessage.InetCommandOrBuilder>(
+                  (com.zjj.proto.CtrlMessage.InetCommand) multiBody_,
+                  getParentForChildren(),
+                  isClean());
+          multiBody_ = null;
+        }
+        multiBodyCase_ = 2;
+        onChanged();;
+        return inetCommandBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.CtrlInfo, com.zjj.proto.CtrlMessage.CtrlInfo.Builder, com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder> ctrlInfoBuilder_;
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        * @return Whether the ctrlInfo field is set.
        */
       @java.lang.Override
       public boolean hasCtrlInfo() {
-        return multiBodyCase_ == 2;
+        return multiBodyCase_ == 3;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        * @return The ctrlInfo.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.CtrlInfo getCtrlInfo() {
         if (ctrlInfoBuilder_ == null) {
-          if (multiBodyCase_ == 2) {
+          if (multiBodyCase_ == 3) {
             return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 2) {
+          if (multiBodyCase_ == 3) {
             return ctrlInfoBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
         }
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       public Builder setCtrlInfo(com.zjj.proto.CtrlMessage.CtrlInfo value) {
         if (ctrlInfoBuilder_ == null) {
@@ -980,11 +1218,11 @@ public final class CtrlMessage {
         } else {
           ctrlInfoBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 2;
+        multiBodyCase_ = 3;
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       public Builder setCtrlInfo(
           com.zjj.proto.CtrlMessage.CtrlInfo.Builder builderForValue) {
@@ -994,15 +1232,15 @@ public final class CtrlMessage {
         } else {
           ctrlInfoBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 2;
+        multiBodyCase_ = 3;
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       public Builder mergeCtrlInfo(com.zjj.proto.CtrlMessage.CtrlInfo value) {
         if (ctrlInfoBuilder_ == null) {
-          if (multiBodyCase_ == 2 &&
+          if (multiBodyCase_ == 3 &&
               multiBody_ != com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.CtrlInfo.newBuilder((com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -1011,26 +1249,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 2) {
+          if (multiBodyCase_ == 3) {
             ctrlInfoBuilder_.mergeFrom(value);
           }
           ctrlInfoBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 2;
+        multiBodyCase_ = 3;
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       public Builder clearCtrlInfo() {
         if (ctrlInfoBuilder_ == null) {
-          if (multiBodyCase_ == 2) {
+          if (multiBodyCase_ == 3) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 2) {
+          if (multiBodyCase_ == 3) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -1039,33 +1277,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       public com.zjj.proto.CtrlMessage.CtrlInfo.Builder getCtrlInfoBuilder() {
         return getCtrlInfoFieldBuilder().getBuilder();
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder getCtrlInfoOrBuilder() {
-        if ((multiBodyCase_ == 2) && (ctrlInfoBuilder_ != null)) {
+        if ((multiBodyCase_ == 3) && (ctrlInfoBuilder_ != null)) {
           return ctrlInfoBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 2) {
+          if (multiBodyCase_ == 3) {
             return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
         }
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 2;</code>
+       * <code>.CtrlInfo ctrlInfo = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.CtrlInfo, com.zjj.proto.CtrlMessage.CtrlInfo.Builder, com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder> 
           getCtrlInfoFieldBuilder() {
         if (ctrlInfoBuilder_ == null) {
-          if (!(multiBodyCase_ == 2)) {
+          if (!(multiBodyCase_ == 3)) {
             multiBody_ = com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
           }
           ctrlInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -1075,7 +1313,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 2;
+        multiBodyCase_ = 3;
         onChanged();;
         return ctrlInfoBuilder_;
       }
@@ -1083,33 +1321,33 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.ServerAck, com.zjj.proto.CtrlMessage.ServerAck.Builder, com.zjj.proto.CtrlMessage.ServerAckOrBuilder> serverAckBuilder_;
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        * @return Whether the serverAck field is set.
        */
       @java.lang.Override
       public boolean hasServerAck() {
-        return multiBodyCase_ == 3;
+        return multiBodyCase_ == 4;
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        * @return The serverAck.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.ServerAck getServerAck() {
         if (serverAckBuilder_ == null) {
-          if (multiBodyCase_ == 3) {
+          if (multiBodyCase_ == 4) {
             return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 3) {
+          if (multiBodyCase_ == 4) {
             return serverAckBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       public Builder setServerAck(com.zjj.proto.CtrlMessage.ServerAck value) {
         if (serverAckBuilder_ == null) {
@@ -1121,11 +1359,11 @@ public final class CtrlMessage {
         } else {
           serverAckBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 3;
+        multiBodyCase_ = 4;
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       public Builder setServerAck(
           com.zjj.proto.CtrlMessage.ServerAck.Builder builderForValue) {
@@ -1135,15 +1373,15 @@ public final class CtrlMessage {
         } else {
           serverAckBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 3;
+        multiBodyCase_ = 4;
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       public Builder mergeServerAck(com.zjj.proto.CtrlMessage.ServerAck value) {
         if (serverAckBuilder_ == null) {
-          if (multiBodyCase_ == 3 &&
+          if (multiBodyCase_ == 4 &&
               multiBody_ != com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.ServerAck.newBuilder((com.zjj.proto.CtrlMessage.ServerAck) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -1152,26 +1390,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 3) {
+          if (multiBodyCase_ == 4) {
             serverAckBuilder_.mergeFrom(value);
           }
           serverAckBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 3;
+        multiBodyCase_ = 4;
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       public Builder clearServerAck() {
         if (serverAckBuilder_ == null) {
-          if (multiBodyCase_ == 3) {
+          if (multiBodyCase_ == 4) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 3) {
+          if (multiBodyCase_ == 4) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -1180,33 +1418,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       public com.zjj.proto.CtrlMessage.ServerAck.Builder getServerAckBuilder() {
         return getServerAckFieldBuilder().getBuilder();
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.ServerAckOrBuilder getServerAckOrBuilder() {
-        if ((multiBodyCase_ == 3) && (serverAckBuilder_ != null)) {
+        if ((multiBodyCase_ == 4) && (serverAckBuilder_ != null)) {
           return serverAckBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 3) {
+          if (multiBodyCase_ == 4) {
             return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.ServerAck serverAck = 3;</code>
+       * <code>.ServerAck serverAck = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.ServerAck, com.zjj.proto.CtrlMessage.ServerAck.Builder, com.zjj.proto.CtrlMessage.ServerAckOrBuilder> 
           getServerAckFieldBuilder() {
         if (serverAckBuilder_ == null) {
-          if (!(multiBodyCase_ == 3)) {
+          if (!(multiBodyCase_ == 4)) {
             multiBody_ = com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
           }
           serverAckBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -1216,7 +1454,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 3;
+        multiBodyCase_ = 4;
         onChanged();;
         return serverAckBuilder_;
       }
@@ -1224,33 +1462,33 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.P2PMessage, com.zjj.proto.CtrlMessage.P2PMessage.Builder, com.zjj.proto.CtrlMessage.P2PMessageOrBuilder> p2PMessageBuilder_;
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        * @return Whether the p2PMessage field is set.
        */
       @java.lang.Override
       public boolean hasP2PMessage() {
-        return multiBodyCase_ == 4;
+        return multiBodyCase_ == 5;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        * @return The p2PMessage.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage() {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 4) {
+          if (multiBodyCase_ == 5) {
             return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 4) {
+          if (multiBodyCase_ == 5) {
             return p2PMessageBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       public Builder setP2PMessage(com.zjj.proto.CtrlMessage.P2PMessage value) {
         if (p2PMessageBuilder_ == null) {
@@ -1262,11 +1500,11 @@ public final class CtrlMessage {
         } else {
           p2PMessageBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 4;
+        multiBodyCase_ = 5;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       public Builder setP2PMessage(
           com.zjj.proto.CtrlMessage.P2PMessage.Builder builderForValue) {
@@ -1276,15 +1514,15 @@ public final class CtrlMessage {
         } else {
           p2PMessageBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 4;
+        multiBodyCase_ = 5;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       public Builder mergeP2PMessage(com.zjj.proto.CtrlMessage.P2PMessage value) {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 4 &&
+          if (multiBodyCase_ == 5 &&
               multiBody_ != com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.P2PMessage.newBuilder((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -1293,26 +1531,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 4) {
+          if (multiBodyCase_ == 5) {
             p2PMessageBuilder_.mergeFrom(value);
           }
           p2PMessageBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 4;
+        multiBodyCase_ = 5;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       public Builder clearP2PMessage() {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 4) {
+          if (multiBodyCase_ == 5) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 4) {
+          if (multiBodyCase_ == 5) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -1321,33 +1559,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       public com.zjj.proto.CtrlMessage.P2PMessage.Builder getP2PMessageBuilder() {
         return getP2PMessageFieldBuilder().getBuilder();
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder() {
-        if ((multiBodyCase_ == 4) && (p2PMessageBuilder_ != null)) {
+        if ((multiBodyCase_ == 5) && (p2PMessageBuilder_ != null)) {
           return p2PMessageBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 4) {
+          if (multiBodyCase_ == 5) {
             return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.P2PMessage p2PMessage = 4;</code>
+       * <code>.P2PMessage p2PMessage = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.P2PMessage, com.zjj.proto.CtrlMessage.P2PMessage.Builder, com.zjj.proto.CtrlMessage.P2PMessageOrBuilder> 
           getP2PMessageFieldBuilder() {
         if (p2PMessageBuilder_ == null) {
-          if (!(multiBodyCase_ == 4)) {
+          if (!(multiBodyCase_ == 5)) {
             multiBody_ = com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
           }
           p2PMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -1357,7 +1595,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 4;
+        multiBodyCase_ = 5;
         onChanged();;
         return p2PMessageBuilder_;
       }
@@ -1409,6 +1647,1009 @@ public final class CtrlMessage {
 
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.MultiMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface InetCommandOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:InetCommand)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string clientId = 1;</code>
+     * @return The clientId.
+     */
+    java.lang.String getClientId();
+    /**
+     * <code>string clientId = 1;</code>
+     * @return The bytes for clientId.
+     */
+    com.google.protobuf.ByteString
+        getClientIdBytes();
+
+    /**
+     * <code>string host = 2;</code>
+     * @return The host.
+     */
+    java.lang.String getHost();
+    /**
+     * <code>string host = 2;</code>
+     * @return The bytes for host.
+     */
+    com.google.protobuf.ByteString
+        getHostBytes();
+
+    /**
+     * <code>int32 port = 3;</code>
+     * @return The port.
+     */
+    int getPort();
+
+    /**
+     * <code>.InetCommand.InetType inetType = 4;</code>
+     * @return The enum numeric value on the wire for inetType.
+     */
+    int getInetTypeValue();
+    /**
+     * <code>.InetCommand.InetType inetType = 4;</code>
+     * @return The inetType.
+     */
+    com.zjj.proto.CtrlMessage.InetCommand.InetType getInetType();
+  }
+  /**
+   * Protobuf type {@code InetCommand}
+   */
+  public static final class InetCommand extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:InetCommand)
+      InetCommandOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use InetCommand.newBuilder() to construct.
+    private InetCommand(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private InetCommand() {
+      clientId_ = "";
+      host_ = "";
+      inetType_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new InetCommand();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private InetCommand(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              clientId_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              host_ = s;
+              break;
+            }
+            case 24: {
+
+              port_ = input.readInt32();
+              break;
+            }
+            case 32: {
+              int rawValue = input.readEnum();
+
+              inetType_ = rawValue;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.zjj.proto.CtrlMessage.internal_static_InetCommand_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.zjj.proto.CtrlMessage.internal_static_InetCommand_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.zjj.proto.CtrlMessage.InetCommand.class, com.zjj.proto.CtrlMessage.InetCommand.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code InetCommand.InetType}
+     */
+    public enum InetType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>PRIVATE = 0;</code>
+       */
+      PRIVATE(0),
+      /**
+       * <code>PUBLIC = 1;</code>
+       */
+      PUBLIC(1),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>PRIVATE = 0;</code>
+       */
+      public static final int PRIVATE_VALUE = 0;
+      /**
+       * <code>PUBLIC = 1;</code>
+       */
+      public static final int PUBLIC_VALUE = 1;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static InetType valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static InetType forNumber(int value) {
+        switch (value) {
+          case 0: return PRIVATE;
+          case 1: return PUBLIC;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<InetType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          InetType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<InetType>() {
+              public InetType findValueByNumber(int number) {
+                return InetType.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalStateException(
+              "Can't get the descriptor of an unrecognized enum value.");
+        }
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return com.zjj.proto.CtrlMessage.InetCommand.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final InetType[] VALUES = values();
+
+      public static InetType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private InetType(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:InetCommand.InetType)
+    }
+
+    public static final int CLIENTID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object clientId_;
+    /**
+     * <code>string clientId = 1;</code>
+     * @return The clientId.
+     */
+    @java.lang.Override
+    public java.lang.String getClientId() {
+      java.lang.Object ref = clientId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        clientId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string clientId = 1;</code>
+     * @return The bytes for clientId.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getClientIdBytes() {
+      java.lang.Object ref = clientId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        clientId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int HOST_FIELD_NUMBER = 2;
+    private volatile java.lang.Object host_;
+    /**
+     * <code>string host = 2;</code>
+     * @return The host.
+     */
+    @java.lang.Override
+    public java.lang.String getHost() {
+      java.lang.Object ref = host_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        host_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string host = 2;</code>
+     * @return The bytes for host.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getHostBytes() {
+      java.lang.Object ref = host_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        host_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PORT_FIELD_NUMBER = 3;
+    private int port_;
+    /**
+     * <code>int32 port = 3;</code>
+     * @return The port.
+     */
+    @java.lang.Override
+    public int getPort() {
+      return port_;
+    }
+
+    public static final int INETTYPE_FIELD_NUMBER = 4;
+    private int inetType_;
+    /**
+     * <code>.InetCommand.InetType inetType = 4;</code>
+     * @return The enum numeric value on the wire for inetType.
+     */
+    @java.lang.Override public int getInetTypeValue() {
+      return inetType_;
+    }
+    /**
+     * <code>.InetCommand.InetType inetType = 4;</code>
+     * @return The inetType.
+     */
+    @java.lang.Override public com.zjj.proto.CtrlMessage.InetCommand.InetType getInetType() {
+      @SuppressWarnings("deprecation")
+      com.zjj.proto.CtrlMessage.InetCommand.InetType result = com.zjj.proto.CtrlMessage.InetCommand.InetType.valueOf(inetType_);
+      return result == null ? com.zjj.proto.CtrlMessage.InetCommand.InetType.UNRECOGNIZED : result;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getClientIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, clientId_);
+      }
+      if (!getHostBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, host_);
+      }
+      if (port_ != 0) {
+        output.writeInt32(3, port_);
+      }
+      if (inetType_ != com.zjj.proto.CtrlMessage.InetCommand.InetType.PRIVATE.getNumber()) {
+        output.writeEnum(4, inetType_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getClientIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, clientId_);
+      }
+      if (!getHostBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, host_);
+      }
+      if (port_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, port_);
+      }
+      if (inetType_ != com.zjj.proto.CtrlMessage.InetCommand.InetType.PRIVATE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(4, inetType_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.zjj.proto.CtrlMessage.InetCommand)) {
+        return super.equals(obj);
+      }
+      com.zjj.proto.CtrlMessage.InetCommand other = (com.zjj.proto.CtrlMessage.InetCommand) obj;
+
+      if (!getClientId()
+          .equals(other.getClientId())) return false;
+      if (!getHost()
+          .equals(other.getHost())) return false;
+      if (getPort()
+          != other.getPort()) return false;
+      if (inetType_ != other.inetType_) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CLIENTID_FIELD_NUMBER;
+      hash = (53 * hash) + getClientId().hashCode();
+      hash = (37 * hash) + HOST_FIELD_NUMBER;
+      hash = (53 * hash) + getHost().hashCode();
+      hash = (37 * hash) + PORT_FIELD_NUMBER;
+      hash = (53 * hash) + getPort();
+      hash = (37 * hash) + INETTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + inetType_;
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.InetCommand parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.zjj.proto.CtrlMessage.InetCommand prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code InetCommand}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:InetCommand)
+        com.zjj.proto.CtrlMessage.InetCommandOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.zjj.proto.CtrlMessage.internal_static_InetCommand_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.zjj.proto.CtrlMessage.internal_static_InetCommand_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.zjj.proto.CtrlMessage.InetCommand.class, com.zjj.proto.CtrlMessage.InetCommand.Builder.class);
+      }
+
+      // Construct using com.zjj.proto.CtrlMessage.InetCommand.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        clientId_ = "";
+
+        host_ = "";
+
+        port_ = 0;
+
+        inetType_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.zjj.proto.CtrlMessage.internal_static_InetCommand_descriptor;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.InetCommand getDefaultInstanceForType() {
+        return com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.InetCommand build() {
+        com.zjj.proto.CtrlMessage.InetCommand result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.InetCommand buildPartial() {
+        com.zjj.proto.CtrlMessage.InetCommand result = new com.zjj.proto.CtrlMessage.InetCommand(this);
+        result.clientId_ = clientId_;
+        result.host_ = host_;
+        result.port_ = port_;
+        result.inetType_ = inetType_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.zjj.proto.CtrlMessage.InetCommand) {
+          return mergeFrom((com.zjj.proto.CtrlMessage.InetCommand)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.zjj.proto.CtrlMessage.InetCommand other) {
+        if (other == com.zjj.proto.CtrlMessage.InetCommand.getDefaultInstance()) return this;
+        if (!other.getClientId().isEmpty()) {
+          clientId_ = other.clientId_;
+          onChanged();
+        }
+        if (!other.getHost().isEmpty()) {
+          host_ = other.host_;
+          onChanged();
+        }
+        if (other.getPort() != 0) {
+          setPort(other.getPort());
+        }
+        if (other.inetType_ != 0) {
+          setInetTypeValue(other.getInetTypeValue());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.zjj.proto.CtrlMessage.InetCommand parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.zjj.proto.CtrlMessage.InetCommand) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object clientId_ = "";
+      /**
+       * <code>string clientId = 1;</code>
+       * @return The clientId.
+       */
+      public java.lang.String getClientId() {
+        java.lang.Object ref = clientId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          clientId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string clientId = 1;</code>
+       * @return The bytes for clientId.
+       */
+      public com.google.protobuf.ByteString
+          getClientIdBytes() {
+        java.lang.Object ref = clientId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          clientId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string clientId = 1;</code>
+       * @param value The clientId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setClientId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string clientId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearClientId() {
+        
+        clientId_ = getDefaultInstance().getClientId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string clientId = 1;</code>
+       * @param value The bytes for clientId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setClientIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        clientId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object host_ = "";
+      /**
+       * <code>string host = 2;</code>
+       * @return The host.
+       */
+      public java.lang.String getHost() {
+        java.lang.Object ref = host_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          host_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string host = 2;</code>
+       * @return The bytes for host.
+       */
+      public com.google.protobuf.ByteString
+          getHostBytes() {
+        java.lang.Object ref = host_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          host_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string host = 2;</code>
+       * @param value The host to set.
+       * @return This builder for chaining.
+       */
+      public Builder setHost(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        host_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string host = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearHost() {
+        
+        host_ = getDefaultInstance().getHost();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string host = 2;</code>
+       * @param value The bytes for host to set.
+       * @return This builder for chaining.
+       */
+      public Builder setHostBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        host_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int port_ ;
+      /**
+       * <code>int32 port = 3;</code>
+       * @return The port.
+       */
+      @java.lang.Override
+      public int getPort() {
+        return port_;
+      }
+      /**
+       * <code>int32 port = 3;</code>
+       * @param value The port to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPort(int value) {
+        
+        port_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 port = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPort() {
+        
+        port_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int inetType_ = 0;
+      /**
+       * <code>.InetCommand.InetType inetType = 4;</code>
+       * @return The enum numeric value on the wire for inetType.
+       */
+      @java.lang.Override public int getInetTypeValue() {
+        return inetType_;
+      }
+      /**
+       * <code>.InetCommand.InetType inetType = 4;</code>
+       * @param value The enum numeric value on the wire for inetType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setInetTypeValue(int value) {
+        
+        inetType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.InetCommand.InetType inetType = 4;</code>
+       * @return The inetType.
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.InetCommand.InetType getInetType() {
+        @SuppressWarnings("deprecation")
+        com.zjj.proto.CtrlMessage.InetCommand.InetType result = com.zjj.proto.CtrlMessage.InetCommand.InetType.valueOf(inetType_);
+        return result == null ? com.zjj.proto.CtrlMessage.InetCommand.InetType.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.InetCommand.InetType inetType = 4;</code>
+       * @param value The inetType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setInetType(com.zjj.proto.CtrlMessage.InetCommand.InetType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        inetType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.InetCommand.InetType inetType = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearInetType() {
+        
+        inetType_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:InetCommand)
+    }
+
+    // @@protoc_insertion_point(class_scope:InetCommand)
+    private static final com.zjj.proto.CtrlMessage.InetCommand DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.zjj.proto.CtrlMessage.InetCommand();
+    }
+
+    public static com.zjj.proto.CtrlMessage.InetCommand getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<InetCommand>
+        PARSER = new com.google.protobuf.AbstractParser<InetCommand>() {
+      @java.lang.Override
+      public InetCommand parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new InetCommand(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<InetCommand> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<InetCommand> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.InetCommand getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -4105,6 +5346,11 @@ public final class CtrlMessage {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_MultiMessage_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_InetCommand_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_InetCommand_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_CtrlInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -4128,24 +5374,29 @@ public final class CtrlMessage {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021ctrlMessage.proto\"\347\001\n\014MultiMessage\022*\n\t" +
+      "\n\021ctrlMessage.proto\"\236\002\n\014MultiMessage\022*\n\t" +
       "multiType\030\001 \001(\0162\027.MultiMessage.MultiType" +
-      "\022\035\n\010ctrlInfo\030\002 \001(\0132\t.CtrlInfoH\000\022\037\n\tserve" +
-      "rAck\030\003 \001(\0132\n.ServerAckH\000\022!\n\np2PMessage\030\004" +
-      " \001(\0132\013.P2PMessageH\000\";\n\tMultiType\022\r\n\tCTRL" +
-      "_INFO\020\000\022\016\n\nSERVER_ACK\020\001\022\017\n\013PSP_MESSAGE\020\002" +
-      "B\013\n\tMultiBody\"\253\001\n\010CtrlInfo\022 \n\004type\030\001 \001(\016" +
-      "2\022.CtrlInfo.CtrlType\022\017\n\007localId\030\002 \001(\t\022\022\n" +
-      "\noppositeId\030\003 \001(\t\022\017\n\007message\030\004 \001(\t\"G\n\010Ct" +
-      "rlType\022\014\n\010REGISTER\020\000\022\014\n\010REQ_ADDR\020\001\022\017\n\013UP" +
-      "DATE_ADDR\020\002\022\016\n\nNOTIFY_ACK\020\003\"p\n\tServerAck" +
-      "\022 \n\004type\030\001 \001(\0162\022.ServerAck.AckType\022\017\n\007me" +
-      "ssage\030\002 \001(\t\"0\n\007AckType\022\006\n\002OK\020\000\022\014\n\010ACK_AD" +
-      "DR\020\001\022\017\n\013NOTIFY_SEND\020\002\"t\n\nP2PMessage\022!\n\004t" +
-      "ype\030\001 \001(\0162\023.P2PMessage.MsgType\022\017\n\007messag" +
-      "e\030\002 \001(\t\"2\n\007MsgType\022\r\n\tSAVE_ADDR\020\000\022\016\n\nHEA" +
-      "RT_BEAT\020\001\022\010\n\004CHAT\020\002B\034\n\rcom.zjj.protoB\013Ct" +
-      "rlMessageb\006proto3"
+      "\022#\n\013inetCommand\030\002 \001(\0132\014.InetCommandH\000\022\035\n" +
+      "\010ctrlInfo\030\003 \001(\0132\t.CtrlInfoH\000\022\037\n\tserverAc" +
+      "k\030\004 \001(\0132\n.ServerAckH\000\022!\n\np2PMessage\030\005 \001(" +
+      "\0132\013.P2PMessageH\000\"M\n\tMultiType\022\020\n\014INET_CO" +
+      "MMAND\020\000\022\r\n\tCTRL_INFO\020\001\022\016\n\nSERVER_ACK\020\002\022\017" +
+      "\n\013PSP_MESSAGE\020\003B\013\n\tMultiBody\"\211\001\n\013InetCom" +
+      "mand\022\020\n\010clientId\030\001 \001(\t\022\014\n\004host\030\002 \001(\t\022\014\n\004" +
+      "port\030\003 \001(\005\022\'\n\010inetType\030\004 \001(\0162\025.InetComma" +
+      "nd.InetType\"#\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006" +
+      "PUBLIC\020\001\"\253\001\n\010CtrlInfo\022 \n\004type\030\001 \001(\0162\022.Ct" +
+      "rlInfo.CtrlType\022\017\n\007localId\030\002 \001(\t\022\022\n\noppo" +
+      "siteId\030\003 \001(\t\022\017\n\007message\030\004 \001(\t\"G\n\010CtrlTyp" +
+      "e\022\014\n\010REGISTER\020\000\022\014\n\010REQ_ADDR\020\001\022\017\n\013UPDATE_" +
+      "ADDR\020\002\022\016\n\nNOTIFY_ACK\020\003\"p\n\tServerAck\022 \n\004t" +
+      "ype\030\001 \001(\0162\022.ServerAck.AckType\022\017\n\007message" +
+      "\030\002 \001(\t\"0\n\007AckType\022\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022" +
+      "\017\n\013NOTIFY_SEND\020\002\"t\n\nP2PMessage\022!\n\004type\030\001" +
+      " \001(\0162\023.P2PMessage.MsgType\022\017\n\007message\030\002 \001" +
+      "(\t\"2\n\007MsgType\022\r\n\tSAVE_ADDR\020\000\022\016\n\nHEART_BE" +
+      "AT\020\001\022\010\n\004CHAT\020\002B\034\n\rcom.zjj.protoB\013CtrlMes" +
+      "sageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -4156,21 +5407,27 @@ public final class CtrlMessage {
     internal_static_MultiMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MultiMessage_descriptor,
-        new java.lang.String[] { "MultiType", "CtrlInfo", "ServerAck", "P2PMessage", "MultiBody", });
-    internal_static_CtrlInfo_descriptor =
+        new java.lang.String[] { "MultiType", "InetCommand", "CtrlInfo", "ServerAck", "P2PMessage", "MultiBody", });
+    internal_static_InetCommand_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_InetCommand_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_InetCommand_descriptor,
+        new java.lang.String[] { "ClientId", "Host", "Port", "InetType", });
+    internal_static_CtrlInfo_descriptor =
+      getDescriptor().getMessageTypes().get(2);
     internal_static_CtrlInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CtrlInfo_descriptor,
         new java.lang.String[] { "Type", "LocalId", "OppositeId", "Message", });
     internal_static_ServerAck_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_ServerAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ServerAck_descriptor,
         new java.lang.String[] { "Type", "Message", });
     internal_static_P2PMessage_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_P2PMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_P2PMessage_descriptor,
