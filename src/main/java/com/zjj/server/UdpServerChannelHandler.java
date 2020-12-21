@@ -85,6 +85,40 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                         break;
                 }
                 break;
+            case REQ_ADDR:
+                ReqAddr reqAddr = multiMessage.getReqAddr();
+                String id = reqAddr.getId();
+                String privateAddrStr = PRIVATE_ADDR_MAP.get(id);
+                String[] privateAddr = privateAddrStr.split(":");
+                MultiMessage privateInetAck = ProtoUtils.createMultiInetCommand(id, privateAddr[0], Integer.parseInt(privateAddr[1]), false);
+                DatagramPacket privateInetAckPacket =
+                        new DatagramPacket(Unpooled.wrappedBuffer(privateInetAck.toByteArray()),
+                                InetUtils.toInetSocketAddress(addressString));
+                channel.writeAndFlush(privateInetAckPacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        if (log.isInfoEnabled()) {
+                            log.info("回复 {} 的私网地址 {}", id, privateAddrStr);
+                        }
+                    } else {
+                        log.error("回复 {} 的私网地址失败", id);
+                    }
+                });
+                String publicAddrStr = PUBLIC_ADDR_MAP.get(id);
+                String[] publicAddr = publicAddrStr.split(":");
+                MultiMessage publicInetAck = ProtoUtils.createMultiInetCommand(id, publicAddr[0], Integer.parseInt(publicAddr[1]), true);
+                DatagramPacket publicInetAckPacket =
+                        new DatagramPacket(Unpooled.wrappedBuffer(publicInetAck.toByteArray()),
+                                InetUtils.toInetSocketAddress(addressString));
+                channel.writeAndFlush(publicInetAckPacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        if (log.isInfoEnabled()) {
+                            log.info("回复 {} 的公网地址 {}", id, publicAddrStr);
+                        }
+                    } else {
+                        log.error("回复 {} 的公网地址失败", id);
+                    }
+                });
+                break;
             case CTRL_INFO:
                 processCtrlInfo(multiMessage.getCtrlInfo(), addressString, channel);
                 break;
