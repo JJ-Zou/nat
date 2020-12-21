@@ -72,7 +72,6 @@ public class UdpClientRemote4 {
                 } else if ("nat".equals(split[0])) {
                     oppositeId = split[1].substring(1);
                     requestForOppositeAddr();
-                    TimeUnit.SECONDS.sleep(2);
                     attemptPrivateConnect();
 //                    requestForNat();
                 } else if ("chat".equals(split[0])) {
@@ -85,7 +84,11 @@ public class UdpClientRemote4 {
         }
     }
 
+    @SneakyThrows
     private static void attemptPrivateConnect() {
+        while (!UdpClientChannelHandler.PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
+            TimeUnit.NANOSECONDS.sleep(1000);
+        }
         String privateAddrStr = UdpClientChannelHandler.PRIVATE_ADDR_MAP.get(oppositeId);
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReq(ID, oppositeId).toByteArray()),
