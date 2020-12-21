@@ -21,6 +21,7 @@ public class UdpServer {
     private static final int PORT = 20000;
     private static final int PORT2 = 30000;
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, String> ACTUAL_ADDRESS_MAP = new ConcurrentHashMap<>();
     private static final Map<Integer, Channel> CHANNEL_MAP = new ConcurrentHashMap<>();
 //    private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, PORT);
 
@@ -147,10 +148,12 @@ public class UdpServer {
         private void updateAddrHandler(CtrlInfo ctrlInfo) {
             String oppositeId = ctrlInfo.getOppositeId();
             String address = ctrlInfo.getMessage();
-            if (!Objects.equals(address, ADDRESS_MAP.get(oppositeId))) {
-                System.out.println("更新用户 " + oppositeId + " 的通信地址 " + address);
-                ADDRESS_MAP.put(oppositeId, address);
+            if (!Objects.equals(address, ACTUAL_ADDRESS_MAP.get(oppositeId))) {
+                System.out.println("更新用户 " + oppositeId + " 的实际地址 " + address);
+                ACTUAL_ADDRESS_MAP.put(oppositeId, address);
             }
+            System.out.println("用户注册地址： " + ADDRESS_MAP.get(oppositeId));
+            System.out.println("用户P2P地址： " + ACTUAL_ADDRESS_MAP.get(oppositeId));
         }
 
         private void routeHandler(String addressString, String oppositeId, String localId, Channel channel) {

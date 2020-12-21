@@ -48,6 +48,8 @@ public class UdpClientRemote4 {
         try {
             ChannelFuture future = bootstrap.bind(LOCAL_PORT).sync();
             channel = future.channel();
+            register(SERVER_ADDRESS);
+            register(SERVER_ADDRESS1);
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
@@ -55,8 +57,6 @@ public class UdpClientRemote4 {
                 if ("q!".equals(input)) {
                     break;
                 } else if ("nat".equals(split[0])) {
-                    register(SERVER_ADDRESS);
-                    register(SERVER_ADDRESS1);
                     natId = split[1].substring(1);
                     requestForNat(natId);
                 } else if ("chat".equals(split[0])) {
