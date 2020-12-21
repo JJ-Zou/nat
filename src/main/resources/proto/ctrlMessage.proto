@@ -63,7 +63,7 @@ message Ack {
 message ReqRedirect {
   string from = 1;
   string to = 2;
-  InetType inetType = 3;
+  string fromAddr = 3;
 }
 
 message CtrlInfo {
