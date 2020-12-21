@@ -64,6 +64,7 @@ public class UdpServer {
             Channel channel = ctx.channel();
             String addressString = InetUtils.toAddressString(msg.sender());
             ByteBuf content = msg.content();
+            System.out.println(msg);
             MultiMessage multiMessage = MultiMessage.parseFrom(content.nioBuffer());
             switch (multiMessage.getMultiType()) {
                 case CTRL_INFO:
@@ -74,6 +75,7 @@ public class UdpServer {
                 case PSP_MESSAGE:
                     break;
                 case UNRECOGNIZED:
+                    System.out.println(msg);
                     break;
                 default:
                     break;

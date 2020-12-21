@@ -12,6 +12,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,10 +23,13 @@ public class UdpClientRemote2 {
     private static final String LOCAL_IP = "192.168.0.108";
     //    private static final String LOCAL_IP = "172.20.10.6";
     private static final int LOCAL_PORT = 10002;
-    private static final int SERVER_PORT = 10000;
+    private static final int SERVER_PORT = 20000;
+    private static final int SERVER_PORT1 = 30000;
     private static final String ID = "test2";
+    private static String natId;
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
+    private static final InetSocketAddress SERVER_ADDRESS1 = new InetSocketAddress(SERVE_IP, SERVER_PORT1);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
 
@@ -38,14 +42,12 @@ public class UdpClientRemote2 {
                 .handler(new ChannelInitializer<DatagramChannel>() {
                     @Override
                     protected void initChannel(DatagramChannel ch) throws Exception {
-                        ch.pipeline().addLast(new UdpChannelHandler());
+                        ch.pipeline().addLast(new UdpClientRemote2.UdpChannelHandler());
                     }
                 });
         try {
             ChannelFuture future = bootstrap.bind(LOCAL_PORT).sync();
             channel = future.channel();
-            System.out.println("客户端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
-            register();
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
@@ -53,8 +55,10 @@ public class UdpClientRemote2 {
                 if ("q!".equals(input)) {
                     break;
                 } else if ("nat".equals(split[0])) {
-                    String oppositeId = split[1].substring(1);
-                    requestForNat(oppositeId);
+                    register(SERVER_ADDRESS);
+                    register(SERVER_ADDRESS1);
+                    natId = split[1].substring(1);
+                    requestForNat(natId);
                 } else if ("chat".equals(split[0])) {
                     sendMessage(split[1].substring(1), split[2]);
                 }
@@ -89,7 +93,7 @@ public class UdpClientRemote2 {
         });
     }
 
-    private static void register() {
+    private static void register(InetSocketAddress address) {
         CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
                 .setType(CtrlInfo.CtrlType.REGISTER)
                 .setLocalId(ID)
@@ -100,7 +104,7 @@ public class UdpClientRemote2 {
                 .build();
         byte[] bytes = ctrl.toByteArray();
         ByteBuf byteBuf = Unpooled.copiedBuffer(bytes);
-        DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
+        DatagramPacket packet = new DatagramPacket(byteBuf, address);
         channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
             if (f.isSuccess()) {
                 System.out.println("发送注册消息。");
@@ -124,7 +128,7 @@ public class UdpClientRemote2 {
         DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(ADDRESS_MAP.get(oppositeId)));
         channel.writeAndFlush(packet).addListener((ChannelFutureListener) future -> {
             if (future.isSuccess()) {
-                System.out.println(message + " send to" + oppositeId + " success!");
+                System.out.println(message + " send to " + oppositeId + " success!");
             } else {
                 System.err.println(message + " send fail!");
             }
@@ -132,6 +136,11 @@ public class UdpClientRemote2 {
     }
 
     private static class UdpChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            System.out.println("客户端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
+        }
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
             Channel channel = ctx.channel();
@@ -157,6 +166,7 @@ public class UdpClientRemote2 {
         private void processP2pMessage(P2PMessage p2PMessage, String addressString, Channel channel) {
             switch (p2PMessage.getType()) {
                 case SAVE_ADDR:
+                    System.out.println("UDP穿透成功！");
                     processSaveAddr(p2PMessage.getMessage(), addressString);
                     break;
                 case HEART_BEAT:
@@ -176,6 +186,10 @@ public class UdpClientRemote2 {
         }
 
         private void processSaveAddr(String id, String addressString) {
+            if (Objects.equals(addressString, ADDRESS_MAP.get(id))) {
+                System.out.println(id + " 的地址未变化");
+                return;
+            }
             System.out.println("收到" + id + "的地址" + addressString + ", 加入缓存");
             ADDRESS_MAP.put(id, addressString);
             CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
@@ -193,9 +207,9 @@ public class UdpClientRemote2 {
             DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
             channel.writeAndFlush(packet).addListener((ChannelFutureListener) f -> {
                 if (f.isSuccess()) {
-                    System.out.println("请求更新 " + id + " 的地址为 " + addressString + "。");
+                    System.out.println("请求服务器更新 " + id + " 的地址为 " + addressString + "。");
                 } else {
-                    System.err.println("请求更新地址发送失败。");
+                    System.err.println("请求服务器更新地址发送失败。");
                 }
             });
         }
@@ -203,7 +217,7 @@ public class UdpClientRemote2 {
         private void processServerAck(ServerAck serverAck, String addressString, Channel channel) {
             switch (serverAck.getType()) {
                 case OK:
-                    System.out.println(serverAck.getMessage());
+                    System.out.println(addressString + " : " + serverAck.getMessage());
                     break;
                 case ACK_ADDR:
                     String oppositeId = processAckAddr(serverAck.getMessage());
@@ -271,9 +285,14 @@ public class UdpClientRemote2 {
 
         private String processAckAddr(String addr) {
             String[] split = addr.split("@");
-            System.out.println("收到" + split[0] + "的地址" + split[1] + ", 加入缓存");
-            ADDRESS_MAP.put(split[0], split[1]);
+            if (Objects.equals(split[1], ADDRESS_MAP.get(split[0]))) {
+                System.out.println(split[0] + " 的地址已缓存");
+            } else {
+                System.out.println("收到" + split[0] + "的地址" + split[1] + ", 加入缓存");
+                ADDRESS_MAP.put(split[0], split[1]);
+            }
             return split[0];
+
         }
     }
 }

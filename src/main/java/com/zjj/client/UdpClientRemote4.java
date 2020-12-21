@@ -48,9 +48,6 @@ public class UdpClientRemote4 {
         try {
             ChannelFuture future = bootstrap.bind(LOCAL_PORT).sync();
             channel = future.channel();
-            System.out.println("客户端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
-            register(SERVER_ADDRESS);
-            register(SERVER_ADDRESS1);
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String input = scanner.nextLine();
@@ -58,6 +55,8 @@ public class UdpClientRemote4 {
                 if ("q!".equals(input)) {
                     break;
                 } else if ("nat".equals(split[0])) {
+                    register(SERVER_ADDRESS);
+                    register(SERVER_ADDRESS1);
                     natId = split[1].substring(1);
                     requestForNat(natId);
                 } else if ("chat".equals(split[0])) {
@@ -137,6 +136,11 @@ public class UdpClientRemote4 {
     }
 
     private static class UdpChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            System.out.println("客户端绑定成功！" + InetUtils.toAddressString((InetSocketAddress) channel.localAddress()));
+        }
+
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
             Channel channel = ctx.channel();
