@@ -6596,15 +6596,16 @@ public final class CtrlMessage {
         getToBytes();
 
     /**
-     * <code>.InetType inetType = 3;</code>
-     * @return The enum numeric value on the wire for inetType.
+     * <code>string fromAddr = 3;</code>
+     * @return The fromAddr.
      */
-    int getInetTypeValue();
+    java.lang.String getFromAddr();
     /**
-     * <code>.InetType inetType = 3;</code>
-     * @return The inetType.
+     * <code>string fromAddr = 3;</code>
+     * @return The bytes for fromAddr.
      */
-    com.zjj.proto.CtrlMessage.InetType getInetType();
+    com.google.protobuf.ByteString
+        getFromAddrBytes();
   }
   /**
    * Protobuf type {@code ReqRedirect}
@@ -6621,7 +6622,7 @@ public final class CtrlMessage {
     private ReqRedirect() {
       from_ = "";
       to_ = "";
-      inetType_ = 0;
+      fromAddr_ = "";
     }
 
     @java.lang.Override
@@ -6666,10 +6667,10 @@ public final class CtrlMessage {
               to_ = s;
               break;
             }
-            case 24: {
-              int rawValue = input.readEnum();
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
 
-              inetType_ = rawValue;
+              fromAddr_ = s;
               break;
             }
             default: {
@@ -6780,23 +6781,42 @@ public final class CtrlMessage {
       }
     }
 
-    public static final int INETTYPE_FIELD_NUMBER = 3;
-    private int inetType_;
+    public static final int FROMADDR_FIELD_NUMBER = 3;
+    private volatile java.lang.Object fromAddr_;
     /**
-     * <code>.InetType inetType = 3;</code>
-     * @return The enum numeric value on the wire for inetType.
+     * <code>string fromAddr = 3;</code>
+     * @return The fromAddr.
      */
-    @java.lang.Override public int getInetTypeValue() {
-      return inetType_;
+    @java.lang.Override
+    public java.lang.String getFromAddr() {
+      java.lang.Object ref = fromAddr_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fromAddr_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.InetType inetType = 3;</code>
-     * @return The inetType.
+     * <code>string fromAddr = 3;</code>
+     * @return The bytes for fromAddr.
      */
-    @java.lang.Override public com.zjj.proto.CtrlMessage.InetType getInetType() {
-      @SuppressWarnings("deprecation")
-      com.zjj.proto.CtrlMessage.InetType result = com.zjj.proto.CtrlMessage.InetType.valueOf(inetType_);
-      return result == null ? com.zjj.proto.CtrlMessage.InetType.UNRECOGNIZED : result;
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getFromAddrBytes() {
+      java.lang.Object ref = fromAddr_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fromAddr_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -6819,8 +6839,8 @@ public final class CtrlMessage {
       if (!getToBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, to_);
       }
-      if (inetType_ != com.zjj.proto.CtrlMessage.InetType.PRIVATE.getNumber()) {
-        output.writeEnum(3, inetType_);
+      if (!getFromAddrBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, fromAddr_);
       }
       unknownFields.writeTo(output);
     }
@@ -6837,9 +6857,8 @@ public final class CtrlMessage {
       if (!getToBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, to_);
       }
-      if (inetType_ != com.zjj.proto.CtrlMessage.InetType.PRIVATE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, inetType_);
+      if (!getFromAddrBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, fromAddr_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6860,7 +6879,8 @@ public final class CtrlMessage {
           .equals(other.getFrom())) return false;
       if (!getTo()
           .equals(other.getTo())) return false;
-      if (inetType_ != other.inetType_) return false;
+      if (!getFromAddr()
+          .equals(other.getFromAddr())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6876,8 +6896,8 @@ public final class CtrlMessage {
       hash = (53 * hash) + getFrom().hashCode();
       hash = (37 * hash) + TO_FIELD_NUMBER;
       hash = (53 * hash) + getTo().hashCode();
-      hash = (37 * hash) + INETTYPE_FIELD_NUMBER;
-      hash = (53 * hash) + inetType_;
+      hash = (37 * hash) + FROMADDR_FIELD_NUMBER;
+      hash = (53 * hash) + getFromAddr().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7015,7 +7035,7 @@ public final class CtrlMessage {
 
         to_ = "";
 
-        inetType_ = 0;
+        fromAddr_ = "";
 
         return this;
       }
@@ -7045,7 +7065,7 @@ public final class CtrlMessage {
         com.zjj.proto.CtrlMessage.ReqRedirect result = new com.zjj.proto.CtrlMessage.ReqRedirect(this);
         result.from_ = from_;
         result.to_ = to_;
-        result.inetType_ = inetType_;
+        result.fromAddr_ = fromAddr_;
         onBuilt();
         return result;
       }
@@ -7102,8 +7122,9 @@ public final class CtrlMessage {
           to_ = other.to_;
           onChanged();
         }
-        if (other.inetType_ != 0) {
-          setInetTypeValue(other.getInetTypeValue());
+        if (!other.getFromAddr().isEmpty()) {
+          fromAddr_ = other.fromAddr_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -7286,56 +7307,78 @@ public final class CtrlMessage {
         return this;
       }
 
-      private int inetType_ = 0;
+      private java.lang.Object fromAddr_ = "";
       /**
-       * <code>.InetType inetType = 3;</code>
-       * @return The enum numeric value on the wire for inetType.
+       * <code>string fromAddr = 3;</code>
+       * @return The fromAddr.
        */
-      @java.lang.Override public int getInetTypeValue() {
-        return inetType_;
-      }
-      /**
-       * <code>.InetType inetType = 3;</code>
-       * @param value The enum numeric value on the wire for inetType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setInetTypeValue(int value) {
-        
-        inetType_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.InetType inetType = 3;</code>
-       * @return The inetType.
-       */
-      @java.lang.Override
-      public com.zjj.proto.CtrlMessage.InetType getInetType() {
-        @SuppressWarnings("deprecation")
-        com.zjj.proto.CtrlMessage.InetType result = com.zjj.proto.CtrlMessage.InetType.valueOf(inetType_);
-        return result == null ? com.zjj.proto.CtrlMessage.InetType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.InetType inetType = 3;</code>
-       * @param value The inetType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setInetType(com.zjj.proto.CtrlMessage.InetType value) {
-        if (value == null) {
-          throw new NullPointerException();
+      public java.lang.String getFromAddr() {
+        java.lang.Object ref = fromAddr_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fromAddr_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
         }
-        
-        inetType_ = value.getNumber();
+      }
+      /**
+       * <code>string fromAddr = 3;</code>
+       * @return The bytes for fromAddr.
+       */
+      public com.google.protobuf.ByteString
+          getFromAddrBytes() {
+        java.lang.Object ref = fromAddr_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fromAddr_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string fromAddr = 3;</code>
+       * @param value The fromAddr to set.
+       * @return This builder for chaining.
+       */
+      public Builder setFromAddr(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fromAddr_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>.InetType inetType = 3;</code>
+       * <code>string fromAddr = 3;</code>
        * @return This builder for chaining.
        */
-      public Builder clearInetType() {
+      public Builder clearFromAddr() {
         
-        inetType_ = 0;
+        fromAddr_ = getDefaultInstance().getFromAddr();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string fromAddr = 3;</code>
+       * @param value The bytes for fromAddr to set.
+       * @return This builder for chaining.
+       */
+      public Builder setFromAddrBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fromAddr_ = value;
         onChanged();
         return this;
       }
@@ -10154,20 +10197,20 @@ public final class CtrlMessage {
       "\007ReqAddr\022\n\n\002id\030\001 \001(\t\"\037\n\003Syn\022\014\n\004from\030\001 \001(" +
       "\t\022\n\n\002to\030\002 \001(\t\"\"\n\006SynAck\022\014\n\004from\030\001 \001(\t\022\n\n" +
       "\002to\030\002 \001(\t\"\037\n\003Ack\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001" +
-      "(\t\"D\n\013ReqRedirect\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 " +
-      "\001(\t\022\033\n\010inetType\030\003 \001(\0162\t.InetType\"\253\001\n\010Ctr" +
-      "lInfo\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlType\022" +
-      "\017\n\007localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n\007" +
-      "message\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000\022" +
-      "\014\n\010REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIFY" +
-      "_ACK\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.Serv" +
-      "erAck.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckTyp" +
-      "e\022\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020\002" +
-      "\"t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessag" +
-      "e.MsgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n" +
-      "\tSAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#" +
-      "\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rc" +
-      "om.zjj.protoB\013CtrlMessageb\006proto3"
+      "(\t\"9\n\013ReqRedirect\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 " +
+      "\001(\t\022\020\n\010fromAddr\030\003 \001(\t\"\253\001\n\010CtrlInfo\022 \n\004ty" +
+      "pe\030\001 \001(\0162\022.CtrlInfo.CtrlType\022\017\n\007localId\030" +
+      "\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n\007message\030\004 \001" +
+      "(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000\022\014\n\010REQ_ADDR" +
+      "\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIFY_ACK\020\003\"p\n\tS" +
+      "erverAck\022 \n\004type\030\001 \001(\0162\022.ServerAck.AckTy" +
+      "pe\022\017\n\007message\030\002 \001(\t\"0\n\007AckType\022\006\n\002OK\020\000\022\014" +
+      "\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020\002\"t\n\nP2PMess" +
+      "age\022!\n\004type\030\001 \001(\0162\023.P2PMessage.MsgType\022\017" +
+      "\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\tSAVE_ADDR\020" +
+      "\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n\010InetType\022" +
+      "\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom.zjj.prot" +
+      "oB\013CtrlMessageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -10214,7 +10257,7 @@ public final class CtrlMessage {
     internal_static_ReqRedirect_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ReqRedirect_descriptor,
-        new java.lang.String[] { "From", "To", "InetType", });
+        new java.lang.String[] { "From", "To", "FromAddr", });
     internal_static_CtrlInfo_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_CtrlInfo_fieldAccessorTable = new

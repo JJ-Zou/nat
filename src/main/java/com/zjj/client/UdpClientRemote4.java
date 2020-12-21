@@ -95,7 +95,7 @@ public class UdpClientRemote4 {
 
     private static void sendRedirectReqToServer() {
         DatagramPacket packet
-                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReqRedirect(ID, oppositeId, false).toByteArray()),
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReqRedirect(ID, oppositeId, InetUtils.toAddressString(LOCAL_ADDRESS)).toByteArray()),
                 SERVER_ADDRESS);
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {

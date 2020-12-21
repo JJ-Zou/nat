@@ -207,14 +207,14 @@ public class ProtoUtils {
      *
      * @param from
      * @param to
-     * @param publicInet
+     * @param fromAddr
      * @return
      */
-    public static ReqRedirect createReqRedirect(String from, String to, boolean publicInet) {
+    public static ReqRedirect createReqRedirect(String from, String to, String fromAddr) {
         return ReqRedirect.newBuilder()
                 .setFrom(from)
                 .setTo(to)
-                .setInetType(publicInet ? InetType.PUBLIC : InetType.PRIVATE)
+                .setFromAddr(fromAddr)
                 .build();
     }
 
@@ -236,10 +236,10 @@ public class ProtoUtils {
      *
      * @param from
      * @param to
-     * @param publicInet
+     * @param fromAddr
      * @return
      */
-    public static MultiMessage createMultiReqRedirect(String from, String to, boolean publicInet) {
-        return createMultiFromReqRedirect(createReqRedirect(from, to, publicInet));
+    public static MultiMessage createMultiReqRedirect(String from, String to, String fromAddr) {
+        return createMultiFromReqRedirect(createReqRedirect(from, to, fromAddr));
     }
 }

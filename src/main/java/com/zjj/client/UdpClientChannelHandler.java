@@ -126,22 +126,14 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
                 String from = reqRedirect.getFrom();
                 String to = reqRedirect.getTo();
-                String peerAddrStr;
-                if (reqRedirect.getInetType() == InetType.PRIVATE) {
-                    peerAddrStr = PRIVATE_ADDR_MAP.get(from);
-                } else {
-                    peerAddrStr = PUBLIC_ADDR_MAP.get(from);
-                }
+                String peerAddrStr = reqRedirect.getFromAddr();
                 DatagramPacket privatePacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSyn(to, from).toByteArray()),
                         InetUtils.toInetSocketAddress(peerAddrStr));
                 channel.writeAndFlush(privatePacket).addListener(f -> {
                     if (f.isSuccess()) {
                         if (log.isInfoEnabled()) {
-                            log.info("请求与 {} 的 {} 网 {} 建立连接",
-                                    from,
-                                    reqRedirect.getInetType() == InetType.PRIVATE ? "私" : "公",
-                                    peerAddrStr);
+                            log.info("请求与 {} 的地址 {} 建立连接", from, peerAddrStr);
                         }
                     } else {
                         log.error("请求发送失败");
