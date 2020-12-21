@@ -83,7 +83,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case REQ:
                 Req req = multiMessage.getReq();
                 if (log.isInfoEnabled()) {
-                    log.info("收到 {} 的连接请求, 从 {} 到 {} 的穿透成功", req.getFrom(), req.getFrom(), req.getTo());
+                    log.info("收到 {} 的连接请求, 从 {} 到 {} 的穿透成功!", req.getFrom(), req.getFrom(), req.getTo());
                 }
                 DatagramPacket packet
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(req.getTo(), req.getFrom()).toByteArray()),
@@ -101,7 +101,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case ACK:
                 Ack ack = multiMessage.getAck();
                 if (log.isInfoEnabled()) {
-                    log.info("收到 {} 的连接请求, 从 {} 到 {} 的穿透成功", ack.getFrom(), ack.getFrom(), ack.getTo());
+                    log.info("收到 {} 的回复, 从 {} 到 {} 的穿透成功!", ack.getFrom(), ack.getFrom(), ack.getTo());
                 }
                 break;
             case CTRL_INFO:
