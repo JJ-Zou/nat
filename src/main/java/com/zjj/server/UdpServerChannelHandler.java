@@ -119,6 +119,22 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                     }
                 });
                 break;
+            case REQ_REDIRECT:
+                ReqRedirect reqRedirect = multiMessage.getReqRedirect();
+                String to = reqRedirect.getTo();
+                String toInetAddrStr = PUBLIC_ADDR_MAP.get(to);
+                DatagramPacket reqRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
+                        InetUtils.toInetSocketAddress(toInetAddrStr));
+                channel.writeAndFlush(reqRedirectPacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        if (log.isInfoEnabled()) {
+                            log.info("转发消息, 让 {} 尝试和 {} 建立连接", to, reqRedirect.getFrom());
+                        }
+                    } else {
+                        log.error("转发消息失败");
+                    }
+                });
+                break;
             case CTRL_INFO:
                 processCtrlInfo(multiMessage.getCtrlInfo(), addressString, channel);
                 break;

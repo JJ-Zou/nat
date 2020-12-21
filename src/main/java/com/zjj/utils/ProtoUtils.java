@@ -21,7 +21,7 @@ public class ProtoUtils {
                 .setClientId(clientId)
                 .setHost(host)
                 .setPort(port)
-                .setInetType(publicInet ? InetCommand.InetType.PUBLIC : InetCommand.InetType.PRIVATE)
+                .setInetType(publicInet ? InetType.PUBLIC : InetType.PRIVATE)
                 .build();
     }
 
@@ -88,41 +88,80 @@ public class ProtoUtils {
     }
 
     /**
-     * 创建Req
+     * 创建Syn
      *
      * @param from
      * @param to
      * @return
      */
-    public static Req createReq(String from, String to) {
-        return Req.newBuilder()
+    public static Syn createSyn(String from, String to) {
+        return Syn.newBuilder()
                 .setFrom(from)
                 .setTo(to)
                 .build();
     }
 
     /**
-     * 创建Req的包装
+     * 创建Syn的包装
      *
-     * @param req
+     * @param syn
      * @return
      */
-    public static MultiMessage createMultiFromReq(Req req) {
+    public static MultiMessage createMultiFromSyn(Syn syn) {
         return MultiMessage.newBuilder()
-                .setMultiType(MultiMessage.MultiType.REQ)
-                .setReq(req)
+                .setMultiType(MultiMessage.MultiType.SYN)
+                .setSyn(syn)
                 .build();
     }
 
     /**
-     * 创建Req类型的MultiMessage
+     * 创建Syn类型的MultiMessage
      *
      * @param from
      * @param to
      * @return
      */
-    public static MultiMessage createMultiReq(String from, String to) {
-        return createMultiFromReq(createReq(from, to));
+    public static MultiMessage createMultiSyn(String from, String to) {
+        return createMultiFromSyn(createSyn(from, to));
+    }
+
+
+    /**
+     * 创建SynAck
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    public static SynAck createSynAck(String from, String to) {
+        return SynAck.newBuilder()
+                .setFrom(from)
+                .setTo(to)
+                .build();
+    }
+
+    /**
+     * 创建SynAck的包装
+     *
+     * @param synAck
+     * @return
+     */
+    public static MultiMessage createMultiFromSynAck(SynAck synAck) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.SYN_ACK)
+                .setSynAck(synAck)
+                .build();
+    }
+
+    /**
+     * 创建SynAck类型的MultiMessage
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    public static MultiMessage createMultiSynAck(String from, String to) {
+        return createMultiFromSynAck(createSynAck(from, to));
     }
 
     /**
@@ -161,5 +200,46 @@ public class ProtoUtils {
      */
     public static MultiMessage createMultiAck(String from, String to) {
         return createMultiFromAck(createAck(from, to));
+    }
+
+    /**
+     * 创建ReqRedirect
+     *
+     * @param from
+     * @param to
+     * @param publicInet
+     * @return
+     */
+    public static ReqRedirect createReqRedirect(String from, String to, boolean publicInet) {
+        return ReqRedirect.newBuilder()
+                .setFrom(from)
+                .setTo(to)
+                .setInetType(publicInet ? InetType.PUBLIC : InetType.PRIVATE)
+                .build();
+    }
+
+    /**
+     * 创建ReqRedirect的包装
+     *
+     * @param reqRedirect
+     * @return
+     */
+    public static MultiMessage createMultiFromReqRedirect(ReqRedirect reqRedirect) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.REQ_REDIRECT)
+                .setReqRedirect(reqRedirect)
+                .build();
+    }
+
+    /**
+     * 创建MultiMessaged类型的ReqRedirect
+     *
+     * @param from
+     * @param to
+     * @param publicInet
+     * @return
+     */
+    public static MultiMessage createMultiReqRedirect(String from, String to, boolean publicInet) {
+        return createMultiFromReqRedirect(createReqRedirect(from, to, publicInet));
     }
 }
