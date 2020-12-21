@@ -89,9 +89,29 @@ public class UdpClientRemote3 {
         while (!UdpClientChannelHandler.PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
             TimeUnit.NANOSECONDS.sleep(1000);
         }
+        sendReqToPeer();
+        sendRedirectReqToServer();
+    }
+
+    private static void sendRedirectReqToServer() {
+        DatagramPacket packet
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReqRedirect(ID, oppositeId, false).toByteArray()),
+                SERVER_ADDRESS);
+        channel.writeAndFlush(packet).addListener(f -> {
+            if (f.isSuccess()) {
+                if (log.isInfoEnabled()) {
+                    log.info("请求服务器转发消息让 {} 使用私网尝试与 {} 建立连接", oppositeId, ID);
+                }
+            } else {
+                log.error("请求发送失败");
+            }
+        });
+    }
+
+    private static void sendReqToPeer() {
         String privateAddrStr = UdpClientChannelHandler.PRIVATE_ADDR_MAP.get(oppositeId);
         DatagramPacket packet
-                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReq(ID, oppositeId).toByteArray()),
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSyn(ID, oppositeId).toByteArray()),
                 InetUtils.toInetSocketAddress(privateAddrStr));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {

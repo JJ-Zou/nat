@@ -7,29 +7,34 @@ message MultiMessage {
   enum MultiType {
     INET_COMMAND = 0;
     REQ_ADDR = 1;
-    REQ = 2;
-    ACK = 3;
-    CTRL_INFO = 4;
-    SERVER_ACK = 5;
-    PSP_MESSAGE = 6;
+    SYN = 2;
+    SYN_ACK = 3;
+    ACK = 4;
+    REQ_REDIRECT = 5;
+    CTRL_INFO = 6;
+    SERVER_ACK = 7;
+    PSP_MESSAGE = 8;
   }
   MultiType multiType = 1;
   oneof MultiBody {
     InetCommand inetCommand = 2;
     ReqAddr reqAddr = 3;
-    Req req = 4;
-    Ack ack = 5;
-    CtrlInfo ctrlInfo = 6;
-    ServerAck serverAck = 7;
-    P2PMessage p2PMessage = 8;
+    Syn syn = 4;
+    SynAck synAck = 5;
+    Ack ack = 6;
+    ReqRedirect reqRedirect = 7;
+    CtrlInfo ctrlInfo = 8;
+    ServerAck serverAck = 9;
+    P2PMessage p2PMessage = 10;
   }
 }
 
+enum InetType {
+  PRIVATE = 0;
+  PUBLIC = 1;
+}
+
 message InetCommand {
-  enum InetType {
-    PRIVATE = 0;
-    PUBLIC = 1;
-  }
   string clientId = 1;
   string host = 2;
   int32 port = 3;
@@ -40,7 +45,12 @@ message ReqAddr {
   string id = 1;
 }
 
-message Req {
+message Syn {
+  string from = 1;
+  string to = 2;
+}
+
+message SynAck {
   string from = 1;
   string to = 2;
 }
@@ -48,6 +58,12 @@ message Req {
 message Ack {
   string from = 1;
   string to = 2;
+}
+
+message ReqRedirect {
+  string from = 1;
+  string to = 2;
+  InetType inetType = 3;
 }
 
 message CtrlInfo {

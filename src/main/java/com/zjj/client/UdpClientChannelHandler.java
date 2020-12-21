@@ -80,29 +80,73 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         break;
                 }
                 break;
-            case REQ:
-                Req req = multiMessage.getReq();
+            case SYN:
+                Syn syn = multiMessage.getSyn();
                 if (log.isInfoEnabled()) {
-                    log.info("收到 {} 的连接请求!", req.getFrom());
+                    log.info("收到 {} 的连接请求!", syn.getFrom());
                 }
-                DatagramPacket packet
-                        = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(req.getTo(), req.getFrom()).toByteArray()),
+                DatagramPacket synAckPacket
+                        = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSynAck(syn.getTo(), syn.getFrom()).toByteArray()),
                         InetUtils.toInetSocketAddress(addressString));
-                channel.writeAndFlush(packet).addListener(f -> {
+                channel.writeAndFlush(synAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
                         if (log.isInfoEnabled()) {
-                            log.info("返回 {} ACK", req.getFrom());
+                            log.info("给 {} 返回 SYN_ACK", syn.getFrom());
                         }
                     } else {
-                        log.error("ACK发送失败");
+                        log.error("SYN_ACK 发送失败");
+                    }
+                });
+                break;
+            case SYN_ACK:
+                SynAck synAck = multiMessage.getSynAck();
+                if (log.isInfoEnabled()) {
+                    log.info("{} 到 {} 的连接请求被回复", synAck.getTo(), synAck.getFrom());
+                }
+                DatagramPacket ackPacket
+                        = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(synAck.getTo(), synAck.getFrom()).toByteArray()),
+                        InetUtils.toInetSocketAddress(addressString));
+                channel.writeAndFlush(ackPacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        if (log.isInfoEnabled()) {
+                            log.info("给 {} 返回 ACK", synAck.getFrom());
+                        }
+                    } else {
+                        log.error("ACK 发送失败");
                     }
                 });
                 break;
             case ACK:
                 Ack ack = multiMessage.getAck();
                 if (log.isInfoEnabled()) {
-                    log.info("收到 {} 的回复, 从 {} 到 {} 的穿透成功!", ack.getFrom(), ack.getFrom(), ack.getTo());
+                    log.info("收到 {} 的回复, {} 与 {} 穿透成功!", ack.getFrom(), ack.getFrom(), ack.getTo());
                 }
+                break;
+            case REQ_REDIRECT:
+                ReqRedirect reqRedirect = multiMessage.getReqRedirect();
+                String from = reqRedirect.getFrom();
+                String to = reqRedirect.getTo();
+                String peerAddrStr;
+                if (reqRedirect.getInetType() == InetType.PRIVATE) {
+                    peerAddrStr = PRIVATE_ADDR_MAP.get(from);
+                } else {
+                    peerAddrStr = PUBLIC_ADDR_MAP.get(from);
+                }
+                DatagramPacket privatePacket
+                        = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSyn(to, from).toByteArray()),
+                        InetUtils.toInetSocketAddress(peerAddrStr));
+                channel.writeAndFlush(privatePacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        if (log.isInfoEnabled()) {
+                            log.info("请求与 {} 的 {} 网 {} 建立连接",
+                                    from,
+                                    reqRedirect.getInetType() == InetType.PRIVATE ? "私" : "公",
+                                    peerAddrStr);
+                        }
+                    } else {
+                        log.error("请求发送失败");
+                    }
+                });
                 break;
             case CTRL_INFO:
                 break;
