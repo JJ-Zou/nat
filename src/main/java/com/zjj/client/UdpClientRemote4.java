@@ -1,6 +1,7 @@
 package com.zjj.client;
 
 import com.zjj.utils.InetUtils;
+import com.zjj.utils.ProtoUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -24,7 +25,7 @@ import static com.zjj.proto.CtrlMessage.*;
 public class UdpClientRemote4 {
     private static final String ID;
     private static final int LOCAL_PORT;
-    private static final String LOCAL_ADDR_STRING;
+    private static final String LOCAL_HOST_NAME;
 
     static {
         String className = UdpClientRemote4.class.getName();
@@ -32,15 +33,15 @@ public class UdpClientRemote4 {
         String num = Pattern.compile(reg).matcher(className).replaceAll("").trim();
         ID = "test" + num;
         LOCAL_PORT = Integer.parseInt("100" + num);
-        LOCAL_ADDR_STRING = InetUtils.getLocalAddress();
+        LOCAL_HOST_NAME = InetUtils.getLocalAddress();
     }
 
-    private static final String SERVE_IP = "39.105.65.104";
+    private static final String SERVE_IP = "39.105.65.104";;
     private static final int SERVER_PORT = 20000;
     private static String oppositeId;
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
-    private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_ADDR_STRING, LOCAL_PORT);
+    private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_HOST_NAME, LOCAL_PORT);
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -59,7 +60,7 @@ public class UdpClientRemote4 {
         try (Scanner scanner = new Scanner(System.in);) {
             ChannelFuture future = bootstrap.bind(LOCAL_ADDRESS).syncUninterruptibly();
             channel = future.channel();
-            register();
+            sendPrivateAddr();
             while (true) {
                 String input = scanner.nextLine();
                 String[] split = input.split(" +");
@@ -101,24 +102,20 @@ public class UdpClientRemote4 {
         });
     }
 
-    private static void register() {
-        CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
-                .setType(CtrlInfo.CtrlType.REGISTER)
-                .setLocalId(ID)
-                .build();
-        MultiMessage ctrl = MultiMessage.newBuilder()
-                .setMultiType(MultiMessage.MultiType.CTRL_INFO)
-                .setCtrlInfo(ctrlInfo)
-                .build();
-        ByteBuf byteBuf = Unpooled.wrappedBuffer(ctrl.toByteArray());
+    private static void sendPrivateAddr() {
+        MultiMessage inetCommand = ProtoUtils.createMultiInetCommand(ID, LOCAL_HOST_NAME, LOCAL_PORT, false);
+        ByteBuf byteBuf = Unpooled.wrappedBuffer(inetCommand.toByteArray());
         DatagramPacket packet = new DatagramPacket(byteBuf, SERVER_ADDRESS);
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("发送注册消息。");
+                    log.info("给 {} 发送 {} 的私网地址 {}",
+                            InetUtils.toAddressString(SERVER_ADDRESS),
+                            ID,
+                            InetUtils.toAddressString(LOCAL_ADDRESS));
                 }
             } else {
-                log.error("发送注册消息失败。");
+                log.error("发送失败");
             }
         });
     }
@@ -134,7 +131,7 @@ public class UdpClientRemote4 {
                 .build();
         ByteBuf byteBuf = Unpooled.wrappedBuffer(chat.toByteArray());
         DatagramPacket packet = new DatagramPacket(byteBuf,
-                InetUtils.toInetSocketAddress(UdpClientChannelHandler.ADDRESS_MAP.get(oppositeId)));
+                InetUtils.toInetSocketAddress(UdpClientChannelHandler.PUBLIC_ADDR_MAP.get(oppositeId)));
         channel.writeAndFlush(packet).addListener(future -> {
             if (future.isSuccess()) {
                 if (log.isInfoEnabled()) {
