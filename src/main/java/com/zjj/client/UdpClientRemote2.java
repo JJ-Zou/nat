@@ -108,7 +108,7 @@ public class UdpClientRemote2 {
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("请求 {} 的地址", oppositeId);
+                    log.info("请求 {} 的私网地址", oppositeId);
                 }
             } else {
                 log.error("请求地址失败");
