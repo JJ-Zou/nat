@@ -38,8 +38,8 @@ public class Starter {
                     TimeUnit.MILLISECONDS.sleep(5);
                 }
                 log.info("{}ms", System.currentTimeMillis() - l1);
-                processNatHandler.attemptPrivateConnect();
                 l1 = System.currentTimeMillis();
+                processNatHandler.attemptPrivateConnect();
                 while (!client.getThrough()) {
                     if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
 

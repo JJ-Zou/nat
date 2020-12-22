@@ -27,7 +27,7 @@ public abstract class AbstractClient implements NettyClient {
     }
 
     @Override
-    public InetSocketAddress getLocalAddress() {
+    public synchronized InetSocketAddress getLocalAddress() {
         if (localAddress == null) {
             localAddress = new InetSocketAddress(InetUtils.getLocalAddress(), NetUtil.getUsableLocalPort());
         }
@@ -35,7 +35,7 @@ public abstract class AbstractClient implements NettyClient {
     }
 
     @Override
-    public InetSocketAddress getServerAddress() {
+    public synchronized InetSocketAddress getServerAddress() {
         if (serverAddress == null) {
             serverAddress = new InetSocketAddress(SERVE_IP, SERVER_PORT);
         }
@@ -44,7 +44,7 @@ public abstract class AbstractClient implements NettyClient {
 
 
     @Override
-    public String getLocalId() {
+    public synchronized String getLocalId() {
         if (localId == null) {
             localId = RandomUtil.randomString(8);
         }
