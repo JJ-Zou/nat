@@ -16,23 +16,7 @@ public class ProcessNatHandler {
         this.oppositeId = oppositeId;
     }
 
-    public void sendPrivateAndGetPublicAddr() {
-        DatagramPacket packet
-                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(), nettyClient.getLocalAddress().getHostString(), nettyClient.getLocalAddress().getPort(), false).toByteArray()),
-                nettyClient.getServerAddress());
-        nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
-            if (f.isSuccess()) {
-                if (log.isInfoEnabled()) {
-                    log.info("给 {} 发送 {} 的私网地址 {}",
-                            InetUtils.toAddressString(nettyClient.getServerAddress()),
-                            nettyClient.getLocalId(),
-                            InetUtils.toAddressString(nettyClient.getLocalAddress()));
-                }
-            } else {
-                log.error("发送失败");
-            }
-        });
-    }
+
 
     public void requestForOppositeAddr() {
         DatagramPacket packet
