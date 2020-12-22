@@ -67,7 +67,7 @@ public class UdpClientRemote4 {
         try (Scanner scanner = new Scanner(System.in);) {
             ChannelFuture future = bootstrap.bind(LOCAL_ADDRESS).syncUninterruptibly();
             channel = future.channel();
-            sendPrivateAddr();
+            sendPrivateAndGetPublicAddr();
             while (true) {
                 String input = scanner.nextLine();
                 String[] split = input.split(" +");
@@ -88,12 +88,13 @@ public class UdpClientRemote4 {
                     l1 = System.currentTimeMillis();
                     while (!udpClientChannelHandler.getThrough()) {
                         if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
+
                             break;
                         }
                         TimeUnit.MILLISECONDS.sleep(5);
                     }
                     log.info("{}ms", System.currentTimeMillis() - l1);
-//                    requestForNat();
+                    attemptPublicConnect();
                 } else if ("chat".equals(split[0])) {
                     sendMessage(split[1].substring(1), split[2]);
                 }
@@ -104,20 +105,27 @@ public class UdpClientRemote4 {
         }
     }
 
-    @SneakyThrows
-    private static void attemptPrivateConnect() {
-        sendReqToPeer();
-        sendRedirectReqToServer();
+    private static void attemptPublicConnect() {
+        sendSynToPeer(true);
+        sendRedirectSynToServer(true);
     }
 
-    private static void sendRedirectReqToServer() {
+    private static void attemptPrivateConnect() {
+        sendSynToPeer(false);
+        sendRedirectSynToServer(false);
+    }
+
+    private static void sendRedirectSynToServer(boolean publicInet) {
+        String inetAddrStr = publicInet
+                ? UdpClientChannelHandler.PUBLIC_ADDR_MAP.get(ID)
+                : UdpClientChannelHandler.PRIVATE_ADDR_MAP.get(ID);
         DatagramPacket packet
-                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReqRedirect(ID, oppositeId, InetUtils.toAddressString(LOCAL_ADDRESS)).toByteArray()),
+                = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiReqRedirect(ID, oppositeId, inetAddrStr).toByteArray()),
                 SERVER_ADDRESS);
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("请求服务器转发消息让 {} 使用私网尝试与 {} 建立连接", oppositeId, ID);
+                    log.info("请求服务器转发消息让 {} 使用地址 {} 尝试与 {} 建立连接", oppositeId, inetAddrStr, ID);
                 }
             } else {
                 log.error("请求发送失败");
@@ -125,15 +133,17 @@ public class UdpClientRemote4 {
         });
     }
 
-    private static void sendReqToPeer() {
-        String privateAddrStr = UdpClientChannelHandler.PRIVATE_ADDR_MAP.get(oppositeId);
+    private static void sendSynToPeer(boolean publicInet) {
+        String inetAddrStr = publicInet
+                ? UdpClientChannelHandler.PUBLIC_ADDR_MAP.get(oppositeId)
+                : UdpClientChannelHandler.PRIVATE_ADDR_MAP.get(oppositeId);
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSyn(ID, oppositeId).toByteArray()),
-                InetUtils.toInetSocketAddress(privateAddrStr));
+                InetUtils.toInetSocketAddress(inetAddrStr));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("请求与 {} 的私网 {} 建立连接", oppositeId, privateAddrStr);
+                    log.info("请求与 {} 的地址 {} 建立连接", oppositeId, inetAddrStr);
                 }
             } else {
                 log.error("请求发送失败");
@@ -179,7 +189,7 @@ public class UdpClientRemote4 {
         });
     }
 
-    private static void sendPrivateAddr() {
+    private static void sendPrivateAndGetPublicAddr() {
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiInetCommand(ID, LOCAL_HOST_NAME, LOCAL_PORT, false).toByteArray()),
                 SERVER_ADDRESS);

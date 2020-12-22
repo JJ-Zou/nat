@@ -47,7 +47,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             log.info("监听本地地址 {}",
                     InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
         }
-        PRIVATE_ADDR_MAP.put(localId, InetUtils.toAddressString(serverAddress));
+        PRIVATE_ADDR_MAP.put(localId, InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
     }
 
     @Override
