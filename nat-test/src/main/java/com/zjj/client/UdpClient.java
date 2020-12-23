@@ -24,7 +24,7 @@ public class UdpClient {
     private static final String ID = "zz";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
-    private static final String OTHER_ID = "zjj";
+    private static final String OTHER_ID = "com/zjj";
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {

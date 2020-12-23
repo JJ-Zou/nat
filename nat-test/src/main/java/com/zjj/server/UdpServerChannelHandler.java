@@ -1,6 +1,7 @@
 package com.zjj.server;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.zjj.http.HttpReq;
 import com.zjj.utils.InetUtils;
 import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.ByteBuf;
@@ -27,6 +28,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
     private static final Map<String, String> ACTUAL_ADDRESS_MAP = new ConcurrentHashMap<>();
     private static final Map<String, String> PRIVATE_ADDR_MAP = new ConcurrentHashMap<>();
     private static final Map<Integer, Channel> CHANNEL_MAP = new ConcurrentHashMap<>();
+    private static HttpReq httpReq = new HttpReq();
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -61,23 +63,13 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                         }
                         PRIVATE_ADDR_MAP.put(id,
                                 privateInetAddr);
+                        channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
                         if (log.isInfoEnabled()) {
                             log.info("收到 {} 的公网地址 {} 加入缓存", id, addressString);
                         }
                         PUBLIC_ADDR_MAP.put(id,
                                 addressString);
-                        MultiMessage publicInetAck = ProtoUtils.createMultiInetCommand(id, msg.sender().getHostString(), msg.sender().getPort(), true);
-                        ByteBuf byteBuf = Unpooled.wrappedBuffer(publicInetAck.toByteArray());
-                        DatagramPacket publicInetAckPacket = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(addressString));
-                        channel.writeAndFlush(publicInetAckPacket).addListener(f -> {
-                            if (f.isSuccess()) {
-                                if (log.isInfoEnabled()) {
-                                    log.info("向 {} 发送公网地址 {}", id, addressString);
-                                }
-                            } else {
-                                log.error("向 {} 发送公网地址失败", id);
-                            }
-                        });
+                        channel.eventLoop().parent().execute(() -> httpReq.addPublicAddr(id, addressString));
                         break;
                     case PUBLIC:
                     case UNRECOGNIZED:

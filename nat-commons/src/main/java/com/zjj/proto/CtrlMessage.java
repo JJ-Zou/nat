@@ -1326,7 +1326,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.MultiMessage.class, com.zjj.proto.CtrlMessage.MultiMessage.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.MultiMessage.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.MultiMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3409,7 +3409,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.InetCommand.class, com.zjj.proto.CtrlMessage.InetCommand.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.InetCommand.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.InetCommand.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4157,7 +4157,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.ReqAddr.class, com.zjj.proto.CtrlMessage.ReqAddr.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.ReqAddr.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.ReqAddr.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4792,7 +4792,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.Syn.class, com.zjj.proto.CtrlMessage.Syn.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.Syn.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.Syn.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5510,7 +5510,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.SynAck.class, com.zjj.proto.CtrlMessage.SynAck.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.SynAck.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.SynAck.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -6228,7 +6228,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.Ack.class, com.zjj.proto.CtrlMessage.Ack.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.Ack.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.Ack.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7013,7 +7013,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.ReqRedirect.class, com.zjj.proto.CtrlMessage.ReqRedirect.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.ReqRedirect.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.ReqRedirect.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -8054,7 +8054,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.CtrlInfo.class, com.zjj.proto.CtrlMessage.CtrlInfo.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.CtrlInfo.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.CtrlInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9012,7 +9012,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.ServerAck.class, com.zjj.proto.CtrlMessage.ServerAck.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.ServerAck.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.ServerAck.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9804,7 +9804,7 @@ public final class CtrlMessage {
                 com.zjj.proto.CtrlMessage.P2PMessage.class, com.zjj.proto.CtrlMessage.P2PMessage.Builder.class);
       }
 
-      // Construct using com.zjj.proto.CtrlMessage.P2PMessage.newBuilder()
+      // Construct using com.com.zjj.proto.CtrlMessage.P2PMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -10209,7 +10209,7 @@ public final class CtrlMessage {
       "age\022!\n\004type\030\001 \001(\0162\023.P2PMessage.MsgType\022\017" +
       "\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\tSAVE_ADDR\020" +
       "\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n\010InetType\022" +
-      "\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom.zjj.prot" +
+      "\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom.com.zjj.prot" +
       "oB\013CtrlMessageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
