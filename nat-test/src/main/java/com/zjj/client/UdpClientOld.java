@@ -20,7 +20,7 @@ public class UdpClientOld {
     private static final String SERVE_IP = "39.105.65.104";
     private static final int LOCAL_PORT = 10002;
     private static final int SERVER_PORT = 10000;
-    private static final String ID = "zjj";
+    private static final String ID = "com/zjj";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final String OTHER_ID = "zz";

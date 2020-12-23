@@ -24,7 +24,7 @@ public class UdpClient1 {
 //    private static final String LOCAL_IP = "172.20.10.6";
     private static final int LOCAL_PORT = 10002;
     private static final int SERVER_PORT = 10000;
-    private static final String ID = "zjj";
+    private static final String ID = "com/zjj";
     private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
