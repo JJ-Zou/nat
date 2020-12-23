@@ -1,5 +1,6 @@
 package com.zjj.client;
 
+import com.zjj.http.HttpReq;
 import com.zjj.utils.InetUtils;
 import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.Unpooled;
@@ -16,10 +17,17 @@ public class Starter {
     }
 
     public static void startClient() throws ConnectException, InterruptedException {
+        HttpReq httpReq = new HttpReq();
         NettyClient client = new UdpClientRemote();
         client.doBind();
-        sendPrivateAndGetPublicAddr(client);
         log.info("本机ID: {}", client.getLocalId());
+        httpReq.addPrivateAddr(client.getLocalId(), InetUtils.toAddressString(client.getLocalAddress()));
+        String publicAddr;
+        do {
+            sendPrivateAddr(client);
+            TimeUnit.MILLISECONDS.sleep(500);
+        } while ((publicAddr = httpReq.getPublicAddr(client.getLocalId())) == null);
+        log.info("本机公网地址: {}", publicAddr);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
@@ -37,7 +45,7 @@ public class Starter {
                     }
                     TimeUnit.MILLISECONDS.sleep(5);
                 }
-                log.info("{}ms", System.currentTimeMillis() - l1);
+                log.debug("{}ms", System.currentTimeMillis() - l1);
                 l1 = System.currentTimeMillis();
                 processNatHandler.attemptPrivateConnect();
                 while (!client.getThrough()) {
@@ -47,7 +55,7 @@ public class Starter {
                     }
                     TimeUnit.MILLISECONDS.sleep(5);
                 }
-                log.info("{}ms", System.currentTimeMillis() - l1);
+                log.debug("{}ms", System.currentTimeMillis() - l1);
                 if (UdpClientChannelHandler.PUBLIC_ADDR_MAP.containsKey(client.getLocalId())) {
                     if (!client.getThrough()) {
                         processNatHandler.attemptPublicConnect();
@@ -59,7 +67,7 @@ public class Starter {
         }
     }
 
-    public static void sendPrivateAndGetPublicAddr(NettyClient nettyClient) {
+    public static void sendPrivateAddr(NettyClient nettyClient) {
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(), nettyClient.getLocalAddress().getHostString(), nettyClient.getLocalAddress().getPort(), false).toByteArray()),
                 nettyClient.getServerAddress());

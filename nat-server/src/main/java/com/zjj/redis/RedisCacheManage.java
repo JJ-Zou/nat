@@ -12,26 +12,26 @@ public class RedisCacheManage {
 
 
     public void addPrivateAddrStr(String id, String addrStr) {
-        stringRedisTemplate.opsForHash().put(Constants.PRIVATE_ADDRESS_KEY, id, addrStr);
+        stringRedisTemplate.boundHashOps(Constants.PRIVATE_ADDRESS_KEY).put(id, addrStr);
     }
 
     public void addPublicAddrStr(String id, String addrStr) {
-        stringRedisTemplate.opsForHash().put(Constants.PUBLIC_ADDRESS_KEY, id, addrStr);
+        stringRedisTemplate.boundHashOps(Constants.PUBLIC_ADDRESS_KEY).put(id, addrStr);
     }
 
     public String getPrivateAddrStr(String id) {
-        return (String) stringRedisTemplate.opsForHash().get(Constants.PRIVATE_ADDRESS_KEY, id);
+        return (String) stringRedisTemplate.boundHashOps(Constants.PRIVATE_ADDRESS_KEY).get(id);
     }
 
     public String getPublicAddrStr(String id) {
-        return (String) stringRedisTemplate.opsForHash().get(Constants.PUBLIC_ADDRESS_KEY, id);
+        return (String) stringRedisTemplate.boundHashOps(Constants.PUBLIC_ADDRESS_KEY).get(id);
     }
 
     public Long deletePrivateAddr(String id) {
-        return stringRedisTemplate.opsForHash().delete(Constants.PRIVATE_ADDRESS_KEY, id);
+        return stringRedisTemplate.boundHashOps(Constants.PRIVATE_ADDRESS_KEY).delete(id);
     }
 
     public Long deletePublicAddr(String id) {
-        return stringRedisTemplate.opsForHash().delete(Constants.PUBLIC_ADDRESS_KEY, id);
+        return stringRedisTemplate.boundHashOps(Constants.PUBLIC_ADDRESS_KEY).delete(id);
     }
 }

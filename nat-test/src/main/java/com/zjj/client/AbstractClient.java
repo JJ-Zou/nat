@@ -12,11 +12,18 @@ public abstract class AbstractClient implements NettyClient {
     protected static final String SERVE_IP = "39.105.65.104";
     protected static final int SERVER_PORT = 20000;
 
+    public AbstractClient() {
+        this.localId = RandomUtil.randomString(8);
+        this.localAddress = new InetSocketAddress(InetUtils.getLocalAddress(), NetUtil.getUsableLocalPort());
+        this.serverAddress = new InetSocketAddress(SERVE_IP, SERVER_PORT);
+        this.through = new AtomicBoolean(false);
+    }
+
     private String localId;
     private InetSocketAddress localAddress;
     private InetSocketAddress serverAddress;
 
-    private AtomicBoolean through = new AtomicBoolean(false);
+    private AtomicBoolean through;
 
     public boolean getThrough() {
         return through.get();
@@ -27,27 +34,18 @@ public abstract class AbstractClient implements NettyClient {
     }
 
     @Override
-    public synchronized InetSocketAddress getLocalAddress() {
-        if (localAddress == null) {
-            localAddress = new InetSocketAddress(InetUtils.getLocalAddress(), NetUtil.getUsableLocalPort());
-        }
+    public InetSocketAddress getLocalAddress() {
         return localAddress;
     }
 
     @Override
-    public synchronized InetSocketAddress getServerAddress() {
-        if (serverAddress == null) {
-            serverAddress = new InetSocketAddress(SERVE_IP, SERVER_PORT);
-        }
+    public InetSocketAddress getServerAddress() {
         return serverAddress;
     }
 
 
     @Override
     public synchronized String getLocalId() {
-        if (localId == null) {
-            localId = RandomUtil.randomString(8);
-        }
         return localId;
     }
 }

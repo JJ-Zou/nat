@@ -34,13 +34,13 @@ public class AddrStrController {
         return Objects.equals(clientAddr, insertAddr) ? "OK" : "ERR";
     }
 
-    @GetMapping("getPriAddr")
+    @PostMapping("getPriAddr")
     public String getPrivateAddr(@RequestBody JSONObject jsonObject) {
         String clientId = jsonObject.getString(Constants.CLIENT_ID);
         return redisCacheManage.getPrivateAddrStr(clientId);
     }
 
-    @GetMapping("getPubAddr")
+    @PostMapping("getPubAddr")
     public String getPublicAddr(@RequestBody JSONObject jsonObject) {
         String clientId = jsonObject.getString(Constants.CLIENT_ID);
         return redisCacheManage.getPublicAddrStr(clientId);
