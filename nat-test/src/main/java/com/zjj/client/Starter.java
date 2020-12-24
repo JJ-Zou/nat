@@ -27,7 +27,7 @@ public class Starter {
             TimeUnit.MILLISECONDS.sleep(500);
         } while ((publicAddr = httpReq.getPublicAddr(client.getLocalId())) == null);
         log.debug("获取本机的公网地址用时{}ms", System.currentTimeMillis() - l1);
-        UdpClientChannelHandler.PRIVATE_ADDR_MAP.put(client.getLocalId(), publicAddr);
+        UdpClientChannelHandler.PUBLIC_ADDR_MAP.put(client.getLocalId(), publicAddr);
         log.info("本机公网地址: {}", publicAddr);
         Scanner scanner = new Scanner(System.in);
         while (true) {
