@@ -47,7 +47,7 @@ public class Starter {
                 String oppositePubAddr = httpReq.getPublicAddr(oppositeId);
                 log.info("{} 的公网地址是 {}", oppositeId, oppositePriAddr);
                 UdpClientChannelHandler.PUBLIC_ADDR_MAP.put(oppositeId, oppositePubAddr);
-                log.debug("获取{}的功网地址用时{}ms", oppositeId, System.currentTimeMillis() - l1);
+                log.debug("获取{}的公网地址用时{}ms", oppositeId, System.currentTimeMillis() - l1);
 
                 l1 = System.currentTimeMillis();
                 processNatHandler.attemptPrivateConnect();
