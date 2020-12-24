@@ -16,6 +16,7 @@ public class Starter {
 
     public void startClient() throws ConnectException, InterruptedException {
         HttpReq httpReq = new HttpReq();
+        int retryTime = 0;
         NettyClient client = new UdpClientRemote();
         client.doBind();
         log.info("本机ID: {}", client.getLocalId());
@@ -53,7 +54,7 @@ public class Starter {
                 l1 = System.currentTimeMillis();
                 processNatHandler.attemptPrivateConnect();
                 while (!client.getThrough()) {
-                    if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
+                    if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(500)) {
 
                         break;
                     }
@@ -64,6 +65,10 @@ public class Starter {
                 if (!client.getThrough()) {
                     l1 = System.currentTimeMillis();
                     while (!client.getThrough()) {
+                        if (retryTime > 5) {
+                            break;
+                        }
+                        retryTime++;
                         processNatHandler.attemptPublicConnect();
                         TimeUnit.SECONDS.sleep(2);
                     }
