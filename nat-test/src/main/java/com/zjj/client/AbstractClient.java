@@ -29,8 +29,8 @@ public abstract class AbstractClient implements NettyClient {
         return through.get();
     }
 
-    public void setThrough() {
-        through.compareAndSet(false, true);
+    public boolean setThrough() {
+        return through.compareAndSet(false, true);
     }
 
     @Override

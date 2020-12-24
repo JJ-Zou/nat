@@ -13,10 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class Starter {
-    private Starter() {
-    }
 
-    public static void startClient() throws ConnectException, InterruptedException {
+    public void startClient() throws ConnectException, InterruptedException {
         HttpReq httpReq = new HttpReq();
         NettyClient client = new UdpClientRemote();
         client.doBind();
@@ -37,15 +35,18 @@ public class Starter {
             } else if ("nat".equals(split[0])) {
                 String oppositeId = split[1].substring(1);
                 ProcessNatHandler processNatHandler = new ProcessNatHandler(client, oppositeId);
+
                 long l1 = System.currentTimeMillis();
-                processNatHandler.requestForOppositeAddr();
-                while (!UdpClientChannelHandler.PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
-                    if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
-                        throw new ConnectException("与服务器连接不通畅");
-                    }
-                    TimeUnit.MILLISECONDS.sleep(5);
-                }
-                log.debug("{}ms", System.currentTimeMillis() - l1);
+                String oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
+                log.info("{} 的私网地址是 {}", oppositeId, oppositePriAddr);
+                UdpClientChannelHandler.PRIVATE_ADDR_MAP.put(oppositeId, oppositePriAddr);
+                log.debug("获取{}的私网地址用时{}ms", oppositeId, System.currentTimeMillis() - l1);
+                l1 = System.currentTimeMillis();
+                String oppositePubAddr = httpReq.getPublicAddr(oppositeId);
+                log.info("{} 的公网地址是 {}", oppositeId, oppositePriAddr);
+                UdpClientChannelHandler.PUBLIC_ADDR_MAP.put(oppositeId, oppositePubAddr);
+                log.debug("获取{}的功网地址用时{}ms", oppositeId, System.currentTimeMillis() - l1);
+
                 l1 = System.currentTimeMillis();
                 processNatHandler.attemptPrivateConnect();
                 while (!client.getThrough()) {
@@ -55,19 +56,30 @@ public class Starter {
                     }
                     TimeUnit.MILLISECONDS.sleep(5);
                 }
-                log.debug("{}ms", System.currentTimeMillis() - l1);
-                if (UdpClientChannelHandler.PUBLIC_ADDR_MAP.containsKey(client.getLocalId())) {
-                    if (!client.getThrough()) {
-                        processNatHandler.attemptPublicConnect();
+                log.debug("尝试使用私网穿透用时{}ms, 穿透{}", System.currentTimeMillis() - l1, client.getThrough() ? "成功" : "失败");
+
+                if (!client.getThrough()) {
+                    l1 = System.currentTimeMillis();
+                    processNatHandler.attemptPublicConnect();
+                    while (!client.getThrough()) {
+                        if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
+
+                            break;
+                        }
+                        TimeUnit.MILLISECONDS.sleep(5);
                     }
+                    log.debug("尝试使用公网穿透用时{}ms, 穿透{}", System.currentTimeMillis() - l1, client.getThrough() ? "成功" : "失败");
                 }
+                log.info("UDP穿透{}！", client.getThrough() ? "成功" : "失败");
             } else if ("chat".equals(split[0])) {
 //                processNatHandler.sendMessage(split[1].substring(1), split[2]);
             }
+
         }
+
     }
 
-    public static void sendPrivateAddr(NettyClient nettyClient) {
+    public void sendPrivateAddr(NettyClient nettyClient) {
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(), nettyClient.getLocalAddress().getHostString(), nettyClient.getLocalAddress().getPort(), false).toByteArray()),
                 nettyClient.getServerAddress());
