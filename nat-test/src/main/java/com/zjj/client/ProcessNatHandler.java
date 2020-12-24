@@ -23,7 +23,7 @@ public class ProcessNatHandler {
                 nettyClient.getServerAddress());
         nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                log.debug("请求 {} 的地址", oppositeId);
+                log.debug("请求id: {} 的地址", oppositeId);
             } else {
                 log.error("请求地址失败");
             }
@@ -49,7 +49,7 @@ public class ProcessNatHandler {
                 nettyClient.getServerAddress());
         nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                log.debug("请求服务器转发消息让 {} 使用地址 {} 尝试与 {} 建立连接", oppositeId, inetAddrStr, nettyClient.getLocalId());
+                log.debug("请求服务器转发消息让id: {} 使用地址 {} 尝试与id: {} 建立连接", oppositeId, inetAddrStr, nettyClient.getLocalId());
             } else {
                 log.error("请求发送失败");
             }
@@ -65,7 +65,7 @@ public class ProcessNatHandler {
                 InetUtils.toInetSocketAddress(inetAddrStr));
         nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                log.debug("请求与 {} 的地址 {} 建立连接", oppositeId, inetAddrStr);
+                log.debug("请求与id: {} 的地址 {} 建立连接", oppositeId, inetAddrStr);
             } else {
                 log.error("请求发送失败");
             }

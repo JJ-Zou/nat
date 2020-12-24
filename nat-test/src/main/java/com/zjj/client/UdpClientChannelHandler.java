@@ -59,13 +59,13 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     case PRIVATE:
                         String id = inetCommand.getClientId();
                         String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        log.debug("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
+                        log.debug("收到来自id: {} 公网为 {} 的私网地址 {} 加入缓存", id, addressString, privateInetAddr);
                         PRIVATE_ADDR_MAP.put(id, privateInetAddr);
                         break;
                     case PUBLIC:
                         String id1 = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        log.debug("收到 {} 的公网地址 {} 加入缓存", id1, publicInetAddr);
+                        log.debug("收到来自id: {} 公网为 {} 的公网地址 {} 加入缓存", id1, addressString, publicInetAddr);
                         PUBLIC_ADDR_MAP.put(id1, publicInetAddr);
                         break;
                     case UNRECOGNIZED:
@@ -75,13 +75,13 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case SYN:
                 Syn syn = multiMessage.getSyn();
-                log.debug("收到 {} 的连接请求", syn.getFrom());
+                log.debug("收到来自id: {} 公网为 {} 对 {} 的连接请求", syn.getFrom(), addressString, syn.getTo());
                 DatagramPacket synAckPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSynAck(syn.getTo(), syn.getFrom()).toByteArray()),
                         InetUtils.toInetSocketAddress(addressString));
                 channel.writeAndFlush(synAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("给 {} 返回 SYN_ACK", syn.getFrom());
+                        log.debug("给id: {} 公网为 {} 返回 SYN_ACK", syn.getFrom(), addressString);
                     } else {
                         log.error("SYN_ACK 发送失败");
                     }
@@ -89,16 +89,17 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case SYN_ACK:
                 SynAck synAck = multiMessage.getSynAck();
-                log.debug("{} 到 {} 的连接请求被回复", synAck.getTo(), synAck.getFrom());
+                log.debug("收到来自id: {} 公网为 {} 对id: {} 的连接请求回复", synAck.getFrom(), addressString, synAck.getTo());
                 if (nettyClient.setThrough()) {
                     log.debug("{} 到 {} 穿透成功!", synAck.getTo(), synAck.getFrom());
+                    log.debug("穿透成功的对方id: {} 的穿透地址为 {}", synAck.getFrom(), addressString);
                 }
                 DatagramPacket ackPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(synAck.getTo(), synAck.getFrom()).toByteArray()),
                         InetUtils.toInetSocketAddress(addressString));
                 channel.writeAndFlush(ackPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("给 {} 返回 ACK", synAck.getFrom());
+                        log.debug("给id: {} 公网为 {} 返回 ACK", synAck.getFrom(), addressString);
                     } else {
                         log.error("ACK 发送失败");
                     }
@@ -106,9 +107,10 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case ACK:
                 Ack ack = multiMessage.getAck();
-                log.debug("收到 {} 的回复", ack.getFrom());
+                log.debug("收到id: {} 公网为 {} 的回复", ack.getFrom(), addressString);
                 if (nettyClient.getThrough() || nettyClient.setThrough()) {
                     log.debug("{} 到 {} 穿透成功!", ack.getFrom(), ack.getTo());
+                    log.debug("穿透成功的对方id: {} 的穿透地址为 {}", ack.getFrom(), addressString);
                 }
                 break;
             case REQ_REDIRECT:
@@ -121,7 +123,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toInetSocketAddress(peerAddrStr));
                 channel.writeAndFlush(privatePacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("请求与 {} 的地址 {} 建立连接", from, peerAddrStr);
+                        log.debug("服务器转发id: {} 的请求 id: {} 与 id{} 其公网地址 {} 建立连接", from, to, from, peerAddrStr);
                     } else {
                         log.error("请求发送失败");
                     }
