@@ -36,7 +36,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         if (log.isInfoEnabled()) {
-            log.info("监听本地地址 {}",
+            log.debug("监听本地地址 {}",
                     InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
         }
         PRIVATE_ADDR_MAP.put(nettyClient.getLocalId(), InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
@@ -62,7 +62,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         String id = inetCommand.getClientId();
                         String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
                         if (log.isInfoEnabled()) {
-                            log.info("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
+                            log.debug("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
                         }
                         PRIVATE_ADDR_MAP.put(id, privateInetAddr);
                         break;
@@ -70,7 +70,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         String id1 = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
                         if (log.isInfoEnabled()) {
-                            log.info("收到 {} 的公网地址 {} 加入缓存", id1, publicInetAddr);
+                            log.debug("收到 {} 的公网地址 {} 加入缓存", id1, publicInetAddr);
                         }
                         PUBLIC_ADDR_MAP.put(id1, publicInetAddr);
                         break;
@@ -82,7 +82,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case SYN:
                 Syn syn = multiMessage.getSyn();
                 if (log.isInfoEnabled()) {
-                    log.info("收到 {} 的连接请求!", syn.getFrom());
+                    log.debug("收到 {} 的连接请求", syn.getFrom());
                 }
                 DatagramPacket synAckPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSynAck(syn.getTo(), syn.getFrom()).toByteArray()),
@@ -90,7 +90,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 channel.writeAndFlush(synAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
                         if (log.isInfoEnabled()) {
-                            log.info("给 {} 返回 SYN_ACK", syn.getFrom());
+                            log.debug("给 {} 返回 SYN_ACK", syn.getFrom());
                         }
                     } else {
                         log.error("SYN_ACK 发送失败");
@@ -99,8 +99,9 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case SYN_ACK:
                 SynAck synAck = multiMessage.getSynAck();
-                if (log.isInfoEnabled()) {
-                    log.info("{} 到 {} 的连接请求被回复", synAck.getTo(), synAck.getFrom());
+                log.debug("{} 到 {} 的连接请求被回复", synAck.getTo(), synAck.getFrom());
+                if (nettyClient.setThrough()) {
+                    log.debug("{} 到 {} 穿透成功!", synAck.getTo(), synAck.getFrom());
                 }
                 DatagramPacket ackPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(synAck.getTo(), synAck.getFrom()).toByteArray()),
@@ -108,7 +109,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 channel.writeAndFlush(ackPacket).addListener(f -> {
                     if (f.isSuccess()) {
                         if (log.isInfoEnabled()) {
-                            log.info("给 {} 返回 ACK", synAck.getFrom());
+                            log.debug("给 {} 返回 ACK", synAck.getFrom());
                         }
                     } else {
                         log.error("ACK 发送失败");
@@ -117,10 +118,10 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case ACK:
                 Ack ack = multiMessage.getAck();
-                if (log.isInfoEnabled()) {
-                    log.info("收到 {} 的回复, {} 与 {} 穿透成功!", ack.getFrom(), ack.getFrom(), ack.getTo());
+                log.debug("收到 {} 的回复", ack.getFrom());
+                if (nettyClient.getThrough() || nettyClient.setThrough()) {
+                    log.debug("{} 到 {} 穿透成功!", ack.getFrom(), ack.getTo());
                 }
-                nettyClient.setThrough();
                 break;
             case REQ_REDIRECT:
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
@@ -133,7 +134,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 channel.writeAndFlush(privatePacket).addListener(f -> {
                     if (f.isSuccess()) {
                         if (log.isInfoEnabled()) {
-                            log.info("请求与 {} 的地址 {} 建立连接", from, peerAddrStr);
+                            log.debug("请求与 {} 的地址 {} 建立连接", from, peerAddrStr);
                         }
                     } else {
                         log.error("请求发送失败");
@@ -159,7 +160,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         switch (p2PMessage.getType()) {
             case SAVE_ADDR:
                 if (log.isInfoEnabled()) {
-                    log.info("UDP穿透成功！");
+                    log.debug("UDP穿透成功！");
                 }
                 processSaveAddr(p2PMessage.getMessage(), addressString, channel);
                 break;
@@ -176,16 +177,16 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     }
 
     private void displayChatMessage(P2PMessage p2PMessage) {
-        log.info(p2PMessage.getMessage());
+        log.debug(p2PMessage.getMessage());
     }
 
     private void processSaveAddr(String id, String addressString, Channel channel) {
         if (Objects.equals(addressString, PUBLIC_ADDR_MAP.get(id))) {
-            log.info("{} 的地址未变化", id);
+            log.debug("{} 的地址未变化", id);
             return;
         }
         if (log.isInfoEnabled()) {
-            log.info("缓存用户 {} 的通信地址 {}", nettyClient.getLocalId(), addressString);
+            log.debug("缓存用户 {} 的通信地址 {}", nettyClient.getLocalId(), addressString);
         }
         PUBLIC_ADDR_MAP.put(id, addressString);
         CtrlInfo ctrlInfo = CtrlInfo.newBuilder()
@@ -203,7 +204,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("请求服务器更新 {} 的地址为 {}", id, addressString);
+                    log.debug("请求服务器更新 {} 的地址为 {}", id, addressString);
                 }
             } else {
                 log.error("请求服务器更新地址发送失败。");
@@ -216,8 +217,8 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case OK:
                 String localAddrStr = InetUtils.toAddressString((InetSocketAddress) channel.localAddress());
                 if (log.isInfoEnabled()) {
-                    log.info("本机 {} 经过NAT后的公网地址: {}", localAddrStr, serverAck.getMessage());
-                    log.info("收到 {} 的公网地址 {} 加入缓存", nettyClient.getLocalId(), serverAck.getMessage());
+                    log.debug("本机 {} 经过NAT后的公网地址: {}", localAddrStr, serverAck.getMessage());
+                    log.debug("收到 {} 的公网地址 {} 加入缓存", nettyClient.getLocalId(), serverAck.getMessage());
                 }
                 PUBLIC_ADDR_MAP.put(nettyClient.getLocalId(), serverAck.getMessage());
                 break;
@@ -256,7 +257,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-                    log.info("请求服务器发送一条消息让 {} 给本机 {} 的NAT发送一条消息", id, nettyClient.getLocalId());
+                    log.debug("请求服务器发送一条消息让 {} 给本机 {} 的NAT发送一条消息", id, nettyClient.getLocalId());
                 }
             } else {
                 log.error("请求服务器发送失败。");
@@ -279,11 +280,11 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
                 if (log.isInfoEnabled()) {
-//                    log.info("通过 {} 的NAT {} 给 {} 的NAT {} 发送消息", localId, ADDRESS_MAP.get(localId), id, ADDRESS_MAP.get(id));
-                    log.info("通过 {} 给 {} 的NAT {} 发送消息", nettyClient.getLocalId(), id, PUBLIC_ADDR_MAP.get(id));
+//                    log.debug("通过 {} 的NAT {} 给 {} 的NAT {} 发送消息", localId, ADDRESS_MAP.get(localId), id, ADDRESS_MAP.get(id));
+                    log.debug("通过 {} 给 {} 的NAT {} 发送消息", nettyClient.getLocalId(), id, PUBLIC_ADDR_MAP.get(id));
                 }
             } else {
-                log.info("{} 发送消息失败", nettyClient.getLocalId());
+                log.debug("{} 发送消息失败", nettyClient.getLocalId());
             }
         });
     }
@@ -293,11 +294,11 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         String[] split = addr.split("@");
         if (Objects.equals(split[1], PUBLIC_ADDR_MAP.get(split[0]))) {
             if (log.isInfoEnabled()) {
-                log.info("{} 的地址已缓存", split[0]);
+                log.debug("{} 的地址已缓存", split[0]);
             }
         } else {
             if (log.isInfoEnabled()) {
-                log.info("收到 {} 的地址 {} 加入缓存", split[0], split[1]);
+                log.debug("收到 {} 的地址 {} 加入缓存", split[0], split[1]);
             }
             PUBLIC_ADDR_MAP.put(split[0], split[1]);
         }

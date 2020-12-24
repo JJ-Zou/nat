@@ -10,7 +10,7 @@ public interface NettyClient {
 
     void doClose();
 
-    void setThrough();
+    boolean setThrough();
 
     boolean getThrough();
 
