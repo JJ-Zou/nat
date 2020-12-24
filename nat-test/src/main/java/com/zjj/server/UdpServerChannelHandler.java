@@ -33,9 +33,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         InetSocketAddress localAddress = (InetSocketAddress) ctx.channel().localAddress();
-        if (log.isInfoEnabled()) {
-            log.info("服务端绑定成功！{}", InetUtils.toAddressString(localAddress));
-        }
+        log.debug("服务端绑定成功！{}", InetUtils.toAddressString(localAddress));
         CHANNEL_MAP.put(localAddress.getPort(), ctx.channel());
     }
 
@@ -58,15 +56,11 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                     case PRIVATE:
                         String id = inetCommand.getClientId();
                         String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        if (log.isInfoEnabled()) {
-                            log.info("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
-                        }
+                        log.debug("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
                         PRIVATE_ADDR_MAP.put(id,
                                 privateInetAddr);
                         channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
-                        if (log.isInfoEnabled()) {
-                            log.info("收到 {} 的公网地址 {} 加入缓存", id, addressString);
-                        }
+                        log.debug("收到 {} 的公网地址 {} 加入缓存", id, addressString);
                         PUBLIC_ADDR_MAP.put(id,
                                 addressString);
                         channel.eventLoop().parent().execute(() -> httpReq.addPublicAddr(id, addressString));
@@ -88,9 +82,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                                 InetUtils.toInetSocketAddress(addressString));
                 channel.writeAndFlush(privateInetAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        if (log.isInfoEnabled()) {
-                            log.info("回复 {} 的私网地址 {}", id, privateAddrStr);
-                        }
+                        log.debug("回复 {} 的私网地址 {}", id, privateAddrStr);
                     } else {
                         log.error("回复 {} 的私网地址失败", id);
                     }
@@ -103,9 +95,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                                 InetUtils.toInetSocketAddress(addressString));
                 channel.writeAndFlush(publicInetAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        if (log.isInfoEnabled()) {
-                            log.info("回复 {} 的公网地址 {}", id, publicAddrStr);
-                        }
+                        log.debug("回复 {} 的公网地址 {}", id, publicAddrStr);
                     } else {
                         log.error("回复 {} 的公网地址失败", id);
                     }
@@ -120,9 +110,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toInetSocketAddress(toInetAddrStr));
                 channel.writeAndFlush(reqRedirectPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        if (log.isInfoEnabled()) {
-                            log.info("转发消息, 让 {} 尝试和 {} 建立连接", to, reqRedirect.getFrom());
-                        }
+                        log.debug("转发消息, 让 {} 尝试和 {} 建立连接", to, reqRedirect.getFrom());
                     } else {
                         log.error("转发消息失败");
                     }
@@ -136,7 +124,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
             case PSP_MESSAGE:
                 break;
             case UNRECOGNIZED:
-                log.info("UNRECOGNIZED: {}", multiMessage);
+                log.debug("UNRECOGNIZED: {}", multiMessage);
                 break;
             default:
                 break;
@@ -180,9 +168,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 InetUtils.toInetSocketAddress(addressString));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                if (log.isInfoEnabled()) {
-                    log.info("发送OK");
-                }
+                log.debug("发送OK");
             } else {
                 log.error("发送失败");
             }
@@ -205,9 +191,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 InetUtils.toInetSocketAddress(PUBLIC_ADDR_MAP.get(sendId)));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                if (log.isInfoEnabled()) {
-                    log.info("请求 {} 给 {} 的Nat发送一条消息!", sendId, receiveId);
-                }
+                log.debug("请求 {} 给 {} 的Nat发送一条消息!", sendId, receiveId);
             } else {
                 log.error("{} 发送失败", packet);
             }
@@ -218,15 +202,11 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
         String oppositeId = ctrlInfo.getOppositeId();
         String address = ctrlInfo.getMessage();
         if (!Objects.equals(address, ACTUAL_ADDRESS_MAP.get(oppositeId))) {
-            if (log.isInfoEnabled()) {
-                log.info("更新用户 {} 的实际地址 {}", oppositeId, address);
-            }
+            log.debug("更新用户 {} 的实际地址 {}", oppositeId, address);
             ACTUAL_ADDRESS_MAP.put(oppositeId, address);
         }
-        if (log.isInfoEnabled()) {
-            log.info("用户注册地址: {}", PUBLIC_ADDR_MAP.get(oppositeId));
-            log.info("用户P2P地址: {}", ACTUAL_ADDRESS_MAP.get(oppositeId));
-        }
+        log.debug("用户注册地址: {}", PUBLIC_ADDR_MAP.get(oppositeId));
+        log.debug("用户P2P地址: {}", ACTUAL_ADDRESS_MAP.get(oppositeId));
     }
 
     private void routeHandler(String addressString, String oppositeId, String localId, Channel channel) {
@@ -247,9 +227,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 InetUtils.toInetSocketAddress(addressString));
         channel.writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                if (log.isInfoEnabled()) {
-                    log.info("将 {} 的地址 {} 发送给 {}@{}", oppositeId, PUBLIC_ADDR_MAP.get(oppositeId), localId, addressString);
-                }
+                log.debug("将 {} 的地址 {} 发送给 {}@{}", oppositeId, PUBLIC_ADDR_MAP.get(oppositeId), localId, addressString);
             } else {
                 log.error("向 {} 发送地址失败", localId);
             }
@@ -258,14 +236,10 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
 
     private void registerHandler(String addressString, String localId) {
         if (Objects.equals(addressString, PUBLIC_ADDR_MAP.get(localId))) {
-            if (log.isInfoEnabled()) {
-                log.info("{} 的地址未变化", localId);
-            }
+            log.debug("{} 的地址未变化", localId);
             return;
         }
-        if (log.isInfoEnabled()) {
-            log.info("缓存用户 {} 的通信地址 {}", localId, addressString);
-        }
+        log.debug("缓存用户 {} 的通信地址 {}", localId, addressString);
         PUBLIC_ADDR_MAP.put(localId, addressString);
     }
 }

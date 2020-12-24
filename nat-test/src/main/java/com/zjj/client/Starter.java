@@ -24,7 +24,7 @@ public class Starter {
         String publicAddr;
         do {
             sendPrivateAddr(client);
-            TimeUnit.MILLISECONDS.sleep(500);
+            TimeUnit.SECONDS.sleep(2);
         } while ((publicAddr = httpReq.getPublicAddr(client.getLocalId())) == null);
         log.debug("获取本机的公网地址用时{}ms", System.currentTimeMillis() - l1);
         UdpClientChannelHandler.PUBLIC_ADDR_MAP.put(client.getLocalId(), publicAddr);
@@ -60,16 +60,11 @@ public class Starter {
 //                    TimeUnit.MILLISECONDS.sleep(5);
 //                }
 //                log.debug("尝试使用私网穿透用时{}ms, 穿透{}", System.currentTimeMillis() - l1, client.getThrough() ? "成功" : "失败");
-
-                while (!client.getThrough()) {
+                if (!client.getThrough()) {
                     l1 = System.currentTimeMillis();
-                    processNatHandler.attemptPublicConnect();
                     while (!client.getThrough()) {
-                        if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
-
-                            break;
-                        }
-                        TimeUnit.MILLISECONDS.sleep(5);
+                        processNatHandler.attemptPublicConnect();
+                        TimeUnit.SECONDS.sleep(2);
                     }
                     log.debug("尝试使用公网穿透用时{}ms, 穿透{}", System.currentTimeMillis() - l1, client.getThrough() ? "成功" : "失败");
                 }
