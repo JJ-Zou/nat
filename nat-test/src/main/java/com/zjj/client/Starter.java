@@ -19,12 +19,14 @@ public class Starter {
         NettyClient client = new UdpClientRemote();
         client.doBind();
         log.info("本机ID: {}", client.getLocalId());
+        long l1 = System.currentTimeMillis();
         httpReq.addPrivateAddr(client.getLocalId(), InetUtils.toAddressString(client.getLocalAddress()));
         String publicAddr;
         do {
             sendPrivateAddr(client);
             TimeUnit.MILLISECONDS.sleep(500);
         } while ((publicAddr = httpReq.getPublicAddr(client.getLocalId())) == null);
+        log.debug("获取{}的公网地址用时{}ms", publicAddr, System.currentTimeMillis() - l1);
         log.info("本机公网地址: {}", publicAddr);
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -36,7 +38,7 @@ public class Starter {
                 String oppositeId = split[1].substring(1);
                 ProcessNatHandler processNatHandler = new ProcessNatHandler(client, oppositeId);
 
-                long l1 = System.currentTimeMillis();
+                l1 = System.currentTimeMillis();
                 String oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
                 log.info("{} 的私网地址是 {}", oppositeId, oppositePriAddr);
                 UdpClientChannelHandler.PRIVATE_ADDR_MAP.put(oppositeId, oppositePriAddr);
