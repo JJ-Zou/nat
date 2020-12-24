@@ -50,18 +50,18 @@ public class Starter {
                 UdpClientChannelHandler.PUBLIC_ADDR_MAP.put(oppositeId, oppositePubAddr);
                 log.debug("获取{}的公网地址用时{}ms", oppositeId, System.currentTimeMillis() - l1);
 
-                l1 = System.currentTimeMillis();
-                processNatHandler.attemptPrivateConnect();
+//                l1 = System.currentTimeMillis();
+//                processNatHandler.attemptPrivateConnect();
+//                while (!client.getThrough()) {
+//                    if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
+//
+//                        break;
+//                    }
+//                    TimeUnit.MILLISECONDS.sleep(5);
+//                }
+//                log.debug("尝试使用私网穿透用时{}ms, 穿透{}", System.currentTimeMillis() - l1, client.getThrough() ? "成功" : "失败");
+
                 while (!client.getThrough()) {
-                    if (System.currentTimeMillis() - l1 > TimeUnit.MILLISECONDS.toMillis(200)) {
-
-                        break;
-                    }
-                    TimeUnit.MILLISECONDS.sleep(5);
-                }
-                log.debug("尝试使用私网穿透用时{}ms, 穿透{}", System.currentTimeMillis() - l1, client.getThrough() ? "成功" : "失败");
-
-                if (!client.getThrough()) {
                     l1 = System.currentTimeMillis();
                     processNatHandler.attemptPublicConnect();
                     while (!client.getThrough()) {

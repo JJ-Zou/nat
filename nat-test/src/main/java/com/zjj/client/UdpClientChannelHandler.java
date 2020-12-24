@@ -124,7 +124,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 }
                 break;
             case REQ_REDIRECT:
-                System.out.println(multiMessage);
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
                 String from = reqRedirect.getFrom();
                 String to = reqRedirect.getTo();
