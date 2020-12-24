@@ -115,7 +115,8 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
                 String to = reqRedirect.getTo();
                 String toInetAddrStr = PUBLIC_ADDR_MAP.get(to);
-                DatagramPacket reqRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
+
+                DatagramPacket reqRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(MultiMessage.newBuilder(multiMessage).build().toByteArray()),
                         InetUtils.toInetSocketAddress(toInetAddrStr));
                 channel.writeAndFlush(reqRedirectPacket).addListener(f -> {
                     if (f.isSuccess()) {
