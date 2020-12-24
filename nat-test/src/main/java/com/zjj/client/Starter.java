@@ -78,9 +78,9 @@ public class Starter {
             } else if ("chat".equals(split[0])) {
 //                processNatHandler.sendMessage(split[1].substring(1), split[2]);
             }
-
         }
-
+        httpReq.delPrivateAddr(client.getLocalId());
+        httpReq.delPublicAddr(client.getLocalId());
     }
 
     public void sendPrivateAddr(NettyClient nettyClient) {

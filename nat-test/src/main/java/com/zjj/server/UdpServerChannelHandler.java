@@ -59,7 +59,6 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                         log.debug("收到 {} 的私网地址 {} 加入缓存", id, privateInetAddr);
                         PRIVATE_ADDR_MAP.put(id,
                                 privateInetAddr);
-                        channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
                         log.debug("收到 {} 的公网地址 {} 加入缓存", id, addressString);
                         PUBLIC_ADDR_MAP.put(id,
                                 addressString);

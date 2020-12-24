@@ -36,7 +36,7 @@ public class UdpClientRemote extends AbstractClient {
     }
 
     public void doClose() {
-
+        group.shutdownGracefully().syncUninterruptibly();
     }
 
     @Override
