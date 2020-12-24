@@ -31,6 +31,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
 
     static final Map<String, String> PUBLIC_ADDR_MAP = new ConcurrentHashMap<>();
     static final Map<String, String> PRIVATE_ADDR_MAP = new ConcurrentHashMap<>();
+    static final Map<String, String> ACTUAL_ADDR_MAP = new ConcurrentHashMap<>();
 
 
     @Override
@@ -93,6 +94,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 if (nettyClient.setThrough()) {
                     log.debug("{} 到 {} 穿透成功!", synAck.getTo(), synAck.getFrom());
                     log.debug("穿透成功的对方id: {} 的穿透地址为 {}", synAck.getFrom(), addressString);
+                    ACTUAL_ADDR_MAP.put(synAck.getFrom(), addressString);
                 }
                 DatagramPacket ackPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(synAck.getTo(), synAck.getFrom()).toByteArray()),
@@ -111,6 +113,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 if (nettyClient.getThrough() || nettyClient.setThrough()) {
                     log.debug("{} 到 {} 穿透成功!", ack.getFrom(), ack.getTo());
                     log.debug("穿透成功的对方id: {} 的穿透地址为 {}", ack.getFrom(), addressString);
+                    ACTUAL_ADDR_MAP.put(ack.getFrom(), addressString);
                 }
                 break;
             case REQ_REDIRECT:
@@ -123,7 +126,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toInetSocketAddress(peerAddrStr));
                 channel.writeAndFlush(privatePacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("服务器转发id: {} 的请求 id: {} 与 id{} 其公网地址 {} 建立连接", from, to, from, peerAddrStr);
+                        log.debug("服务器转发id: {} 的请求 id: {} 与 id{} 其地址 {} 建立连接", from, to, from, peerAddrStr);
                     } else {
                         log.error("请求发送失败");
                     }
