@@ -2,6 +2,7 @@ package com.zjj.client;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractIpAddrHolder implements IpAddrHolder {
@@ -14,6 +15,11 @@ public abstract class AbstractIpAddrHolder implements IpAddrHolder {
 
     public Map<String, String> throughAddrMaps() {
         return Collections.unmodifiableMap(throughHolder);
+    }
+
+    @Override
+    public Set<String> getThroughIds() {
+        return Collections.unmodifiableSet(throughHolder.keySet());
     }
 
     @Override

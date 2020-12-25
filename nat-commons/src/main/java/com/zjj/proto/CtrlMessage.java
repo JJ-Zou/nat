@@ -243,47 +243,62 @@ public final class CtrlMessage {
     com.zjj.proto.CtrlMessage.PlotTraceOrBuilder getPlotTraceOrBuilder();
 
     /**
-     * <code>.CtrlInfo ctrlInfo = 9;</code>
+     * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+     * @return Whether the plotTraceRedirect field is set.
+     */
+    boolean hasPlotTraceRedirect();
+    /**
+     * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+     * @return The plotTraceRedirect.
+     */
+    com.zjj.proto.CtrlMessage.PlotTraceRedirect getPlotTraceRedirect();
+    /**
+     * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+     */
+    com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder getPlotTraceRedirectOrBuilder();
+
+    /**
+     * <code>.CtrlInfo ctrlInfo = 10;</code>
      * @return Whether the ctrlInfo field is set.
      */
     boolean hasCtrlInfo();
     /**
-     * <code>.CtrlInfo ctrlInfo = 9;</code>
+     * <code>.CtrlInfo ctrlInfo = 10;</code>
      * @return The ctrlInfo.
      */
     com.zjj.proto.CtrlMessage.CtrlInfo getCtrlInfo();
     /**
-     * <code>.CtrlInfo ctrlInfo = 9;</code>
+     * <code>.CtrlInfo ctrlInfo = 10;</code>
      */
     com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder getCtrlInfoOrBuilder();
 
     /**
-     * <code>.ServerAck serverAck = 10;</code>
+     * <code>.ServerAck serverAck = 11;</code>
      * @return Whether the serverAck field is set.
      */
     boolean hasServerAck();
     /**
-     * <code>.ServerAck serverAck = 10;</code>
+     * <code>.ServerAck serverAck = 11;</code>
      * @return The serverAck.
      */
     com.zjj.proto.CtrlMessage.ServerAck getServerAck();
     /**
-     * <code>.ServerAck serverAck = 10;</code>
+     * <code>.ServerAck serverAck = 11;</code>
      */
     com.zjj.proto.CtrlMessage.ServerAckOrBuilder getServerAckOrBuilder();
 
     /**
-     * <code>.P2PMessage p2PMessage = 11;</code>
+     * <code>.P2PMessage p2PMessage = 12;</code>
      * @return Whether the p2PMessage field is set.
      */
     boolean hasP2PMessage();
     /**
-     * <code>.P2PMessage p2PMessage = 11;</code>
+     * <code>.P2PMessage p2PMessage = 12;</code>
      * @return The p2PMessage.
      */
     com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage();
     /**
-     * <code>.P2PMessage p2PMessage = 11;</code>
+     * <code>.P2PMessage p2PMessage = 12;</code>
      */
     com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder();
 
@@ -440,8 +455,22 @@ public final class CtrlMessage {
               break;
             }
             case 74: {
-              com.zjj.proto.CtrlMessage.CtrlInfo.Builder subBuilder = null;
+              com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder subBuilder = null;
               if (multiBodyCase_ == 9) {
+                subBuilder = ((com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_).toBuilder();
+              }
+              multiBody_ =
+                  input.readMessage(com.zjj.proto.CtrlMessage.PlotTraceRedirect.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_);
+                multiBody_ = subBuilder.buildPartial();
+              }
+              multiBodyCase_ = 9;
+              break;
+            }
+            case 82: {
+              com.zjj.proto.CtrlMessage.CtrlInfo.Builder subBuilder = null;
+              if (multiBodyCase_ == 10) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -450,12 +479,12 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 9;
+              multiBodyCase_ = 10;
               break;
             }
-            case 82: {
+            case 90: {
               com.zjj.proto.CtrlMessage.ServerAck.Builder subBuilder = null;
-              if (multiBodyCase_ == 10) {
+              if (multiBodyCase_ == 11) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.ServerAck) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -464,12 +493,12 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 10;
+              multiBodyCase_ = 11;
               break;
             }
-            case 90: {
+            case 98: {
               com.zjj.proto.CtrlMessage.P2PMessage.Builder subBuilder = null;
-              if (multiBodyCase_ == 11) {
+              if (multiBodyCase_ == 12) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -478,7 +507,7 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 11;
+              multiBodyCase_ = 12;
               break;
             }
             default: {
@@ -547,17 +576,21 @@ public final class CtrlMessage {
        */
       PLOT_TRACE(6),
       /**
-       * <code>CTRL_INFO = 7;</code>
+       * <code>PLOT_TRACE_REDIRECT = 7;</code>
        */
-      CTRL_INFO(7),
+      PLOT_TRACE_REDIRECT(7),
       /**
-       * <code>SERVER_ACK = 8;</code>
+       * <code>CTRL_INFO = 8;</code>
        */
-      SERVER_ACK(8),
+      CTRL_INFO(8),
       /**
-       * <code>PSP_MESSAGE = 9;</code>
+       * <code>SERVER_ACK = 9;</code>
        */
-      PSP_MESSAGE(9),
+      SERVER_ACK(9),
+      /**
+       * <code>PSP_MESSAGE = 10;</code>
+       */
+      PSP_MESSAGE(10),
       UNRECOGNIZED(-1),
       ;
 
@@ -590,17 +623,21 @@ public final class CtrlMessage {
        */
       public static final int PLOT_TRACE_VALUE = 6;
       /**
-       * <code>CTRL_INFO = 7;</code>
+       * <code>PLOT_TRACE_REDIRECT = 7;</code>
        */
-      public static final int CTRL_INFO_VALUE = 7;
+      public static final int PLOT_TRACE_REDIRECT_VALUE = 7;
       /**
-       * <code>SERVER_ACK = 8;</code>
+       * <code>CTRL_INFO = 8;</code>
        */
-      public static final int SERVER_ACK_VALUE = 8;
+      public static final int CTRL_INFO_VALUE = 8;
       /**
-       * <code>PSP_MESSAGE = 9;</code>
+       * <code>SERVER_ACK = 9;</code>
        */
-      public static final int PSP_MESSAGE_VALUE = 9;
+      public static final int SERVER_ACK_VALUE = 9;
+      /**
+       * <code>PSP_MESSAGE = 10;</code>
+       */
+      public static final int PSP_MESSAGE_VALUE = 10;
 
 
       public final int getNumber() {
@@ -634,9 +671,10 @@ public final class CtrlMessage {
           case 4: return ACK;
           case 5: return REQ_REDIRECT;
           case 6: return PLOT_TRACE;
-          case 7: return CTRL_INFO;
-          case 8: return SERVER_ACK;
-          case 9: return PSP_MESSAGE;
+          case 7: return PLOT_TRACE_REDIRECT;
+          case 8: return CTRL_INFO;
+          case 9: return SERVER_ACK;
+          case 10: return PSP_MESSAGE;
           default: return null;
         }
       }
@@ -705,9 +743,10 @@ public final class CtrlMessage {
       ACK(6),
       REQREDIRECT(7),
       PLOTTRACE(8),
-      CTRLINFO(9),
-      SERVERACK(10),
-      P2PMESSAGE(11),
+      PLOTTRACEREDIRECT(9),
+      CTRLINFO(10),
+      SERVERACK(11),
+      P2PMESSAGE(12),
       MULTIBODY_NOT_SET(0);
       private final int value;
       private MultiBodyCase(int value) {
@@ -732,9 +771,10 @@ public final class CtrlMessage {
           case 6: return ACK;
           case 7: return REQREDIRECT;
           case 8: return PLOTTRACE;
-          case 9: return CTRLINFO;
-          case 10: return SERVERACK;
-          case 11: return P2PMESSAGE;
+          case 9: return PLOTTRACEREDIRECT;
+          case 10: return CTRLINFO;
+          case 11: return SERVERACK;
+          case 12: return P2PMESSAGE;
           case 0: return MULTIBODY_NOT_SET;
           default: return null;
         }
@@ -986,94 +1026,125 @@ public final class CtrlMessage {
       return com.zjj.proto.CtrlMessage.PlotTrace.getDefaultInstance();
     }
 
-    public static final int CTRLINFO_FIELD_NUMBER = 9;
+    public static final int PLOTTRACEREDIRECT_FIELD_NUMBER = 9;
     /**
-     * <code>.CtrlInfo ctrlInfo = 9;</code>
+     * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+     * @return Whether the plotTraceRedirect field is set.
+     */
+    @java.lang.Override
+    public boolean hasPlotTraceRedirect() {
+      return multiBodyCase_ == 9;
+    }
+    /**
+     * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+     * @return The plotTraceRedirect.
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.PlotTraceRedirect getPlotTraceRedirect() {
+      if (multiBodyCase_ == 9) {
+         return (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+    }
+    /**
+     * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder getPlotTraceRedirectOrBuilder() {
+      if (multiBodyCase_ == 9) {
+         return (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+    }
+
+    public static final int CTRLINFO_FIELD_NUMBER = 10;
+    /**
+     * <code>.CtrlInfo ctrlInfo = 10;</code>
      * @return Whether the ctrlInfo field is set.
      */
     @java.lang.Override
     public boolean hasCtrlInfo() {
-      return multiBodyCase_ == 9;
+      return multiBodyCase_ == 10;
     }
     /**
-     * <code>.CtrlInfo ctrlInfo = 9;</code>
+     * <code>.CtrlInfo ctrlInfo = 10;</code>
      * @return The ctrlInfo.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.CtrlInfo getCtrlInfo() {
-      if (multiBodyCase_ == 9) {
+      if (multiBodyCase_ == 10) {
          return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
     }
     /**
-     * <code>.CtrlInfo ctrlInfo = 9;</code>
+     * <code>.CtrlInfo ctrlInfo = 10;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder getCtrlInfoOrBuilder() {
-      if (multiBodyCase_ == 9) {
+      if (multiBodyCase_ == 10) {
          return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
     }
 
-    public static final int SERVERACK_FIELD_NUMBER = 10;
+    public static final int SERVERACK_FIELD_NUMBER = 11;
     /**
-     * <code>.ServerAck serverAck = 10;</code>
+     * <code>.ServerAck serverAck = 11;</code>
      * @return Whether the serverAck field is set.
      */
     @java.lang.Override
     public boolean hasServerAck() {
-      return multiBodyCase_ == 10;
+      return multiBodyCase_ == 11;
     }
     /**
-     * <code>.ServerAck serverAck = 10;</code>
+     * <code>.ServerAck serverAck = 11;</code>
      * @return The serverAck.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.ServerAck getServerAck() {
-      if (multiBodyCase_ == 10) {
+      if (multiBodyCase_ == 11) {
          return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
     }
     /**
-     * <code>.ServerAck serverAck = 10;</code>
+     * <code>.ServerAck serverAck = 11;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.ServerAckOrBuilder getServerAckOrBuilder() {
-      if (multiBodyCase_ == 10) {
+      if (multiBodyCase_ == 11) {
          return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
     }
 
-    public static final int P2PMESSAGE_FIELD_NUMBER = 11;
+    public static final int P2PMESSAGE_FIELD_NUMBER = 12;
     /**
-     * <code>.P2PMessage p2PMessage = 11;</code>
+     * <code>.P2PMessage p2PMessage = 12;</code>
      * @return Whether the p2PMessage field is set.
      */
     @java.lang.Override
     public boolean hasP2PMessage() {
-      return multiBodyCase_ == 11;
+      return multiBodyCase_ == 12;
     }
     /**
-     * <code>.P2PMessage p2PMessage = 11;</code>
+     * <code>.P2PMessage p2PMessage = 12;</code>
      * @return The p2PMessage.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage() {
-      if (multiBodyCase_ == 11) {
+      if (multiBodyCase_ == 12) {
          return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
     }
     /**
-     * <code>.P2PMessage p2PMessage = 11;</code>
+     * <code>.P2PMessage p2PMessage = 12;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder() {
-      if (multiBodyCase_ == 11) {
+      if (multiBodyCase_ == 12) {
          return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
@@ -1118,13 +1189,16 @@ public final class CtrlMessage {
         output.writeMessage(8, (com.zjj.proto.CtrlMessage.PlotTrace) multiBody_);
       }
       if (multiBodyCase_ == 9) {
-        output.writeMessage(9, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
+        output.writeMessage(9, (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_);
       }
       if (multiBodyCase_ == 10) {
-        output.writeMessage(10, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+        output.writeMessage(10, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
       }
       if (multiBodyCase_ == 11) {
-        output.writeMessage(11, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
+        output.writeMessage(11, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+      }
+      if (multiBodyCase_ == 12) {
+        output.writeMessage(12, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
       }
       unknownFields.writeTo(output);
     }
@@ -1169,15 +1243,19 @@ public final class CtrlMessage {
       }
       if (multiBodyCase_ == 9) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(9, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
+          .computeMessageSize(9, (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_);
       }
       if (multiBodyCase_ == 10) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+          .computeMessageSize(10, (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_);
       }
       if (multiBodyCase_ == 11) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
+          .computeMessageSize(11, (com.zjj.proto.CtrlMessage.ServerAck) multiBody_);
+      }
+      if (multiBodyCase_ == 12) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(12, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1226,14 +1304,18 @@ public final class CtrlMessage {
               .equals(other.getPlotTrace())) return false;
           break;
         case 9:
+          if (!getPlotTraceRedirect()
+              .equals(other.getPlotTraceRedirect())) return false;
+          break;
+        case 10:
           if (!getCtrlInfo()
               .equals(other.getCtrlInfo())) return false;
           break;
-        case 10:
+        case 11:
           if (!getServerAck()
               .equals(other.getServerAck())) return false;
           break;
-        case 11:
+        case 12:
           if (!getP2PMessage()
               .equals(other.getP2PMessage())) return false;
           break;
@@ -1283,14 +1365,18 @@ public final class CtrlMessage {
           hash = (53 * hash) + getPlotTrace().hashCode();
           break;
         case 9:
+          hash = (37 * hash) + PLOTTRACEREDIRECT_FIELD_NUMBER;
+          hash = (53 * hash) + getPlotTraceRedirect().hashCode();
+          break;
+        case 10:
           hash = (37 * hash) + CTRLINFO_FIELD_NUMBER;
           hash = (53 * hash) + getCtrlInfo().hashCode();
           break;
-        case 10:
+        case 11:
           hash = (37 * hash) + SERVERACK_FIELD_NUMBER;
           hash = (53 * hash) + getServerAck().hashCode();
           break;
-        case 11:
+        case 12:
           hash = (37 * hash) + P2PMESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getP2PMessage().hashCode();
           break;
@@ -1511,20 +1597,27 @@ public final class CtrlMessage {
           }
         }
         if (multiBodyCase_ == 9) {
+          if (plotTraceRedirectBuilder_ == null) {
+            result.multiBody_ = multiBody_;
+          } else {
+            result.multiBody_ = plotTraceRedirectBuilder_.build();
+          }
+        }
+        if (multiBodyCase_ == 10) {
           if (ctrlInfoBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
             result.multiBody_ = ctrlInfoBuilder_.build();
           }
         }
-        if (multiBodyCase_ == 10) {
+        if (multiBodyCase_ == 11) {
           if (serverAckBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
             result.multiBody_ = serverAckBuilder_.build();
           }
         }
-        if (multiBodyCase_ == 11) {
+        if (multiBodyCase_ == 12) {
           if (p2PMessageBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
@@ -1610,6 +1703,10 @@ public final class CtrlMessage {
           }
           case PLOTTRACE: {
             mergePlotTrace(other.getPlotTrace());
+            break;
+          }
+          case PLOTTRACEREDIRECT: {
+            mergePlotTraceRedirect(other.getPlotTraceRedirect());
             break;
           }
           case CTRLINFO: {
@@ -2714,35 +2811,176 @@ public final class CtrlMessage {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.PlotTraceRedirect, com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder, com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder> plotTraceRedirectBuilder_;
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       * @return Whether the plotTraceRedirect field is set.
+       */
+      @java.lang.Override
+      public boolean hasPlotTraceRedirect() {
+        return multiBodyCase_ == 9;
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       * @return The plotTraceRedirect.
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.PlotTraceRedirect getPlotTraceRedirect() {
+        if (plotTraceRedirectBuilder_ == null) {
+          if (multiBodyCase_ == 9) {
+            return (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+        } else {
+          if (multiBodyCase_ == 9) {
+            return plotTraceRedirectBuilder_.getMessage();
+          }
+          return com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      public Builder setPlotTraceRedirect(com.zjj.proto.CtrlMessage.PlotTraceRedirect value) {
+        if (plotTraceRedirectBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          multiBody_ = value;
+          onChanged();
+        } else {
+          plotTraceRedirectBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      public Builder setPlotTraceRedirect(
+          com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder builderForValue) {
+        if (plotTraceRedirectBuilder_ == null) {
+          multiBody_ = builderForValue.build();
+          onChanged();
+        } else {
+          plotTraceRedirectBuilder_.setMessage(builderForValue.build());
+        }
+        multiBodyCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      public Builder mergePlotTraceRedirect(com.zjj.proto.CtrlMessage.PlotTraceRedirect value) {
+        if (plotTraceRedirectBuilder_ == null) {
+          if (multiBodyCase_ == 9 &&
+              multiBody_ != com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance()) {
+            multiBody_ = com.zjj.proto.CtrlMessage.PlotTraceRedirect.newBuilder((com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            multiBody_ = value;
+          }
+          onChanged();
+        } else {
+          if (multiBodyCase_ == 9) {
+            plotTraceRedirectBuilder_.mergeFrom(value);
+          }
+          plotTraceRedirectBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 9;
+        return this;
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      public Builder clearPlotTraceRedirect() {
+        if (plotTraceRedirectBuilder_ == null) {
+          if (multiBodyCase_ == 9) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+            onChanged();
+          }
+        } else {
+          if (multiBodyCase_ == 9) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+          }
+          plotTraceRedirectBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      public com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder getPlotTraceRedirectBuilder() {
+        return getPlotTraceRedirectFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder getPlotTraceRedirectOrBuilder() {
+        if ((multiBodyCase_ == 9) && (plotTraceRedirectBuilder_ != null)) {
+          return plotTraceRedirectBuilder_.getMessageOrBuilder();
+        } else {
+          if (multiBodyCase_ == 9) {
+            return (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.PlotTraceRedirect plotTraceRedirect = 9;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.PlotTraceRedirect, com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder, com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder> 
+          getPlotTraceRedirectFieldBuilder() {
+        if (plotTraceRedirectBuilder_ == null) {
+          if (!(multiBodyCase_ == 9)) {
+            multiBody_ = com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+          }
+          plotTraceRedirectBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.zjj.proto.CtrlMessage.PlotTraceRedirect, com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder, com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder>(
+                  (com.zjj.proto.CtrlMessage.PlotTraceRedirect) multiBody_,
+                  getParentForChildren(),
+                  isClean());
+          multiBody_ = null;
+        }
+        multiBodyCase_ = 9;
+        onChanged();;
+        return plotTraceRedirectBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.CtrlInfo, com.zjj.proto.CtrlMessage.CtrlInfo.Builder, com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder> ctrlInfoBuilder_;
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        * @return Whether the ctrlInfo field is set.
        */
       @java.lang.Override
       public boolean hasCtrlInfo() {
-        return multiBodyCase_ == 9;
+        return multiBodyCase_ == 10;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        * @return The ctrlInfo.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.CtrlInfo getCtrlInfo() {
         if (ctrlInfoBuilder_ == null) {
-          if (multiBodyCase_ == 9) {
+          if (multiBodyCase_ == 10) {
             return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 9) {
+          if (multiBodyCase_ == 10) {
             return ctrlInfoBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
         }
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       public Builder setCtrlInfo(com.zjj.proto.CtrlMessage.CtrlInfo value) {
         if (ctrlInfoBuilder_ == null) {
@@ -2754,11 +2992,11 @@ public final class CtrlMessage {
         } else {
           ctrlInfoBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 9;
+        multiBodyCase_ = 10;
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       public Builder setCtrlInfo(
           com.zjj.proto.CtrlMessage.CtrlInfo.Builder builderForValue) {
@@ -2768,15 +3006,15 @@ public final class CtrlMessage {
         } else {
           ctrlInfoBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 9;
+        multiBodyCase_ = 10;
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       public Builder mergeCtrlInfo(com.zjj.proto.CtrlMessage.CtrlInfo value) {
         if (ctrlInfoBuilder_ == null) {
-          if (multiBodyCase_ == 9 &&
+          if (multiBodyCase_ == 10 &&
               multiBody_ != com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.CtrlInfo.newBuilder((com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -2785,26 +3023,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 9) {
+          if (multiBodyCase_ == 10) {
             ctrlInfoBuilder_.mergeFrom(value);
           }
           ctrlInfoBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 9;
+        multiBodyCase_ = 10;
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       public Builder clearCtrlInfo() {
         if (ctrlInfoBuilder_ == null) {
-          if (multiBodyCase_ == 9) {
+          if (multiBodyCase_ == 10) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 9) {
+          if (multiBodyCase_ == 10) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -2813,33 +3051,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       public com.zjj.proto.CtrlMessage.CtrlInfo.Builder getCtrlInfoBuilder() {
         return getCtrlInfoFieldBuilder().getBuilder();
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder getCtrlInfoOrBuilder() {
-        if ((multiBodyCase_ == 9) && (ctrlInfoBuilder_ != null)) {
+        if ((multiBodyCase_ == 10) && (ctrlInfoBuilder_ != null)) {
           return ctrlInfoBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 9) {
+          if (multiBodyCase_ == 10) {
             return (com.zjj.proto.CtrlMessage.CtrlInfo) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
         }
       }
       /**
-       * <code>.CtrlInfo ctrlInfo = 9;</code>
+       * <code>.CtrlInfo ctrlInfo = 10;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.CtrlInfo, com.zjj.proto.CtrlMessage.CtrlInfo.Builder, com.zjj.proto.CtrlMessage.CtrlInfoOrBuilder> 
           getCtrlInfoFieldBuilder() {
         if (ctrlInfoBuilder_ == null) {
-          if (!(multiBodyCase_ == 9)) {
+          if (!(multiBodyCase_ == 10)) {
             multiBody_ = com.zjj.proto.CtrlMessage.CtrlInfo.getDefaultInstance();
           }
           ctrlInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2849,7 +3087,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 9;
+        multiBodyCase_ = 10;
         onChanged();;
         return ctrlInfoBuilder_;
       }
@@ -2857,33 +3095,33 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.ServerAck, com.zjj.proto.CtrlMessage.ServerAck.Builder, com.zjj.proto.CtrlMessage.ServerAckOrBuilder> serverAckBuilder_;
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        * @return Whether the serverAck field is set.
        */
       @java.lang.Override
       public boolean hasServerAck() {
-        return multiBodyCase_ == 10;
+        return multiBodyCase_ == 11;
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        * @return The serverAck.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.ServerAck getServerAck() {
         if (serverAckBuilder_ == null) {
-          if (multiBodyCase_ == 10) {
+          if (multiBodyCase_ == 11) {
             return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 10) {
+          if (multiBodyCase_ == 11) {
             return serverAckBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       public Builder setServerAck(com.zjj.proto.CtrlMessage.ServerAck value) {
         if (serverAckBuilder_ == null) {
@@ -2895,11 +3133,11 @@ public final class CtrlMessage {
         } else {
           serverAckBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 10;
+        multiBodyCase_ = 11;
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       public Builder setServerAck(
           com.zjj.proto.CtrlMessage.ServerAck.Builder builderForValue) {
@@ -2909,15 +3147,15 @@ public final class CtrlMessage {
         } else {
           serverAckBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 10;
+        multiBodyCase_ = 11;
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       public Builder mergeServerAck(com.zjj.proto.CtrlMessage.ServerAck value) {
         if (serverAckBuilder_ == null) {
-          if (multiBodyCase_ == 10 &&
+          if (multiBodyCase_ == 11 &&
               multiBody_ != com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.ServerAck.newBuilder((com.zjj.proto.CtrlMessage.ServerAck) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -2926,26 +3164,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 10) {
+          if (multiBodyCase_ == 11) {
             serverAckBuilder_.mergeFrom(value);
           }
           serverAckBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 10;
+        multiBodyCase_ = 11;
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       public Builder clearServerAck() {
         if (serverAckBuilder_ == null) {
-          if (multiBodyCase_ == 10) {
+          if (multiBodyCase_ == 11) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 10) {
+          if (multiBodyCase_ == 11) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -2954,33 +3192,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       public com.zjj.proto.CtrlMessage.ServerAck.Builder getServerAckBuilder() {
         return getServerAckFieldBuilder().getBuilder();
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.ServerAckOrBuilder getServerAckOrBuilder() {
-        if ((multiBodyCase_ == 10) && (serverAckBuilder_ != null)) {
+        if ((multiBodyCase_ == 11) && (serverAckBuilder_ != null)) {
           return serverAckBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 10) {
+          if (multiBodyCase_ == 11) {
             return (com.zjj.proto.CtrlMessage.ServerAck) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
         }
       }
       /**
-       * <code>.ServerAck serverAck = 10;</code>
+       * <code>.ServerAck serverAck = 11;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.ServerAck, com.zjj.proto.CtrlMessage.ServerAck.Builder, com.zjj.proto.CtrlMessage.ServerAckOrBuilder> 
           getServerAckFieldBuilder() {
         if (serverAckBuilder_ == null) {
-          if (!(multiBodyCase_ == 10)) {
+          if (!(multiBodyCase_ == 11)) {
             multiBody_ = com.zjj.proto.CtrlMessage.ServerAck.getDefaultInstance();
           }
           serverAckBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -2990,7 +3228,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 10;
+        multiBodyCase_ = 11;
         onChanged();;
         return serverAckBuilder_;
       }
@@ -2998,33 +3236,33 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.P2PMessage, com.zjj.proto.CtrlMessage.P2PMessage.Builder, com.zjj.proto.CtrlMessage.P2PMessageOrBuilder> p2PMessageBuilder_;
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        * @return Whether the p2PMessage field is set.
        */
       @java.lang.Override
       public boolean hasP2PMessage() {
-        return multiBodyCase_ == 11;
+        return multiBodyCase_ == 12;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        * @return The p2PMessage.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage() {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 11) {
+          if (multiBodyCase_ == 12) {
             return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 11) {
+          if (multiBodyCase_ == 12) {
             return p2PMessageBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       public Builder setP2PMessage(com.zjj.proto.CtrlMessage.P2PMessage value) {
         if (p2PMessageBuilder_ == null) {
@@ -3036,11 +3274,11 @@ public final class CtrlMessage {
         } else {
           p2PMessageBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 11;
+        multiBodyCase_ = 12;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       public Builder setP2PMessage(
           com.zjj.proto.CtrlMessage.P2PMessage.Builder builderForValue) {
@@ -3050,15 +3288,15 @@ public final class CtrlMessage {
         } else {
           p2PMessageBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 11;
+        multiBodyCase_ = 12;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       public Builder mergeP2PMessage(com.zjj.proto.CtrlMessage.P2PMessage value) {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 11 &&
+          if (multiBodyCase_ == 12 &&
               multiBody_ != com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.P2PMessage.newBuilder((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -3067,26 +3305,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 11) {
+          if (multiBodyCase_ == 12) {
             p2PMessageBuilder_.mergeFrom(value);
           }
           p2PMessageBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 11;
+        multiBodyCase_ = 12;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       public Builder clearP2PMessage() {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 11) {
+          if (multiBodyCase_ == 12) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 11) {
+          if (multiBodyCase_ == 12) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -3095,33 +3333,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       public com.zjj.proto.CtrlMessage.P2PMessage.Builder getP2PMessageBuilder() {
         return getP2PMessageFieldBuilder().getBuilder();
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder() {
-        if ((multiBodyCase_ == 11) && (p2PMessageBuilder_ != null)) {
+        if ((multiBodyCase_ == 12) && (p2PMessageBuilder_ != null)) {
           return p2PMessageBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 11) {
+          if (multiBodyCase_ == 12) {
             return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.P2PMessage p2PMessage = 11;</code>
+       * <code>.P2PMessage p2PMessage = 12;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.P2PMessage, com.zjj.proto.CtrlMessage.P2PMessage.Builder, com.zjj.proto.CtrlMessage.P2PMessageOrBuilder> 
           getP2PMessageFieldBuilder() {
         if (p2PMessageBuilder_ == null) {
-          if (!(multiBodyCase_ == 11)) {
+          if (!(multiBodyCase_ == 12)) {
             multiBody_ = com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
           }
           p2PMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3131,7 +3369,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 11;
+        multiBodyCase_ = 12;
         onChanged();;
         return p2PMessageBuilder_;
       }
@@ -8669,6 +8907,1152 @@ public final class CtrlMessage {
 
   }
 
+  public interface PlotTraceRedirectOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:PlotTraceRedirect)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.FrameHead frame_head = 1;</code>
+     * @return Whether the frameHead field is set.
+     */
+    boolean hasFrameHead();
+    /**
+     * <code>.FrameHead frame_head = 1;</code>
+     * @return The frameHead.
+     */
+    com.zjj.proto.CtrlMessage.FrameHead getFrameHead();
+    /**
+     * <code>.FrameHead frame_head = 1;</code>
+     */
+    com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder();
+
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    java.util.List<com.zjj.proto.CtrlMessage.Plot> 
+        getPlotsList();
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    com.zjj.proto.CtrlMessage.Plot getPlots(int index);
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    int getPlotsCount();
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    java.util.List<? extends com.zjj.proto.CtrlMessage.PlotOrBuilder> 
+        getPlotsOrBuilderList();
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    com.zjj.proto.CtrlMessage.PlotOrBuilder getPlotsOrBuilder(
+        int index);
+
+    /**
+     * <code>string to = 3;</code>
+     * @return The to.
+     */
+    java.lang.String getTo();
+    /**
+     * <code>string to = 3;</code>
+     * @return The bytes for to.
+     */
+    com.google.protobuf.ByteString
+        getToBytes();
+  }
+  /**
+   * Protobuf type {@code PlotTraceRedirect}
+   */
+  public static final class PlotTraceRedirect extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:PlotTraceRedirect)
+      PlotTraceRedirectOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PlotTraceRedirect.newBuilder() to construct.
+    private PlotTraceRedirect(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PlotTraceRedirect() {
+      plots_ = java.util.Collections.emptyList();
+      to_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new PlotTraceRedirect();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PlotTraceRedirect(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.zjj.proto.CtrlMessage.FrameHead.Builder subBuilder = null;
+              if (frameHead_ != null) {
+                subBuilder = frameHead_.toBuilder();
+              }
+              frameHead_ = input.readMessage(com.zjj.proto.CtrlMessage.FrameHead.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(frameHead_);
+                frameHead_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                plots_ = new java.util.ArrayList<com.zjj.proto.CtrlMessage.Plot>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              plots_.add(
+                  input.readMessage(com.zjj.proto.CtrlMessage.Plot.parser(), extensionRegistry));
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              to_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          plots_ = java.util.Collections.unmodifiableList(plots_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.zjj.proto.CtrlMessage.internal_static_PlotTraceRedirect_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.zjj.proto.CtrlMessage.internal_static_PlotTraceRedirect_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.zjj.proto.CtrlMessage.PlotTraceRedirect.class, com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder.class);
+    }
+
+    public static final int FRAME_HEAD_FIELD_NUMBER = 1;
+    private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
+    /**
+     * <code>.FrameHead frame_head = 1;</code>
+     * @return Whether the frameHead field is set.
+     */
+    @java.lang.Override
+    public boolean hasFrameHead() {
+      return frameHead_ != null;
+    }
+    /**
+     * <code>.FrameHead frame_head = 1;</code>
+     * @return The frameHead.
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.FrameHead getFrameHead() {
+      return frameHead_ == null ? com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
+    }
+    /**
+     * <code>.FrameHead frame_head = 1;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
+      return getFrameHead();
+    }
+
+    public static final int PLOTS_FIELD_NUMBER = 2;
+    private java.util.List<com.zjj.proto.CtrlMessage.Plot> plots_;
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.zjj.proto.CtrlMessage.Plot> getPlotsList() {
+      return plots_;
+    }
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.zjj.proto.CtrlMessage.PlotOrBuilder> 
+        getPlotsOrBuilderList() {
+      return plots_;
+    }
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    @java.lang.Override
+    public int getPlotsCount() {
+      return plots_.size();
+    }
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.Plot getPlots(int index) {
+      return plots_.get(index);
+    }
+    /**
+     * <code>repeated .Plot plots = 2;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.PlotOrBuilder getPlotsOrBuilder(
+        int index) {
+      return plots_.get(index);
+    }
+
+    public static final int TO_FIELD_NUMBER = 3;
+    private volatile java.lang.Object to_;
+    /**
+     * <code>string to = 3;</code>
+     * @return The to.
+     */
+    @java.lang.Override
+    public java.lang.String getTo() {
+      java.lang.Object ref = to_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        to_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string to = 3;</code>
+     * @return The bytes for to.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getToBytes() {
+      java.lang.Object ref = to_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        to_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (frameHead_ != null) {
+        output.writeMessage(1, getFrameHead());
+      }
+      for (int i = 0; i < plots_.size(); i++) {
+        output.writeMessage(2, plots_.get(i));
+      }
+      if (!getToBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, to_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (frameHead_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getFrameHead());
+      }
+      for (int i = 0; i < plots_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, plots_.get(i));
+      }
+      if (!getToBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, to_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.zjj.proto.CtrlMessage.PlotTraceRedirect)) {
+        return super.equals(obj);
+      }
+      com.zjj.proto.CtrlMessage.PlotTraceRedirect other = (com.zjj.proto.CtrlMessage.PlotTraceRedirect) obj;
+
+      if (hasFrameHead() != other.hasFrameHead()) return false;
+      if (hasFrameHead()) {
+        if (!getFrameHead()
+            .equals(other.getFrameHead())) return false;
+      }
+      if (!getPlotsList()
+          .equals(other.getPlotsList())) return false;
+      if (!getTo()
+          .equals(other.getTo())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasFrameHead()) {
+        hash = (37 * hash) + FRAME_HEAD_FIELD_NUMBER;
+        hash = (53 * hash) + getFrameHead().hashCode();
+      }
+      if (getPlotsCount() > 0) {
+        hash = (37 * hash) + PLOTS_FIELD_NUMBER;
+        hash = (53 * hash) + getPlotsList().hashCode();
+      }
+      hash = (37 * hash) + TO_FIELD_NUMBER;
+      hash = (53 * hash) + getTo().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.zjj.proto.CtrlMessage.PlotTraceRedirect prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code PlotTraceRedirect}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:PlotTraceRedirect)
+        com.zjj.proto.CtrlMessage.PlotTraceRedirectOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.zjj.proto.CtrlMessage.internal_static_PlotTraceRedirect_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.zjj.proto.CtrlMessage.internal_static_PlotTraceRedirect_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.zjj.proto.CtrlMessage.PlotTraceRedirect.class, com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder.class);
+      }
+
+      // Construct using com.zjj.proto.CtrlMessage.PlotTraceRedirect.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getPlotsFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (frameHeadBuilder_ == null) {
+          frameHead_ = null;
+        } else {
+          frameHead_ = null;
+          frameHeadBuilder_ = null;
+        }
+        if (plotsBuilder_ == null) {
+          plots_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          plotsBuilder_.clear();
+        }
+        to_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.zjj.proto.CtrlMessage.internal_static_PlotTraceRedirect_descriptor;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.PlotTraceRedirect getDefaultInstanceForType() {
+        return com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.PlotTraceRedirect build() {
+        com.zjj.proto.CtrlMessage.PlotTraceRedirect result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.PlotTraceRedirect buildPartial() {
+        com.zjj.proto.CtrlMessage.PlotTraceRedirect result = new com.zjj.proto.CtrlMessage.PlotTraceRedirect(this);
+        int from_bitField0_ = bitField0_;
+        if (frameHeadBuilder_ == null) {
+          result.frameHead_ = frameHead_;
+        } else {
+          result.frameHead_ = frameHeadBuilder_.build();
+        }
+        if (plotsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            plots_ = java.util.Collections.unmodifiableList(plots_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.plots_ = plots_;
+        } else {
+          result.plots_ = plotsBuilder_.build();
+        }
+        result.to_ = to_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.zjj.proto.CtrlMessage.PlotTraceRedirect) {
+          return mergeFrom((com.zjj.proto.CtrlMessage.PlotTraceRedirect)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.zjj.proto.CtrlMessage.PlotTraceRedirect other) {
+        if (other == com.zjj.proto.CtrlMessage.PlotTraceRedirect.getDefaultInstance()) return this;
+        if (other.hasFrameHead()) {
+          mergeFrameHead(other.getFrameHead());
+        }
+        if (plotsBuilder_ == null) {
+          if (!other.plots_.isEmpty()) {
+            if (plots_.isEmpty()) {
+              plots_ = other.plots_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePlotsIsMutable();
+              plots_.addAll(other.plots_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.plots_.isEmpty()) {
+            if (plotsBuilder_.isEmpty()) {
+              plotsBuilder_.dispose();
+              plotsBuilder_ = null;
+              plots_ = other.plots_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              plotsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPlotsFieldBuilder() : null;
+            } else {
+              plotsBuilder_.addAllMessages(other.plots_);
+            }
+          }
+        }
+        if (!other.getTo().isEmpty()) {
+          to_ = other.to_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.zjj.proto.CtrlMessage.PlotTraceRedirect parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.zjj.proto.CtrlMessage.PlotTraceRedirect) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> frameHeadBuilder_;
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       * @return Whether the frameHead field is set.
+       */
+      public boolean hasFrameHead() {
+        return frameHeadBuilder_ != null || frameHead_ != null;
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       * @return The frameHead.
+       */
+      public com.zjj.proto.CtrlMessage.FrameHead getFrameHead() {
+        if (frameHeadBuilder_ == null) {
+          return frameHead_ == null ? com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
+        } else {
+          return frameHeadBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      public Builder setFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
+        if (frameHeadBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          frameHead_ = value;
+          onChanged();
+        } else {
+          frameHeadBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      public Builder setFrameHead(
+          com.zjj.proto.CtrlMessage.FrameHead.Builder builderForValue) {
+        if (frameHeadBuilder_ == null) {
+          frameHead_ = builderForValue.build();
+          onChanged();
+        } else {
+          frameHeadBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      public Builder mergeFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
+        if (frameHeadBuilder_ == null) {
+          if (frameHead_ != null) {
+            frameHead_ =
+              com.zjj.proto.CtrlMessage.FrameHead.newBuilder(frameHead_).mergeFrom(value).buildPartial();
+          } else {
+            frameHead_ = value;
+          }
+          onChanged();
+        } else {
+          frameHeadBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      public Builder clearFrameHead() {
+        if (frameHeadBuilder_ == null) {
+          frameHead_ = null;
+          onChanged();
+        } else {
+          frameHead_ = null;
+          frameHeadBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      public com.zjj.proto.CtrlMessage.FrameHead.Builder getFrameHeadBuilder() {
+        
+        onChanged();
+        return getFrameHeadFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
+        if (frameHeadBuilder_ != null) {
+          return frameHeadBuilder_.getMessageOrBuilder();
+        } else {
+          return frameHead_ == null ?
+              com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
+        }
+      }
+      /**
+       * <code>.FrameHead frame_head = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> 
+          getFrameHeadFieldBuilder() {
+        if (frameHeadBuilder_ == null) {
+          frameHeadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder>(
+                  getFrameHead(),
+                  getParentForChildren(),
+                  isClean());
+          frameHead_ = null;
+        }
+        return frameHeadBuilder_;
+      }
+
+      private java.util.List<com.zjj.proto.CtrlMessage.Plot> plots_ =
+        java.util.Collections.emptyList();
+      private void ensurePlotsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          plots_ = new java.util.ArrayList<com.zjj.proto.CtrlMessage.Plot>(plots_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.Plot, com.zjj.proto.CtrlMessage.Plot.Builder, com.zjj.proto.CtrlMessage.PlotOrBuilder> plotsBuilder_;
+
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public java.util.List<com.zjj.proto.CtrlMessage.Plot> getPlotsList() {
+        if (plotsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(plots_);
+        } else {
+          return plotsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public int getPlotsCount() {
+        if (plotsBuilder_ == null) {
+          return plots_.size();
+        } else {
+          return plotsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public com.zjj.proto.CtrlMessage.Plot getPlots(int index) {
+        if (plotsBuilder_ == null) {
+          return plots_.get(index);
+        } else {
+          return plotsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder setPlots(
+          int index, com.zjj.proto.CtrlMessage.Plot value) {
+        if (plotsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePlotsIsMutable();
+          plots_.set(index, value);
+          onChanged();
+        } else {
+          plotsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder setPlots(
+          int index, com.zjj.proto.CtrlMessage.Plot.Builder builderForValue) {
+        if (plotsBuilder_ == null) {
+          ensurePlotsIsMutable();
+          plots_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          plotsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder addPlots(com.zjj.proto.CtrlMessage.Plot value) {
+        if (plotsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePlotsIsMutable();
+          plots_.add(value);
+          onChanged();
+        } else {
+          plotsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder addPlots(
+          int index, com.zjj.proto.CtrlMessage.Plot value) {
+        if (plotsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePlotsIsMutable();
+          plots_.add(index, value);
+          onChanged();
+        } else {
+          plotsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder addPlots(
+          com.zjj.proto.CtrlMessage.Plot.Builder builderForValue) {
+        if (plotsBuilder_ == null) {
+          ensurePlotsIsMutable();
+          plots_.add(builderForValue.build());
+          onChanged();
+        } else {
+          plotsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder addPlots(
+          int index, com.zjj.proto.CtrlMessage.Plot.Builder builderForValue) {
+        if (plotsBuilder_ == null) {
+          ensurePlotsIsMutable();
+          plots_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          plotsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder addAllPlots(
+          java.lang.Iterable<? extends com.zjj.proto.CtrlMessage.Plot> values) {
+        if (plotsBuilder_ == null) {
+          ensurePlotsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, plots_);
+          onChanged();
+        } else {
+          plotsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder clearPlots() {
+        if (plotsBuilder_ == null) {
+          plots_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          plotsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public Builder removePlots(int index) {
+        if (plotsBuilder_ == null) {
+          ensurePlotsIsMutable();
+          plots_.remove(index);
+          onChanged();
+        } else {
+          plotsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public com.zjj.proto.CtrlMessage.Plot.Builder getPlotsBuilder(
+          int index) {
+        return getPlotsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public com.zjj.proto.CtrlMessage.PlotOrBuilder getPlotsOrBuilder(
+          int index) {
+        if (plotsBuilder_ == null) {
+          return plots_.get(index);  } else {
+          return plotsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public java.util.List<? extends com.zjj.proto.CtrlMessage.PlotOrBuilder> 
+           getPlotsOrBuilderList() {
+        if (plotsBuilder_ != null) {
+          return plotsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(plots_);
+        }
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public com.zjj.proto.CtrlMessage.Plot.Builder addPlotsBuilder() {
+        return getPlotsFieldBuilder().addBuilder(
+            com.zjj.proto.CtrlMessage.Plot.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public com.zjj.proto.CtrlMessage.Plot.Builder addPlotsBuilder(
+          int index) {
+        return getPlotsFieldBuilder().addBuilder(
+            index, com.zjj.proto.CtrlMessage.Plot.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Plot plots = 2;</code>
+       */
+      public java.util.List<com.zjj.proto.CtrlMessage.Plot.Builder> 
+           getPlotsBuilderList() {
+        return getPlotsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.Plot, com.zjj.proto.CtrlMessage.Plot.Builder, com.zjj.proto.CtrlMessage.PlotOrBuilder> 
+          getPlotsFieldBuilder() {
+        if (plotsBuilder_ == null) {
+          plotsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.zjj.proto.CtrlMessage.Plot, com.zjj.proto.CtrlMessage.Plot.Builder, com.zjj.proto.CtrlMessage.PlotOrBuilder>(
+                  plots_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          plots_ = null;
+        }
+        return plotsBuilder_;
+      }
+
+      private java.lang.Object to_ = "";
+      /**
+       * <code>string to = 3;</code>
+       * @return The to.
+       */
+      public java.lang.String getTo() {
+        java.lang.Object ref = to_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          to_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string to = 3;</code>
+       * @return The bytes for to.
+       */
+      public com.google.protobuf.ByteString
+          getToBytes() {
+        java.lang.Object ref = to_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          to_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string to = 3;</code>
+       * @param value The to to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTo(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        to_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string to = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTo() {
+        
+        to_ = getDefaultInstance().getTo();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string to = 3;</code>
+       * @param value The bytes for to to set.
+       * @return This builder for chaining.
+       */
+      public Builder setToBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        to_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:PlotTraceRedirect)
+    }
+
+    // @@protoc_insertion_point(class_scope:PlotTraceRedirect)
+    private static final com.zjj.proto.CtrlMessage.PlotTraceRedirect DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.zjj.proto.CtrlMessage.PlotTraceRedirect();
+    }
+
+    public static com.zjj.proto.CtrlMessage.PlotTraceRedirect getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PlotTraceRedirect>
+        PARSER = new com.google.protobuf.AbstractParser<PlotTraceRedirect>() {
+      @java.lang.Override
+      public PlotTraceRedirect parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PlotTraceRedirect(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PlotTraceRedirect> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PlotTraceRedirect> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.PlotTraceRedirect getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface FrameHeadOrBuilder extends
       // @@protoc_insertion_point(interface_extends:FrameHead)
       com.google.protobuf.MessageOrBuilder {
@@ -13675,6 +15059,11 @@ public final class CtrlMessage {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_PlotTrace_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_PlotTraceRedirect_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_PlotTraceRedirect_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_FrameHead_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -13708,51 +15097,55 @@ public final class CtrlMessage {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021ctrlMessage.proto\"\226\004\n\014MultiMessage\022*\n\t" +
+      "\n\021ctrlMessage.proto\"\340\004\n\014MultiMessage\022*\n\t" +
       "multiType\030\001 \001(\0162\027.MultiMessage.MultiType" +
       "\022#\n\013inetCommand\030\002 \001(\0132\014.InetCommandH\000\022\033\n" +
       "\007reqAddr\030\003 \001(\0132\010.ReqAddrH\000\022\023\n\003syn\030\004 \001(\0132" +
       "\004.SynH\000\022\031\n\006synAck\030\005 \001(\0132\007.SynAckH\000\022\023\n\003ac" +
       "k\030\006 \001(\0132\004.AckH\000\022#\n\013reqRedirect\030\007 \001(\0132\014.R" +
       "eqRedirectH\000\022\037\n\tplotTrace\030\010 \001(\0132\n.PlotTr" +
-      "aceH\000\022\035\n\010ctrlInfo\030\t \001(\0132\t.CtrlInfoH\000\022\037\n\t" +
-      "serverAck\030\n \001(\0132\n.ServerAckH\000\022!\n\np2PMess" +
-      "age\030\013 \001(\0132\013.P2PMessageH\000\"\234\001\n\tMultiType\022\020" +
-      "\n\014INET_COMMAND\020\000\022\014\n\010REQ_ADDR\020\001\022\007\n\003SYN\020\002\022" +
-      "\013\n\007SYN_ACK\020\003\022\007\n\003ACK\020\004\022\020\n\014REQ_REDIRECT\020\005\022" +
-      "\016\n\nPLOT_TRACE\020\006\022\r\n\tCTRL_INFO\020\007\022\016\n\nSERVER" +
-      "_ACK\020\010\022\017\n\013PSP_MESSAGE\020\tB\013\n\tMultiBody\"X\n\013" +
-      "InetCommand\022\020\n\010clientId\030\001 \001(\t\022\014\n\004host\030\002 " +
-      "\001(\t\022\014\n\004port\030\003 \001(\005\022\033\n\010inetType\030\004 \001(\0162\t.In" +
-      "etType\"\025\n\007ReqAddr\022\n\n\002id\030\001 \001(\t\"\037\n\003Syn\022\014\n\004" +
-      "from\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\"\"\n\006SynAck\022\014\n\004from" +
-      "\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\"\037\n\003Ack\022\014\n\004from\030\001 \001(\t\022" +
-      "\n\n\002to\030\002 \001(\t\"9\n\013ReqRedirect\022\014\n\004from\030\001 \001(\t" +
-      "\022\n\n\002to\030\002 \001(\t\022\020\n\010fromAddr\030\003 \001(\t\"A\n\tPlotTr" +
-      "ace\022\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\024\n\005p" +
-      "lots\030\002 \003(\0132\005.Plot\"\222\002\n\tFrameHead\022\021\n\tmagic" +
-      "_num\030\001 \001(\001\022\017\n\007node_id\030\002 \001(\t\022\026\n\016recv_long" +
-      "itude\030\003 \001(\001\022\025\n\rrecv_latitude\030\004 \001(\001\022\023\n\013re" +
-      "cv_height\030\005 \001(\001\022\027\n\017trans_longitude\030\006 \001(\001" +
-      "\022\026\n\016trans_latitude\030\007 \001(\001\022\024\n\014trans_height" +
-      "\030\010 \001(\001\022\030\n\020signal_frequency\030\t \001(\002\022\026\n\016refr" +
-      "esh_period\030\n \001(\001\022\021\n\ttrace_num\030\013 \001(\005\022\021\n\tt" +
-      "imestamp\030\014 \001(\001\"\205\001\n\004Plot\022\026\n\016bistatic_rang" +
-      "e\030\001 \001(\002\022\031\n\021bistatic_velocity\030\002 \001(\002\022\017\n\007az" +
-      "imuth\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001" +
-      "(\002\022\013\n\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\253\001\n\010CtrlI" +
-      "nfo\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlType\022\017\n" +
-      "\007localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n\007me" +
-      "ssage\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000\022\014\n" +
-      "\010REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIFY_A" +
-      "CK\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.Server" +
-      "Ack.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckType\022" +
-      "\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020\002\"t" +
-      "\n\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessage." +
-      "MsgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\tS" +
-      "AVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n\010" +
-      "InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom" +
-      ".zjj.protoB\013CtrlMessageb\006proto3"
+      "aceH\000\022/\n\021plotTraceRedirect\030\t \001(\0132\022.PlotT" +
+      "raceRedirectH\000\022\035\n\010ctrlInfo\030\n \001(\0132\t.CtrlI" +
+      "nfoH\000\022\037\n\tserverAck\030\013 \001(\0132\n.ServerAckH\000\022!" +
+      "\n\np2PMessage\030\014 \001(\0132\013.P2PMessageH\000\"\265\001\n\tMu" +
+      "ltiType\022\020\n\014INET_COMMAND\020\000\022\014\n\010REQ_ADDR\020\001\022" +
+      "\007\n\003SYN\020\002\022\013\n\007SYN_ACK\020\003\022\007\n\003ACK\020\004\022\020\n\014REQ_RE" +
+      "DIRECT\020\005\022\016\n\nPLOT_TRACE\020\006\022\027\n\023PLOT_TRACE_R" +
+      "EDIRECT\020\007\022\r\n\tCTRL_INFO\020\010\022\016\n\nSERVER_ACK\020\t" +
+      "\022\017\n\013PSP_MESSAGE\020\nB\013\n\tMultiBody\"X\n\013InetCo" +
+      "mmand\022\020\n\010clientId\030\001 \001(\t\022\014\n\004host\030\002 \001(\t\022\014\n" +
+      "\004port\030\003 \001(\005\022\033\n\010inetType\030\004 \001(\0162\t.InetType" +
+      "\"\025\n\007ReqAddr\022\n\n\002id\030\001 \001(\t\"\037\n\003Syn\022\014\n\004from\030\001" +
+      " \001(\t\022\n\n\002to\030\002 \001(\t\"\"\n\006SynAck\022\014\n\004from\030\001 \001(\t" +
+      "\022\n\n\002to\030\002 \001(\t\"\037\n\003Ack\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030" +
+      "\002 \001(\t\"9\n\013ReqRedirect\022\014\n\004from\030\001 \001(\t\022\n\n\002to" +
+      "\030\002 \001(\t\022\020\n\010fromAddr\030\003 \001(\t\"A\n\tPlotTrace\022\036\n" +
+      "\nframe_head\030\001 \001(\0132\n.FrameHead\022\024\n\005plots\030\002" +
+      " \003(\0132\005.Plot\"U\n\021PlotTraceRedirect\022\036\n\nfram" +
+      "e_head\030\001 \001(\0132\n.FrameHead\022\024\n\005plots\030\002 \003(\0132" +
+      "\005.Plot\022\n\n\002to\030\003 \001(\t\"\222\002\n\tFrameHead\022\021\n\tmagi" +
+      "c_num\030\001 \001(\001\022\017\n\007node_id\030\002 \001(\t\022\026\n\016recv_lon" +
+      "gitude\030\003 \001(\001\022\025\n\rrecv_latitude\030\004 \001(\001\022\023\n\013r" +
+      "ecv_height\030\005 \001(\001\022\027\n\017trans_longitude\030\006 \001(" +
+      "\001\022\026\n\016trans_latitude\030\007 \001(\001\022\024\n\014trans_heigh" +
+      "t\030\010 \001(\001\022\030\n\020signal_frequency\030\t \001(\002\022\026\n\016ref" +
+      "resh_period\030\n \001(\001\022\021\n\ttrace_num\030\013 \001(\005\022\021\n\t" +
+      "timestamp\030\014 \001(\001\"\205\001\n\004Plot\022\026\n\016bistatic_ran" +
+      "ge\030\001 \001(\002\022\031\n\021bistatic_velocity\030\002 \001(\002\022\017\n\007a" +
+      "zimuth\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 " +
+      "\001(\002\022\013\n\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\253\001\n\010Ctrl" +
+      "Info\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlType\022\017" +
+      "\n\007localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n\007m" +
+      "essage\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000\022\014" +
+      "\n\010REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIFY_" +
+      "ACK\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.Serve" +
+      "rAck.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckType" +
+      "\022\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020\002\"" +
+      "t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessage" +
+      ".MsgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\t" +
+      "SAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n" +
+      "\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rco" +
+      "m.zjj.protoB\013CtrlMessageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -13763,7 +15156,7 @@ public final class CtrlMessage {
     internal_static_MultiMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MultiMessage_descriptor,
-        new java.lang.String[] { "MultiType", "InetCommand", "ReqAddr", "Syn", "SynAck", "Ack", "ReqRedirect", "PlotTrace", "CtrlInfo", "ServerAck", "P2PMessage", "MultiBody", });
+        new java.lang.String[] { "MultiType", "InetCommand", "ReqAddr", "Syn", "SynAck", "Ack", "ReqRedirect", "PlotTrace", "PlotTraceRedirect", "CtrlInfo", "ServerAck", "P2PMessage", "MultiBody", });
     internal_static_InetCommand_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_InetCommand_fieldAccessorTable = new
@@ -13806,32 +15199,38 @@ public final class CtrlMessage {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_PlotTrace_descriptor,
         new java.lang.String[] { "FrameHead", "Plots", });
-    internal_static_FrameHead_descriptor =
+    internal_static_PlotTraceRedirect_descriptor =
       getDescriptor().getMessageTypes().get(8);
+    internal_static_PlotTraceRedirect_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_PlotTraceRedirect_descriptor,
+        new java.lang.String[] { "FrameHead", "Plots", "To", });
+    internal_static_FrameHead_descriptor =
+      getDescriptor().getMessageTypes().get(9);
     internal_static_FrameHead_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_FrameHead_descriptor,
         new java.lang.String[] { "MagicNum", "NodeId", "RecvLongitude", "RecvLatitude", "RecvHeight", "TransLongitude", "TransLatitude", "TransHeight", "SignalFrequency", "RefreshPeriod", "TraceNum", "Timestamp", });
     internal_static_Plot_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_Plot_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Plot_descriptor,
         new java.lang.String[] { "BistaticRange", "BistaticVelocity", "Azimuth", "Height", "Power", "Snr", "Phase", });
     internal_static_CtrlInfo_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_CtrlInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CtrlInfo_descriptor,
         new java.lang.String[] { "Type", "LocalId", "OppositeId", "Message", });
     internal_static_ServerAck_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_ServerAck_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ServerAck_descriptor,
         new java.lang.String[] { "Type", "Message", });
     internal_static_P2PMessage_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_P2PMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_P2PMessage_descriptor,

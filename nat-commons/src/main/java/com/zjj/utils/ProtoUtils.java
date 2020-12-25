@@ -242,4 +242,41 @@ public class ProtoUtils {
     public static MultiMessage createMultiReqRedirect(String from, String to, String fromAddr) {
         return createMultiFromReqRedirect(createReqRedirect(from, to, fromAddr));
     }
+
+    /**
+     * 通过PlotTrace构造PlotTraceRedirect
+     *
+     * @param plotTrace
+     * @return
+     */
+    public static PlotTraceRedirect createRedirectFromPlotTrace(PlotTrace plotTrace, String toId) {
+        return PlotTraceRedirect.newBuilder()
+                .setFrameHead(plotTrace.getFrameHead())
+                .addAllPlots(plotTrace.getPlotsList())
+                .setTo(toId)
+                .build();
+    }
+
+    /**
+     * 创建PlotTraceRedirect的包装
+     *
+     * @param plotTraceRedirect
+     * @return
+     */
+    public static MultiMessage createMultiFromPlotTraceRedirect(PlotTraceRedirect plotTraceRedirect) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.PLOT_TRACE_REDIRECT)
+                .setPlotTraceRedirect(plotTraceRedirect)
+                .build();
+    }
+
+    /**
+     * 通过PlotTrace构造MultiMessage
+     *
+     * @param plotTrace
+     * @return
+     */
+    public static MultiMessage createMultiFromPlotTrace(PlotTrace plotTrace, String toId) {
+        return createMultiFromPlotTraceRedirect(createRedirectFromPlotTrace(plotTrace, toId));
+    }
 }

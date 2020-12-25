@@ -12,9 +12,10 @@ message MultiMessage {
     ACK = 4;
     REQ_REDIRECT = 5;
     PLOT_TRACE = 6;
-    CTRL_INFO = 7;
-    SERVER_ACK = 8;
-    PSP_MESSAGE = 9;
+    PLOT_TRACE_REDIRECT = 7;
+    CTRL_INFO = 8;
+    SERVER_ACK = 9;
+    PSP_MESSAGE = 10;
   }
   MultiType multiType = 1;
   oneof MultiBody {
@@ -25,9 +26,10 @@ message MultiMessage {
     Ack ack = 6;
     ReqRedirect reqRedirect = 7;
     PlotTrace plotTrace = 8;
-    CtrlInfo ctrlInfo = 9;
-    ServerAck serverAck = 10;
-    P2PMessage p2PMessage = 11;
+    PlotTraceRedirect plotTraceRedirect = 9;
+    CtrlInfo ctrlInfo = 10;
+    ServerAck serverAck = 11;
+    P2PMessage p2PMessage = 12;
   }
 }
 
@@ -71,6 +73,12 @@ message ReqRedirect {
 message PlotTrace {
   FrameHead frame_head = 1;
   repeated Plot plots = 2;
+}
+
+message PlotTraceRedirect {
+  FrameHead frame_head = 1;
+  repeated Plot plots = 2;
+  string to = 3;
 }
 
 message FrameHead {

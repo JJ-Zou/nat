@@ -1,5 +1,7 @@
 package com.zjj.client;
 
+import java.util.Set;
+
 public interface IpAddrHolder extends NatThrough {
 
     String getPriAddrStr(String id);
@@ -13,4 +15,6 @@ public interface IpAddrHolder extends NatThrough {
     void setThrough(String oppositeId, String addrStr);
 
     String getThrough(String oppositeId);
+
+    Set<String> getThroughIds();
 }
