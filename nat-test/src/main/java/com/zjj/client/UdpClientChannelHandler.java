@@ -131,6 +131,10 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     }
                 });
                 break;
+            case PLOT_TRACE:
+                PlotTrace plotTrace = multiMessage.getPlotTrace();
+                log.info("\n{}", plotTrace.toString());
+                break;
             case PSP_MESSAGE:
                 processP2pMessage(multiMessage.getP2PMessage(), oppositeAddrStr, channel);
                 break;

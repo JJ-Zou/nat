@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.com.zjj.proto";
+option java_package = "com.zjj.proto";
 option java_outer_classname = "CtrlMessage";
 
 message MultiMessage {
@@ -11,9 +11,10 @@ message MultiMessage {
     SYN_ACK = 3;
     ACK = 4;
     REQ_REDIRECT = 5;
-    CTRL_INFO = 6;
-    SERVER_ACK = 7;
-    PSP_MESSAGE = 8;
+    PLOT_TRACE = 6;
+    CTRL_INFO = 7;
+    SERVER_ACK = 8;
+    PSP_MESSAGE = 9;
   }
   MultiType multiType = 1;
   oneof MultiBody {
@@ -23,9 +24,10 @@ message MultiMessage {
     SynAck synAck = 5;
     Ack ack = 6;
     ReqRedirect reqRedirect = 7;
-    CtrlInfo ctrlInfo = 8;
-    ServerAck serverAck = 9;
-    P2PMessage p2PMessage = 10;
+    PlotTrace plotTrace = 8;
+    CtrlInfo ctrlInfo = 9;
+    ServerAck serverAck = 10;
+    P2PMessage p2PMessage = 11;
   }
 }
 
@@ -64,6 +66,36 @@ message ReqRedirect {
   string from = 1;
   string to = 2;
   string fromAddr = 3;
+}
+
+message PlotTrace {
+  FrameHead frame_head = 1;
+  repeated Plot plots = 2;
+}
+
+message FrameHead {
+  double magic_num = 1;
+  string node_id = 2;
+  double recv_longitude = 3;
+  double recv_latitude = 4;
+  double recv_height = 5;
+  double trans_longitude = 6;
+  double trans_latitude = 7;
+  double trans_height = 8;
+  float signal_frequency = 9;
+  double refresh_period = 10;
+  int32 trace_num = 11;
+  double timestamp = 12;
+}
+
+message Plot {
+  float bistatic_range = 1;
+  float bistatic_velocity = 2;
+  float azimuth = 3;
+  float height = 4;
+  float power = 5;
+  float snr = 6;
+  float phase = 7;
 }
 
 message CtrlInfo {
