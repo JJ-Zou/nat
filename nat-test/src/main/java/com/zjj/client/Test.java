@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 public class Test {
     @SneakyThrows
     public static void main(String[] args) {
-        new Starter().startClient();
+        ClientStarter starter = new ClientStarter();
+        starter.startClient();
     }
 }

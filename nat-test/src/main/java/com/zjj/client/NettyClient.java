@@ -10,10 +10,6 @@ public interface NettyClient {
 
     void doClose();
 
-    boolean setThrough();
-
-    boolean getThrough();
-
     InetSocketAddress getLocalAddress();
 
     InetSocketAddress getServerAddress();
@@ -21,5 +17,7 @@ public interface NettyClient {
     Channel getChannel();
 
     String getLocalId();
+
+    void attemptNatConnect(String oppositeId);
 
 }

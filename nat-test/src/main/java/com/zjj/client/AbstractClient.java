@@ -5,7 +5,6 @@ import cn.hutool.core.util.RandomUtil;
 import com.zjj.utils.InetUtils;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class AbstractClient implements NettyClient {
 
@@ -16,22 +15,12 @@ public abstract class AbstractClient implements NettyClient {
         this.localId = RandomUtil.randomString(8);
         this.localAddress = new InetSocketAddress(InetUtils.getLocalAddress(), NetUtil.getUsableLocalPort());
         this.serverAddress = new InetSocketAddress(SERVE_IP, SERVER_PORT);
-        this.through = new AtomicBoolean(false);
     }
 
     private String localId;
     private InetSocketAddress localAddress;
     private InetSocketAddress serverAddress;
 
-    private AtomicBoolean through;
-
-    public boolean getThrough() {
-        return through.get();
-    }
-
-    public boolean setThrough() {
-        return through.compareAndSet(false, true);
-    }
 
     @Override
     public InetSocketAddress getLocalAddress() {

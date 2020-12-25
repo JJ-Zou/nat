@@ -1,4 +1,4 @@
-package com.zjj.client;
+package com.zjj.old;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.utils.InetUtils;
