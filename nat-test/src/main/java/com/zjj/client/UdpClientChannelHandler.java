@@ -126,7 +126,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toInetSocketAddress(peerAddrStr));
                 channel.writeAndFlush(privatePacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("请求服务器转发id: {} 的消息: 请求id: {} 使用 id: {} 的地址 {} 尝试建立连接", from, to, from, peerAddrStr);
+                        log.debug("请求与id: {} 的地址 {} 建立连接", to,  peerAddrStr);
                     } else {
                         log.error("请求发送失败");
                     }
