@@ -141,7 +141,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     ByteBuf byteBuf = Unpooled.wrappedBuffer(
                             ProtoUtils.createMultiFromPlotTrace(plotTrace, throughId)
                                     .toByteArray());
-                    if (!Objects.equals(throughId, Constants.NONE)) {
+                    if (!Objects.equals(throughIpAddrStr, Constants.NONE)) {
                         DatagramPacket plotTraceRedirectPacket = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(throughIpAddrStr));
                         channel.writeAndFlush(plotTraceRedirectPacket).addListener(f -> {
                             if (f.isSuccess()) {
