@@ -23,8 +23,8 @@ import static com.zjj.proto.CtrlMessage.*;
 @Slf4j
 @ChannelHandler.Sharable
 public class UdpClientChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
-    private NettyClient nettyClient;
-    private IpAddrHolder ipAddrHolder;
+    private final NettyClient nettyClient;
+    private final IpAddrHolder ipAddrHolder;
 
     public UdpClientChannelHandler(NettyClient nettyClient, IpAddrHolder ipAddrHolder) {
         this.nettyClient = nettyClient;
@@ -58,13 +58,13 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     case PRIVATE:
                         String id = inetCommand.getClientId();
                         String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        log.debug("收到来自id: {} 公网为 {} 的私网地址 {} 加入缓存", id, oppositeAddrStr, privateInetAddr);
+                        log.debug("收到来自id: {} 地址为 {} 的私网地址 {} 加入缓存", id, oppositeAddrStr, privateInetAddr);
                         ipAddrHolder.setPriAddrStr(id, privateInetAddr);
                         break;
                     case PUBLIC:
                         String id1 = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        log.debug("收到来自id: {} 公网为 {} 的公网地址 {} 加入缓存", id1, oppositeAddrStr, publicInetAddr);
+                        log.debug("收到来自id: {} 地址为 {} 的公网地址 {} 加入缓存", id1, oppositeAddrStr, publicInetAddr);
                         ipAddrHolder.setPubAddrStr(id1, publicInetAddr);
                         break;
                     case UNRECOGNIZED:
@@ -74,13 +74,13 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case SYN:
                 Syn syn = multiMessage.getSyn();
-                log.debug("收到来自id: {} 公网为 {} 对 {} 的连接请求", syn.getFrom(), oppositeAddrStr, syn.getTo());
+                log.debug("收到来自id: {} 地址为 {} 对 {} 的连接请求", syn.getFrom(), oppositeAddrStr, syn.getTo());
                 DatagramPacket synAckPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiSynAck(syn.getTo(), syn.getFrom()).toByteArray()),
                         InetUtils.toInetSocketAddress(oppositeAddrStr));
                 channel.writeAndFlush(synAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("给id: {} 公网为 {} 返回 SYN_ACK", syn.getFrom(), oppositeAddrStr);
+                        log.debug("给id: {} 地址为 {} 返回 SYN_ACK", syn.getFrom(), oppositeAddrStr);
                     } else {
                         log.error("SYN_ACK 发送失败");
                     }
@@ -89,7 +89,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case SYN_ACK:
                 SynAck synAck = multiMessage.getSynAck();
                 String oppositeId = synAck.getFrom();
-                log.debug("收到来自id: {} 公网为 {} 对id: {} 的连接请求回复", oppositeId, oppositeAddrStr, synAck.getTo());
+                log.debug("收到来自id: {} 地址为 {} 对id: {} 的连接请求回复", oppositeId, oppositeAddrStr, synAck.getTo());
                 log.debug("{} 到 {} 穿透成功!", synAck.getTo(), oppositeId);
                 log.debug("穿透成功的对方id: {} 的穿透地址为 {}", oppositeId, oppositeAddrStr);
                 ipAddrHolder.setThrough(oppositeId, oppositeAddrStr);
@@ -98,7 +98,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toInetSocketAddress(oppositeAddrStr));
                 channel.writeAndFlush(ackPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("给id: {} 公网为 {} 返回 ACK", oppositeId, oppositeAddrStr);
+                        log.debug("给id: {} 地址为 {} 返回 ACK", oppositeId, oppositeAddrStr);
                     } else {
                         log.error("ACK 发送失败");
                     }
@@ -107,8 +107,8 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case ACK:
                 Ack ack = multiMessage.getAck();
                 oppositeId = ack.getFrom();
-                log.debug("收到id: {} 公网为 {} 的回复", oppositeId, oppositeAddrStr);
-                if (Objects.equals(ipAddrHolder.getThrough(oppositeId), Constants.NONE)) {
+                log.debug("收到id: {} 地址为 {} 的回复", oppositeId, oppositeAddrStr);
+                if (!ipAddrHolder.contains(oppositeId) || Objects.equals(ipAddrHolder.getThrough(oppositeId), Constants.NONE)) {
                     log.debug("{} 到 {} 穿透成功!", oppositeId, ack.getTo());
                     log.debug("更新对方id: {} 的穿透地址, {} -> {}", oppositeId, ipAddrHolder.getThrough(oppositeId), oppositeAddrStr);
                     ipAddrHolder.setThrough(oppositeId, oppositeAddrStr);

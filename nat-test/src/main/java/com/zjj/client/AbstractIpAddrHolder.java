@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractIpAddrHolder implements IpAddrHolder {
-    private Map<String, String> throughHolder;
+    private final Map<String, String> throughHolder;
 
     public AbstractIpAddrHolder() {
         this.throughHolder = new ConcurrentHashMap<>();
@@ -30,5 +30,10 @@ public abstract class AbstractIpAddrHolder implements IpAddrHolder {
     @Override
     public String getThrough(String oppositeId) {
         return throughHolder.get(oppositeId);
+    }
+
+    @Override
+    public boolean contains(String oppositeId) {
+        return throughHolder.containsKey(oppositeId);
     }
 }
