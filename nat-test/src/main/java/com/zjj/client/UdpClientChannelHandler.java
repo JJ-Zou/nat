@@ -126,7 +126,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toInetSocketAddress(peerAddrStr));
                 channel.writeAndFlush(privatePacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("请求与id: {} 的地址 {} 建立连接", to,  peerAddrStr);
+                        log.debug("请求与id: {} 的地址 {} 建立连接", to, peerAddrStr);
                     } else {
                         log.error("请求发送失败");
                     }
@@ -165,6 +165,40 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case PLOT_TRACE_REDIRECT:
                 PlotTraceRedirect plotTraceRedirect = multiMessage.getPlotTraceRedirect();
                 log.info("\n{}", plotTraceRedirect);
+                break;
+            case TRACK_TRACE:
+                TrackTrace trackTrace = multiMessage.getTrackTrace();
+                log.info("\n{}", trackTrace);
+                throughIds = ipAddrHolder.getThroughIds();
+                for (String throughId : throughIds) {
+                    String throughIpAddrStr = ipAddrHolder.getThrough(throughId);
+                    ByteBuf byteBuf = Unpooled.wrappedBuffer(
+                            ProtoUtils.createMultiFromTrackTrace(trackTrace, throughId)
+                                    .toByteArray());
+                    if (!Objects.equals(throughIpAddrStr, Constants.NONE)) {
+                        DatagramPacket plotTraceRedirectPacket = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(throughIpAddrStr));
+                        channel.writeAndFlush(plotTraceRedirectPacket).addListener(f -> {
+                            if (f.isSuccess()) {
+                                log.debug("给id: {} 的地址 {} 转发航迹", throughId, throughIpAddrStr);
+                            } else {
+                                log.error("转发失败");
+                            }
+                        });
+                    } else {
+                        DatagramPacket plotTraceRedirectPacket = new DatagramPacket(byteBuf, nettyClient.getServerAddress());
+                        channel.writeAndFlush(plotTraceRedirectPacket).addListener(f -> {
+                            if (f.isSuccess()) {
+                                log.debug("请求服务器转发id: {} 的消息: 给id: {} 转发航迹", nettyClient.getLocalId(), throughId);
+                            } else {
+                                log.error("请求失败");
+                            }
+                        });
+                    }
+                }
+                break;
+            case TRACK_TRACE_REDIRECT:
+                TrackTraceRedirect trackTraceRedirect = multiMessage.getTrackTraceRedirect();
+                log.info("\n{}", trackTraceRedirect);
                 break;
             case PSP_MESSAGE:
                 processP2pMessage(multiMessage.getP2PMessage(), oppositeAddrStr, channel);

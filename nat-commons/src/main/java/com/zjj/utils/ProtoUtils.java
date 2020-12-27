@@ -279,4 +279,43 @@ public class ProtoUtils {
     public static MultiMessage createMultiFromPlotTrace(PlotTrace plotTrace, String toId) {
         return createMultiFromPlotTraceRedirect(createRedirectFromPlotTrace(plotTrace, toId));
     }
+
+    /**
+     * 通过TrackTrace构造TrackTraceRedirect
+     *
+     * @param trackTrace
+     * @param toId
+     * @return
+     */
+    public static TrackTraceRedirect createRedirectFromTrackTrace(TrackTrace trackTrace, String toId) {
+        return TrackTraceRedirect.newBuilder()
+                .setFrameHead(trackTrace.getFrameHead())
+                .addAllTracks(trackTrace.getTracksList())
+                .setTo(toId)
+                .build();
+    }
+
+    /**
+     * 创建TrackTraceRedirect的包装
+     *
+     * @param trackTraceRedirect
+     * @return
+     */
+    public static MultiMessage createMultiFromTrackTraceRedirect(TrackTraceRedirect trackTraceRedirect) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.TRACK_TRACE_REDIRECT)
+                .setTrackTraceRedirect(trackTraceRedirect)
+                .build();
+    }
+
+    /**
+     * 通过TrackTrace构造MultiMessage
+     *
+     * @param trackTrace
+     * @param toId
+     * @return
+     */
+    public static MultiMessage createMultiFromTrackTrace(TrackTrace trackTrace, String toId) {
+        return createMultiFromTrackTraceRedirect(createRedirectFromTrackTrace(trackTrace, toId));
+    }
 }
