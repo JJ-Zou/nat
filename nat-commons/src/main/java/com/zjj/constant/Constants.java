@@ -1,4 +1,4 @@
-package com.zjj.contant;
+package com.zjj.constant;
 
 public interface Constants {
 
