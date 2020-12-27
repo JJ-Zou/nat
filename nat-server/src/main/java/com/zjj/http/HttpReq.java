@@ -1,7 +1,7 @@
 package com.zjj.http;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zjj.contant.Constants;
+import com.zjj.constant.Constants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
