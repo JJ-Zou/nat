@@ -97,7 +97,7 @@ message TrackTraceRedirect {
 }
 
 message FrameHead {
-  double magicNnum = 1;
+  double magicNum = 1;
   string nodeId = 2;
   double recvLongitude = 3;
   double recvLatitude = 4;

@@ -12676,10 +12676,10 @@ public final class CtrlMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>double magicNnum = 1;</code>
-     * @return The magicNnum.
+     * <code>double magicNum = 1;</code>
+     * @return The magicNum.
      */
-    double getMagicNnum();
+    double getMagicNum();
 
     /**
      * <code>string nodeId = 2;</code>
@@ -12801,7 +12801,7 @@ public final class CtrlMessage {
               break;
             case 9: {
 
-              magicNnum_ = input.readDouble();
+              magicNum_ = input.readDouble();
               break;
             }
             case 18: {
@@ -12892,15 +12892,15 @@ public final class CtrlMessage {
               com.zjj.proto.CtrlMessage.FrameHead.class, com.zjj.proto.CtrlMessage.FrameHead.Builder.class);
     }
 
-    public static final int MAGICNNUM_FIELD_NUMBER = 1;
-    private double magicNnum_;
+    public static final int MAGICNUM_FIELD_NUMBER = 1;
+    private double magicNum_;
     /**
-     * <code>double magicNnum = 1;</code>
-     * @return The magicNnum.
+     * <code>double magicNum = 1;</code>
+     * @return The magicNum.
      */
     @java.lang.Override
-    public double getMagicNnum() {
-      return magicNnum_;
+    public double getMagicNum() {
+      return magicNum_;
     }
 
     public static final int NODEID_FIELD_NUMBER = 2;
@@ -13065,8 +13065,8 @@ public final class CtrlMessage {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (magicNnum_ != 0D) {
-        output.writeDouble(1, magicNnum_);
+      if (magicNum_ != 0D) {
+        output.writeDouble(1, magicNum_);
       }
       if (!getNodeIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nodeId_);
@@ -13110,9 +13110,9 @@ public final class CtrlMessage {
       if (size != -1) return size;
 
       size = 0;
-      if (magicNnum_ != 0D) {
+      if (magicNum_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(1, magicNnum_);
+          .computeDoubleSize(1, magicNum_);
       }
       if (!getNodeIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nodeId_);
@@ -13172,9 +13172,9 @@ public final class CtrlMessage {
       }
       com.zjj.proto.CtrlMessage.FrameHead other = (com.zjj.proto.CtrlMessage.FrameHead) obj;
 
-      if (java.lang.Double.doubleToLongBits(getMagicNnum())
+      if (java.lang.Double.doubleToLongBits(getMagicNum())
           != java.lang.Double.doubleToLongBits(
-              other.getMagicNnum())) return false;
+              other.getMagicNum())) return false;
       if (!getNodeId()
           .equals(other.getNodeId())) return false;
       if (java.lang.Double.doubleToLongBits(getRecvLongitude())
@@ -13217,9 +13217,9 @@ public final class CtrlMessage {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + MAGICNNUM_FIELD_NUMBER;
+      hash = (37 * hash) + MAGICNUM_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getMagicNnum()));
+          java.lang.Double.doubleToLongBits(getMagicNum()));
       hash = (37 * hash) + NODEID_FIELD_NUMBER;
       hash = (53 * hash) + getNodeId().hashCode();
       hash = (37 * hash) + RECVLONGITUDE_FIELD_NUMBER;
@@ -13384,7 +13384,7 @@ public final class CtrlMessage {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        magicNnum_ = 0D;
+        magicNum_ = 0D;
 
         nodeId_ = "";
 
@@ -13434,7 +13434,7 @@ public final class CtrlMessage {
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.FrameHead buildPartial() {
         com.zjj.proto.CtrlMessage.FrameHead result = new com.zjj.proto.CtrlMessage.FrameHead(this);
-        result.magicNnum_ = magicNnum_;
+        result.magicNum_ = magicNum_;
         result.nodeId_ = nodeId_;
         result.recvLongitude_ = recvLongitude_;
         result.recvLatitude_ = recvLatitude_;
@@ -13494,8 +13494,8 @@ public final class CtrlMessage {
 
       public Builder mergeFrom(com.zjj.proto.CtrlMessage.FrameHead other) {
         if (other == com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance()) return this;
-        if (other.getMagicNnum() != 0D) {
-          setMagicNnum(other.getMagicNnum());
+        if (other.getMagicNum() != 0D) {
+          setMagicNum(other.getMagicNum());
         }
         if (!other.getNodeId().isEmpty()) {
           nodeId_ = other.nodeId_;
@@ -13560,33 +13560,33 @@ public final class CtrlMessage {
         return this;
       }
 
-      private double magicNnum_ ;
+      private double magicNum_ ;
       /**
-       * <code>double magicNnum = 1;</code>
-       * @return The magicNnum.
+       * <code>double magicNum = 1;</code>
+       * @return The magicNum.
        */
       @java.lang.Override
-      public double getMagicNnum() {
-        return magicNnum_;
+      public double getMagicNum() {
+        return magicNum_;
       }
       /**
-       * <code>double magicNnum = 1;</code>
-       * @param value The magicNnum to set.
+       * <code>double magicNum = 1;</code>
+       * @param value The magicNum to set.
        * @return This builder for chaining.
        */
-      public Builder setMagicNnum(double value) {
+      public Builder setMagicNum(double value) {
         
-        magicNnum_ = value;
+        magicNum_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>double magicNnum = 1;</code>
+       * <code>double magicNum = 1;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMagicNnum() {
+      public Builder clearMagicNum() {
         
-        magicNnum_ = 0D;
+        magicNum_ = 0D;
         onChanged();
         return this;
       }
@@ -19117,35 +19117,35 @@ public final class CtrlMessage {
       "e\022\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\026\n\006tra" +
       "cks\030\002 \003(\0132\006.Track\"X\n\022TrackTraceRedirect\022" +
       "\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\026\n\006track" +
-      "s\030\002 \003(\0132\006.Track\022\n\n\002to\030\003 \001(\t\"\210\002\n\tFrameHea" +
-      "d\022\021\n\tmagicNnum\030\001 \001(\001\022\016\n\006nodeId\030\002 \001(\t\022\025\n\r" +
-      "recvLongitude\030\003 \001(\001\022\024\n\014recvLatitude\030\004 \001(" +
-      "\001\022\022\n\nrecvHeight\030\005 \001(\001\022\026\n\016transLongitude\030" +
-      "\006 \001(\001\022\025\n\rtransLatitude\030\007 \001(\001\022\023\n\013transHei" +
-      "ght\030\010 \001(\001\022\027\n\017signalFrequency\030\t \001(\002\022\025\n\rre" +
-      "freshPeriod\030\n \001(\001\022\020\n\010traceNum\030\013 \001(\005\022\021\n\tt" +
-      "imestamp\030\014 \001(\001\"\203\001\n\004Plot\022\025\n\rbistaticRange" +
-      "\030\001 \001(\002\022\030\n\020bistaticVelocity\030\002 \001(\002\022\017\n\007azim" +
-      "uth\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001(\002" +
-      "\022\013\n\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\363\001\n\005Track\022\020" +
-      "\n\010batchNum\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010l" +
-      "atitude\030\003 \001(\001\022\016\n\006height\030\004 \001(\001\022\r\n\005range\030\005" +
-      " \001(\001\022\020\n\010position\030\006 \001(\001\022\021\n\televation\030\007 \001(" +
-      "\001\022\032\n\022horizontalVelocity\030\010 \001(\001\022\030\n\020vertica" +
-      "lVelocity\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power" +
-      "\030\013 \001(\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\"\253\001\n\010C" +
-      "trlInfo\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlTyp" +
-      "e\022\017\n\007localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017" +
-      "\n\007message\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020" +
-      "\000\022\014\n\010REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTI" +
-      "FY_ACK\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.Se" +
-      "rverAck.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckT" +
-      "ype\022\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND" +
-      "\020\002\"t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMess" +
-      "age.MsgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022" +
-      "\r\n\tSAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002" +
-      "*#\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n" +
-      "\rcom.zjj.protoB\013CtrlMessageb\006proto3"
+      "s\030\002 \003(\0132\006.Track\022\n\n\002to\030\003 \001(\t\"\207\002\n\tFrameHea" +
+      "d\022\020\n\010magicNum\030\001 \001(\001\022\016\n\006nodeId\030\002 \001(\t\022\025\n\rr" +
+      "ecvLongitude\030\003 \001(\001\022\024\n\014recvLatitude\030\004 \001(\001" +
+      "\022\022\n\nrecvHeight\030\005 \001(\001\022\026\n\016transLongitude\030\006" +
+      " \001(\001\022\025\n\rtransLatitude\030\007 \001(\001\022\023\n\013transHeig" +
+      "ht\030\010 \001(\001\022\027\n\017signalFrequency\030\t \001(\002\022\025\n\rref" +
+      "reshPeriod\030\n \001(\001\022\020\n\010traceNum\030\013 \001(\005\022\021\n\tti" +
+      "mestamp\030\014 \001(\001\"\203\001\n\004Plot\022\025\n\rbistaticRange\030" +
+      "\001 \001(\002\022\030\n\020bistaticVelocity\030\002 \001(\002\022\017\n\007azimu" +
+      "th\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001(\002\022" +
+      "\013\n\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\363\001\n\005Track\022\020\n" +
+      "\010batchNum\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010la" +
+      "titude\030\003 \001(\001\022\016\n\006height\030\004 \001(\001\022\r\n\005range\030\005 " +
+      "\001(\001\022\020\n\010position\030\006 \001(\001\022\021\n\televation\030\007 \001(\001" +
+      "\022\032\n\022horizontalVelocity\030\010 \001(\001\022\030\n\020vertical" +
+      "Velocity\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power\030" +
+      "\013 \001(\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\"\253\001\n\010Ct" +
+      "rlInfo\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlType" +
+      "\022\017\n\007localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n" +
+      "\007message\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000" +
+      "\022\014\n\010REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIF" +
+      "Y_ACK\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.Ser" +
+      "verAck.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckTy" +
+      "pe\022\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020" +
+      "\002\"t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessa" +
+      "ge.MsgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r" +
+      "\n\tSAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*" +
+      "#\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\r" +
+      "com.zjj.protoB\013CtrlMessageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -19222,7 +19222,7 @@ public final class CtrlMessage {
     internal_static_FrameHead_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_FrameHead_descriptor,
-        new java.lang.String[] { "MagicNnum", "NodeId", "RecvLongitude", "RecvLatitude", "RecvHeight", "TransLongitude", "TransLatitude", "TransHeight", "SignalFrequency", "RefreshPeriod", "TraceNum", "Timestamp", });
+        new java.lang.String[] { "MagicNum", "NodeId", "RecvLongitude", "RecvLatitude", "RecvHeight", "TransLongitude", "TransLatitude", "TransHeight", "SignalFrequency", "RefreshPeriod", "TraceNum", "Timestamp", });
     internal_static_Plot_descriptor =
       getDescriptor().getMessageTypes().get(12);
     internal_static_Plot_fieldAccessorTable = new
