@@ -8392,17 +8392,17 @@ public final class CtrlMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     boolean hasFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     com.zjj.proto.CtrlMessage.FrameHead getFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder();
 
@@ -8534,10 +8534,10 @@ public final class CtrlMessage {
               com.zjj.proto.CtrlMessage.PlotTrace.class, com.zjj.proto.CtrlMessage.PlotTrace.Builder.class);
     }
 
-    public static final int FRAME_HEAD_FIELD_NUMBER = 1;
+    public static final int FRAMEHEAD_FIELD_NUMBER = 1;
     private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     @java.lang.Override
@@ -8545,7 +8545,7 @@ public final class CtrlMessage {
       return frameHead_ != null;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     @java.lang.Override
@@ -8553,7 +8553,7 @@ public final class CtrlMessage {
       return frameHead_ == null ? com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
@@ -8671,7 +8671,7 @@ public final class CtrlMessage {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       if (hasFrameHead()) {
-        hash = (37 * hash) + FRAME_HEAD_FIELD_NUMBER;
+        hash = (37 * hash) + FRAMEHEAD_FIELD_NUMBER;
         hash = (53 * hash) + getFrameHead().hashCode();
       }
       if (getPlotsCount() > 0) {
@@ -8976,14 +8976,14 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> frameHeadBuilder_;
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return Whether the frameHead field is set.
        */
       public boolean hasFrameHead() {
         return frameHeadBuilder_ != null || frameHead_ != null;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return The frameHead.
        */
       public com.zjj.proto.CtrlMessage.FrameHead getFrameHead() {
@@ -8994,7 +8994,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -9010,7 +9010,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(
           com.zjj.proto.CtrlMessage.FrameHead.Builder builderForValue) {
@@ -9024,7 +9024,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder mergeFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -9042,7 +9042,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder clearFrameHead() {
         if (frameHeadBuilder_ == null) {
@@ -9056,7 +9056,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHead.Builder getFrameHeadBuilder() {
         
@@ -9064,7 +9064,7 @@ public final class CtrlMessage {
         return getFrameHeadFieldBuilder().getBuilder();
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
         if (frameHeadBuilder_ != null) {
@@ -9075,7 +9075,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> 
@@ -9388,17 +9388,17 @@ public final class CtrlMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     boolean hasFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     com.zjj.proto.CtrlMessage.FrameHead getFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder();
 
@@ -9549,10 +9549,10 @@ public final class CtrlMessage {
               com.zjj.proto.CtrlMessage.PlotTraceRedirect.class, com.zjj.proto.CtrlMessage.PlotTraceRedirect.Builder.class);
     }
 
-    public static final int FRAME_HEAD_FIELD_NUMBER = 1;
+    public static final int FRAMEHEAD_FIELD_NUMBER = 1;
     private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     @java.lang.Override
@@ -9560,7 +9560,7 @@ public final class CtrlMessage {
       return frameHead_ != null;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     @java.lang.Override
@@ -9568,7 +9568,7 @@ public final class CtrlMessage {
       return frameHead_ == null ? com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
@@ -9732,7 +9732,7 @@ public final class CtrlMessage {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       if (hasFrameHead()) {
-        hash = (37 * hash) + FRAME_HEAD_FIELD_NUMBER;
+        hash = (37 * hash) + FRAMEHEAD_FIELD_NUMBER;
         hash = (53 * hash) + getFrameHead().hashCode();
       }
       if (getPlotsCount() > 0) {
@@ -10046,14 +10046,14 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> frameHeadBuilder_;
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return Whether the frameHead field is set.
        */
       public boolean hasFrameHead() {
         return frameHeadBuilder_ != null || frameHead_ != null;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return The frameHead.
        */
       public com.zjj.proto.CtrlMessage.FrameHead getFrameHead() {
@@ -10064,7 +10064,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -10080,7 +10080,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(
           com.zjj.proto.CtrlMessage.FrameHead.Builder builderForValue) {
@@ -10094,7 +10094,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder mergeFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -10112,7 +10112,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder clearFrameHead() {
         if (frameHeadBuilder_ == null) {
@@ -10126,7 +10126,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHead.Builder getFrameHeadBuilder() {
         
@@ -10134,7 +10134,7 @@ public final class CtrlMessage {
         return getFrameHeadFieldBuilder().getBuilder();
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
         if (frameHeadBuilder_ != null) {
@@ -10145,7 +10145,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> 
@@ -10534,17 +10534,17 @@ public final class CtrlMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     boolean hasFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     com.zjj.proto.CtrlMessage.FrameHead getFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder();
 
@@ -10676,10 +10676,10 @@ public final class CtrlMessage {
               com.zjj.proto.CtrlMessage.TrackTrace.class, com.zjj.proto.CtrlMessage.TrackTrace.Builder.class);
     }
 
-    public static final int FRAME_HEAD_FIELD_NUMBER = 1;
+    public static final int FRAMEHEAD_FIELD_NUMBER = 1;
     private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     @java.lang.Override
@@ -10687,7 +10687,7 @@ public final class CtrlMessage {
       return frameHead_ != null;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     @java.lang.Override
@@ -10695,7 +10695,7 @@ public final class CtrlMessage {
       return frameHead_ == null ? com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
@@ -10813,7 +10813,7 @@ public final class CtrlMessage {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       if (hasFrameHead()) {
-        hash = (37 * hash) + FRAME_HEAD_FIELD_NUMBER;
+        hash = (37 * hash) + FRAMEHEAD_FIELD_NUMBER;
         hash = (53 * hash) + getFrameHead().hashCode();
       }
       if (getTracksCount() > 0) {
@@ -11118,14 +11118,14 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> frameHeadBuilder_;
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return Whether the frameHead field is set.
        */
       public boolean hasFrameHead() {
         return frameHeadBuilder_ != null || frameHead_ != null;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return The frameHead.
        */
       public com.zjj.proto.CtrlMessage.FrameHead getFrameHead() {
@@ -11136,7 +11136,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -11152,7 +11152,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(
           com.zjj.proto.CtrlMessage.FrameHead.Builder builderForValue) {
@@ -11166,7 +11166,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder mergeFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -11184,7 +11184,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder clearFrameHead() {
         if (frameHeadBuilder_ == null) {
@@ -11198,7 +11198,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHead.Builder getFrameHeadBuilder() {
         
@@ -11206,7 +11206,7 @@ public final class CtrlMessage {
         return getFrameHeadFieldBuilder().getBuilder();
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
         if (frameHeadBuilder_ != null) {
@@ -11217,7 +11217,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> 
@@ -11530,17 +11530,17 @@ public final class CtrlMessage {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     boolean hasFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     com.zjj.proto.CtrlMessage.FrameHead getFrameHead();
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder();
 
@@ -11691,10 +11691,10 @@ public final class CtrlMessage {
               com.zjj.proto.CtrlMessage.TrackTraceRedirect.class, com.zjj.proto.CtrlMessage.TrackTraceRedirect.Builder.class);
     }
 
-    public static final int FRAME_HEAD_FIELD_NUMBER = 1;
+    public static final int FRAMEHEAD_FIELD_NUMBER = 1;
     private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return Whether the frameHead field is set.
      */
     @java.lang.Override
@@ -11702,7 +11702,7 @@ public final class CtrlMessage {
       return frameHead_ != null;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      * @return The frameHead.
      */
     @java.lang.Override
@@ -11710,7 +11710,7 @@ public final class CtrlMessage {
       return frameHead_ == null ? com.zjj.proto.CtrlMessage.FrameHead.getDefaultInstance() : frameHead_;
     }
     /**
-     * <code>.FrameHead frame_head = 1;</code>
+     * <code>.FrameHead frameHead = 1;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
@@ -11874,7 +11874,7 @@ public final class CtrlMessage {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       if (hasFrameHead()) {
-        hash = (37 * hash) + FRAME_HEAD_FIELD_NUMBER;
+        hash = (37 * hash) + FRAMEHEAD_FIELD_NUMBER;
         hash = (53 * hash) + getFrameHead().hashCode();
       }
       if (getTracksCount() > 0) {
@@ -12188,14 +12188,14 @@ public final class CtrlMessage {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> frameHeadBuilder_;
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return Whether the frameHead field is set.
        */
       public boolean hasFrameHead() {
         return frameHeadBuilder_ != null || frameHead_ != null;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        * @return The frameHead.
        */
       public com.zjj.proto.CtrlMessage.FrameHead getFrameHead() {
@@ -12206,7 +12206,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -12222,7 +12222,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder setFrameHead(
           com.zjj.proto.CtrlMessage.FrameHead.Builder builderForValue) {
@@ -12236,7 +12236,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder mergeFrameHead(com.zjj.proto.CtrlMessage.FrameHead value) {
         if (frameHeadBuilder_ == null) {
@@ -12254,7 +12254,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public Builder clearFrameHead() {
         if (frameHeadBuilder_ == null) {
@@ -12268,7 +12268,7 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHead.Builder getFrameHeadBuilder() {
         
@@ -12276,7 +12276,7 @@ public final class CtrlMessage {
         return getFrameHeadFieldBuilder().getBuilder();
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       public com.zjj.proto.CtrlMessage.FrameHeadOrBuilder getFrameHeadOrBuilder() {
         if (frameHeadBuilder_ != null) {
@@ -12287,7 +12287,7 @@ public final class CtrlMessage {
         }
       }
       /**
-       * <code>.FrameHead frame_head = 1;</code>
+       * <code>.FrameHead frameHead = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.FrameHead, com.zjj.proto.CtrlMessage.FrameHead.Builder, com.zjj.proto.CtrlMessage.FrameHeadOrBuilder> 
@@ -19109,43 +19109,43 @@ public final class CtrlMessage {
       "\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\"\"\n\006SynAck\022\014\n\004f" +
       "rom\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\"\037\n\003Ack\022\014\n\004from\030\001 \001" +
       "(\t\022\n\n\002to\030\002 \001(\t\"9\n\013ReqRedirect\022\014\n\004from\030\001 " +
-      "\001(\t\022\n\n\002to\030\002 \001(\t\022\020\n\010fromAddr\030\003 \001(\t\"A\n\tPlo" +
-      "tTrace\022\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\024" +
-      "\n\005plots\030\002 \003(\0132\005.Plot\"U\n\021PlotTraceRedirec" +
-      "t\022\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\024\n\005plo" +
-      "ts\030\002 \003(\0132\005.Plot\022\n\n\002to\030\003 \001(\t\"D\n\nTrackTrac" +
-      "e\022\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\026\n\006tra" +
-      "cks\030\002 \003(\0132\006.Track\"X\n\022TrackTraceRedirect\022" +
-      "\036\n\nframe_head\030\001 \001(\0132\n.FrameHead\022\026\n\006track" +
-      "s\030\002 \003(\0132\006.Track\022\n\n\002to\030\003 \001(\t\"\207\002\n\tFrameHea" +
-      "d\022\020\n\010magicNum\030\001 \001(\001\022\016\n\006nodeId\030\002 \001(\t\022\025\n\rr" +
-      "ecvLongitude\030\003 \001(\001\022\024\n\014recvLatitude\030\004 \001(\001" +
-      "\022\022\n\nrecvHeight\030\005 \001(\001\022\026\n\016transLongitude\030\006" +
-      " \001(\001\022\025\n\rtransLatitude\030\007 \001(\001\022\023\n\013transHeig" +
-      "ht\030\010 \001(\001\022\027\n\017signalFrequency\030\t \001(\002\022\025\n\rref" +
-      "reshPeriod\030\n \001(\001\022\020\n\010traceNum\030\013 \001(\005\022\021\n\tti" +
-      "mestamp\030\014 \001(\001\"\203\001\n\004Plot\022\025\n\rbistaticRange\030" +
-      "\001 \001(\002\022\030\n\020bistaticVelocity\030\002 \001(\002\022\017\n\007azimu" +
-      "th\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001(\002\022" +
-      "\013\n\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\363\001\n\005Track\022\020\n" +
-      "\010batchNum\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010la" +
-      "titude\030\003 \001(\001\022\016\n\006height\030\004 \001(\001\022\r\n\005range\030\005 " +
-      "\001(\001\022\020\n\010position\030\006 \001(\001\022\021\n\televation\030\007 \001(\001" +
-      "\022\032\n\022horizontalVelocity\030\010 \001(\001\022\030\n\020vertical" +
-      "Velocity\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power\030" +
-      "\013 \001(\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\"\253\001\n\010Ct" +
-      "rlInfo\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlType" +
-      "\022\017\n\007localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n" +
-      "\007message\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000" +
-      "\022\014\n\010REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIF" +
-      "Y_ACK\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.Ser" +
-      "verAck.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckTy" +
-      "pe\022\006\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020" +
-      "\002\"t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessa" +
-      "ge.MsgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r" +
-      "\n\tSAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*" +
-      "#\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\r" +
-      "com.zjj.protoB\013CtrlMessageb\006proto3"
+      "\001(\t\022\n\n\002to\030\002 \001(\t\022\020\n\010fromAddr\030\003 \001(\t\"@\n\tPlo" +
+      "tTrace\022\035\n\tframeHead\030\001 \001(\0132\n.FrameHead\022\024\n" +
+      "\005plots\030\002 \003(\0132\005.Plot\"T\n\021PlotTraceRedirect" +
+      "\022\035\n\tframeHead\030\001 \001(\0132\n.FrameHead\022\024\n\005plots" +
+      "\030\002 \003(\0132\005.Plot\022\n\n\002to\030\003 \001(\t\"C\n\nTrackTrace\022" +
+      "\035\n\tframeHead\030\001 \001(\0132\n.FrameHead\022\026\n\006tracks" +
+      "\030\002 \003(\0132\006.Track\"W\n\022TrackTraceRedirect\022\035\n\t" +
+      "frameHead\030\001 \001(\0132\n.FrameHead\022\026\n\006tracks\030\002 " +
+      "\003(\0132\006.Track\022\n\n\002to\030\003 \001(\t\"\207\002\n\tFrameHead\022\020\n" +
+      "\010magicNum\030\001 \001(\001\022\016\n\006nodeId\030\002 \001(\t\022\025\n\rrecvL" +
+      "ongitude\030\003 \001(\001\022\024\n\014recvLatitude\030\004 \001(\001\022\022\n\n" +
+      "recvHeight\030\005 \001(\001\022\026\n\016transLongitude\030\006 \001(\001" +
+      "\022\025\n\rtransLatitude\030\007 \001(\001\022\023\n\013transHeight\030\010" +
+      " \001(\001\022\027\n\017signalFrequency\030\t \001(\002\022\025\n\rrefresh" +
+      "Period\030\n \001(\001\022\020\n\010traceNum\030\013 \001(\005\022\021\n\ttimest" +
+      "amp\030\014 \001(\001\"\203\001\n\004Plot\022\025\n\rbistaticRange\030\001 \001(" +
+      "\002\022\030\n\020bistaticVelocity\030\002 \001(\002\022\017\n\007azimuth\030\003" +
+      " \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001(\002\022\013\n\003s" +
+      "nr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\363\001\n\005Track\022\020\n\010bat" +
+      "chNum\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010latitu" +
+      "de\030\003 \001(\001\022\016\n\006height\030\004 \001(\001\022\r\n\005range\030\005 \001(\001\022" +
+      "\020\n\010position\030\006 \001(\001\022\021\n\televation\030\007 \001(\001\022\032\n\022" +
+      "horizontalVelocity\030\010 \001(\001\022\030\n\020verticalVelo" +
+      "city\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power\030\013 \001(" +
+      "\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\"\253\001\n\010CtrlIn" +
+      "fo\022 \n\004type\030\001 \001(\0162\022.CtrlInfo.CtrlType\022\017\n\007" +
+      "localId\030\002 \001(\t\022\022\n\noppositeId\030\003 \001(\t\022\017\n\007mes" +
+      "sage\030\004 \001(\t\"G\n\010CtrlType\022\014\n\010REGISTER\020\000\022\014\n\010" +
+      "REQ_ADDR\020\001\022\017\n\013UPDATE_ADDR\020\002\022\016\n\nNOTIFY_AC" +
+      "K\020\003\"p\n\tServerAck\022 \n\004type\030\001 \001(\0162\022.ServerA" +
+      "ck.AckType\022\017\n\007message\030\002 \001(\t\"0\n\007AckType\022\006" +
+      "\n\002OK\020\000\022\014\n\010ACK_ADDR\020\001\022\017\n\013NOTIFY_SEND\020\002\"t\n" +
+      "\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessage.M" +
+      "sgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\tSA" +
+      "VE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n\010I" +
+      "netType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom." +
+      "zjj.protoB\013CtrlMessageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

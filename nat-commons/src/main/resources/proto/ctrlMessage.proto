@@ -75,23 +75,23 @@ message ReqRedirect {
 }
 
 message PlotTrace {
-  FrameHead frame_head = 1;
+  FrameHead frameHead = 1;
   repeated Plot plots = 2;
 }
 
 message PlotTraceRedirect {
-  FrameHead frame_head = 1;
+  FrameHead frameHead = 1;
   repeated Plot plots = 2;
   string to = 3;
 }
 
 message TrackTrace {
-  FrameHead frame_head = 1;
+  FrameHead frameHead = 1;
   repeated Track tracks = 2;
 }
 
 message TrackTraceRedirect {
-  FrameHead frame_head = 1;
+  FrameHead frameHead = 1;
   repeated Track tracks = 2;
   string to = 3;
 }
