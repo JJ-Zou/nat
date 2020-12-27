@@ -1,15 +1,22 @@
 package com.zjj.http;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zjj.constant.Constants;
+import com.zjj.contant.Constants;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
+
+@Component
 public class HttpReq {
-    private static final String URL = "http://39.105.65.104:20080/addr/";
-    private static RestTemplate restTemplate = new RestTemplate();
+    @Value("${server.url}")
+    private String url;
+    @Resource
+    private RestTemplate restTemplate;
 
     public String addPrivateAddr(String id, String addr) {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -18,7 +25,7 @@ public class HttpReq {
         jsonObject.put(Constants.CLIENT_ID, id);
         jsonObject.put(Constants.CLIENT_PRIVATE_ADDRESS, addr);
         HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
-        return restTemplate.postForObject(URL + "addPriAddr", httpEntity, String.class);
+        return restTemplate.postForObject(url + "addPriAddr", httpEntity, String.class);
     }
 
     public String addPublicAddr(String id, String addr) {
@@ -28,7 +35,7 @@ public class HttpReq {
         jsonObject.put(Constants.CLIENT_ID, id);
         jsonObject.put(Constants.CLIENT_PUBLIC_ADDRESS, addr);
         HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
-        return restTemplate.postForObject(URL + "addPubAddr", httpEntity, String.class);
+        return restTemplate.postForObject(url + "addPubAddr", httpEntity, String.class);
     }
 
     public String getPrivateAddr(String id) {
@@ -37,7 +44,7 @@ public class HttpReq {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.CLIENT_ID, id);
         HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
-        return restTemplate.postForObject(URL + "getPriAddr", httpEntity, String.class);
+        return restTemplate.postForObject(url + "getPriAddr", httpEntity, String.class);
     }
 
     public String getPublicAddr(String id) {
@@ -46,7 +53,7 @@ public class HttpReq {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.CLIENT_ID, id);
         HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
-        return restTemplate.postForObject(URL + "getPubAddr", httpEntity, String.class);
+        return restTemplate.postForObject(url + "getPubAddr", httpEntity, String.class);
     }
 
     public String delPrivateAddr(String id) {
@@ -55,7 +62,7 @@ public class HttpReq {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.CLIENT_ID, id);
         HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
-        return restTemplate.postForObject(URL + "delPriAddr", httpEntity, String.class);
+        return restTemplate.postForObject(url + "delPriAddr", httpEntity, String.class);
     }
 
     public String delPublicAddr(String id) {
@@ -64,6 +71,6 @@ public class HttpReq {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.CLIENT_ID, id);
         HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
-        return restTemplate.postForObject(URL + "delPubAddr", httpEntity, String.class);
+        return restTemplate.postForObject(url + "delPubAddr", httpEntity, String.class);
     }
 }
