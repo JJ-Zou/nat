@@ -104,8 +104,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
                 String to = reqRedirect.getTo();
                 String toInetAddrStr = PUBLIC_ADDR_MAP.get(to);
-                MultiMessage multiReqRedirect = ProtoUtils.createMultiReqRedirect(reqRedirect.getFrom(), to, reqRedirect.getFromAddr());
-                DatagramPacket reqRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiReqRedirect.toByteArray()),
+                DatagramPacket reqRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
                         InetUtils.toInetSocketAddress(toInetAddrStr));
                 channel.writeAndFlush(reqRedirectPacket).addListener(f -> {
                     if (f.isSuccess()) {
@@ -117,14 +116,29 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 break;
             case PLOT_TRACE_REDIRECT:
                 PlotTraceRedirect plotTraceRedirect = multiMessage.getPlotTraceRedirect();
-                String redirectToId = plotTraceRedirect.getTo();
-                String redirectToIdAddrStr = PUBLIC_ADDR_MAP.get(redirectToId);
-                DatagramPacket redirectPacket = new DatagramPacket(content, InetUtils.toInetSocketAddress(redirectToIdAddrStr));
-                channel.writeAndFlush(redirectPacket).addListener(f -> {
+                String plotRedirectToId = plotTraceRedirect.getTo();
+                String plotRedirectToIdAddrStr = PUBLIC_ADDR_MAP.get(plotRedirectToId);
+                DatagramPacket plotRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
+                        InetUtils.toInetSocketAddress(plotRedirectToIdAddrStr));
+                channel.writeAndFlush(plotRedirectPacket).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("转发点迹给id: {} 地址为 {}", redirectToId, redirectToIdAddrStr);
+                        log.debug("转发点迹给id: {} 地址为 {}", plotRedirectToId, plotRedirectToIdAddrStr);
                     } else {
                         log.error("转发点迹失败");
+                    }
+                });
+                break;
+            case TRACK_TRACE_REDIRECT:
+                TrackTraceRedirect trackTraceRedirect = multiMessage.getTrackTraceRedirect();
+                String trackRedirectToId = trackTraceRedirect.getTo();
+                String trackRectToIdAddrStr = PUBLIC_ADDR_MAP.get(trackRedirectToId);
+                DatagramPacket trackRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
+                        InetUtils.toInetSocketAddress(trackRectToIdAddrStr));
+                channel.writeAndFlush(trackRedirectPacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        log.debug("转发航迹给id: {} 地址为 {}", trackRedirectToId, trackRectToIdAddrStr);
+                    } else {
+                        log.error("转发航迹失败");
                     }
                 });
                 break;

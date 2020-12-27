@@ -13,9 +13,11 @@ message MultiMessage {
     REQ_REDIRECT = 5;
     PLOT_TRACE = 6;
     PLOT_TRACE_REDIRECT = 7;
-    CTRL_INFO = 8;
-    SERVER_ACK = 9;
-    PSP_MESSAGE = 10;
+    TRACK_TRACE = 8;
+    TRACK_TRACE_REDIRECT = 9;
+    CTRL_INFO = 10;
+    SERVER_ACK = 11;
+    PSP_MESSAGE = 12;
   }
   MultiType multiType = 1;
   oneof MultiBody {
@@ -27,9 +29,11 @@ message MultiMessage {
     ReqRedirect reqRedirect = 7;
     PlotTrace plotTrace = 8;
     PlotTraceRedirect plotTraceRedirect = 9;
-    CtrlInfo ctrlInfo = 10;
-    ServerAck serverAck = 11;
-    P2PMessage p2PMessage = 12;
+    TrackTrace trackTrace = 10;
+    TrackTraceRedirect trackTraceRedirect = 11;
+    CtrlInfo ctrlInfo = 12;
+    ServerAck serverAck = 13;
+    P2PMessage p2PMessage = 14;
   }
 }
 
@@ -81,29 +85,56 @@ message PlotTraceRedirect {
   string to = 3;
 }
 
+message TrackTrace {
+  FrameHead frame_head = 1;
+  repeated Track tracks = 2;
+}
+
+message TrackTraceRedirect {
+  FrameHead frame_head = 1;
+  repeated Track tracks = 2;
+  string to = 3;
+}
+
 message FrameHead {
-  double magic_num = 1;
-  string node_id = 2;
-  double recv_longitude = 3;
-  double recv_latitude = 4;
-  double recv_height = 5;
-  double trans_longitude = 6;
-  double trans_latitude = 7;
-  double trans_height = 8;
-  float signal_frequency = 9;
-  double refresh_period = 10;
-  int32 trace_num = 11;
+  double magicNnum = 1;
+  string nodeId = 2;
+  double recvLongitude = 3;
+  double recvLatitude = 4;
+  double recvHeight = 5;
+  double transLongitude = 6;
+  double transLatitude = 7;
+  double transHeight = 8;
+  float signalFrequency = 9;
+  double refreshPeriod = 10;
+  int32 traceNum = 11;
   double timestamp = 12;
 }
 
 message Plot {
-  float bistatic_range = 1;
-  float bistatic_velocity = 2;
+  float bistaticRange = 1;
+  float bistaticVelocity = 2;
   float azimuth = 3;
   float height = 4;
   float power = 5;
   float snr = 6;
   float phase = 7;
+}
+
+message Track {
+  double batchNum = 1;
+  double longitude = 2;
+  double latitude = 3;
+  double height = 4;
+  double range = 5;
+  double position = 6;
+  double elevation = 7;
+  double horizontalVelocity = 8;
+  double verticalVelocity = 9;
+  double course = 10;
+  double power = 11;
+  double snr = 12;
+  double phase = 13;
 }
 
 message CtrlInfo {
