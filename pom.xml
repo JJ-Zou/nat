@@ -13,6 +13,7 @@
         <module>nat-test</module>
         <module>nat-commons</module>
         <module>nat-server</module>
+        <module>nat-client</module>
     </modules>
 
     <properties>

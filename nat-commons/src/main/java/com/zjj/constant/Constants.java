@@ -2,6 +2,7 @@ package com.zjj.constant;
 
 public interface Constants {
 
+    String NONE = "";
     String PUBLIC_ADDRESS_KEY = "publicAddr";
     String PRIVATE_ADDRESS_KEY = "privateAddr";
 

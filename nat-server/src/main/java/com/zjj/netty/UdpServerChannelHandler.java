@@ -46,7 +46,8 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
         Channel channel = ctx.channel();
-        String addressString = InetUtils.toAddressString(msg.sender());
+        InetSocketAddress sender = msg.sender();
+        String addressString = InetUtils.toAddressString(sender);
         ByteBuf content = msg.content();
         MultiMessage multiMessage;
         try {
@@ -65,12 +66,26 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                         log.debug("收到id: {} 的私网地址 {} 加入缓存", id, privateInetAddr);
                         PRIVATE_ADDR_MAP.put(id,
                                 privateInetAddr);
+                        channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
                         log.debug("收到id: {} 的公网地址 {} 加入缓存", id, addressString);
                         PUBLIC_ADDR_MAP.put(id,
                                 addressString);
                         channel.eventLoop().parent().execute(() -> httpReq.addPublicAddr(id, addressString));
+                        DatagramPacket packet
+                                = new DatagramPacket(Unpooled.wrappedBuffer(
+                                ProtoUtils.createMultiInetCommand(id,
+                                        sender.getHostString(),
+                                        sender.getPort(),
+                                        true).toByteArray()),
+                                sender);
+                        channel.writeAndFlush(packet).addListener(f -> {
+                            if (f.isSuccess()) {
+                                log.debug("给id: {} 发送id: {} 的公网地址 {}", id, id, addressString);
+                            } else {
+                                log.error("发送失败");
+                            }
+                        });
                         break;
-                    case PUBLIC:
                     case UNRECOGNIZED:
                     default:
                         break;
@@ -83,8 +98,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 String[] privateAddr = privateAddrStr.split(":");
                 MultiMessage privateInetAck = ProtoUtils.createMultiInetCommand(id, privateAddr[0], Integer.parseInt(privateAddr[1]), false);
                 DatagramPacket privateInetAckPacket =
-                        new DatagramPacket(Unpooled.wrappedBuffer(privateInetAck.toByteArray()),
-                                InetUtils.toInetSocketAddress(addressString));
+                        new DatagramPacket(Unpooled.wrappedBuffer(privateInetAck.toByteArray()), sender);
                 channel.writeAndFlush(privateInetAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
                         log.debug("回复id: {} 的私网地址 {}", id, privateAddrStr);
@@ -96,8 +110,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 String[] publicAddr = publicAddrStr.split(":");
                 MultiMessage publicInetAck = ProtoUtils.createMultiInetCommand(id, publicAddr[0], Integer.parseInt(publicAddr[1]), true);
                 DatagramPacket publicInetAckPacket =
-                        new DatagramPacket(Unpooled.wrappedBuffer(publicInetAck.toByteArray()),
-                                InetUtils.toInetSocketAddress(addressString));
+                        new DatagramPacket(Unpooled.wrappedBuffer(publicInetAck.toByteArray()), sender);
                 channel.writeAndFlush(publicInetAckPacket).addListener(f -> {
                     if (f.isSuccess()) {
                         log.debug("回复id: {} 的公网地址 {}", id, publicAddrStr);
