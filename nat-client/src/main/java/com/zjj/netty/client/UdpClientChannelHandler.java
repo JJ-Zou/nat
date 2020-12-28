@@ -31,6 +31,10 @@ import static com.zjj.proto.CtrlMessage.*;
 @Component
 @ChannelHandler.Sharable
 public class UdpClientChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
+    public static final String KEY_READ_TIMESTAMP = "READ_TIMESTAMP";
+    public static final String KEY_WRITE_TIMESTAMP = "WRITE_TIMESTAMP";
+    private static final AttributeKey<Long> KEY_WRITE = AttributeKey.valueOf(KEY_WRITE_TIMESTAMP);
+    private static final AttributeKey<Long> KEY_READ = AttributeKey.valueOf(KEY_READ_TIMESTAMP);
     @Resource(name = "udpClient")
     private NettyClient nettyClient;
     @Resource(name = "natThroughProcessor")
@@ -39,13 +43,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     private HttpReq httpReq;
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor executor;
-
-    public static final String KEY_READ_TIMESTAMP = "READ_TIMESTAMP";
-    public static final String KEY_WRITE_TIMESTAMP = "WRITE_TIMESTAMP";
-
-    private static final AttributeKey<Long> KEY_WRITE = AttributeKey.valueOf(KEY_WRITE_TIMESTAMP);
-    private static final AttributeKey<Long> KEY_READ = AttributeKey.valueOf(KEY_READ_TIMESTAMP);
-
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

@@ -17,6 +17,10 @@ public interface IpAddrHolder extends NatThrough {
 
     void setThrough(String oppositeId, String addrStr);
 
+    void setThrough(String oppositeId);
+
+    void setAllThrough(Set<String> oppositeIds);
+
     String getThrough(String oppositeId);
 
     boolean contains(String oppositeId);

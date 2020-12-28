@@ -1,9 +1,12 @@
 package com.zjj.netty;
 
+import com.zjj.constant.Constants;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public abstract class AbstractIpAddrHolder implements IpAddrHolder {
     private final Map<String, String> throughHolder;
@@ -25,6 +28,17 @@ public abstract class AbstractIpAddrHolder implements IpAddrHolder {
     @Override
     public void setThrough(String oppositeId, String addrStr) {
         throughHolder.put(oppositeId, addrStr);
+    }
+
+    @Override
+    public void setThrough(String oppositeId) {
+        setThrough(oppositeId, Constants.NONE);
+    }
+
+    @Override
+    public void setAllThrough(Set<String> oppositeIds) {
+        Map<String, String> collect = oppositeIds.stream().collect(Collectors.toMap(oppositeId -> oppositeId, s -> Constants.NONE));
+        throughHolder.putAll(collect);
     }
 
     @Override

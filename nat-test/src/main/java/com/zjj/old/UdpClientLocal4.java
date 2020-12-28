@@ -28,12 +28,12 @@ public class UdpClientLocal4 {
     private static final int SERVER_PORT = 20000;
     private static final int SERVER_PORT1 = 30000;
     private static final String ID = "test4";
-    private static String natId;
-    private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress SERVER_ADDRESS1 = new InetSocketAddress(SERVE_IP, SERVER_PORT1);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
+    private static String natId;
+    private static Channel channel;
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();

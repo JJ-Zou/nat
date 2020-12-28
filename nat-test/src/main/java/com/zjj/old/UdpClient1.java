@@ -25,10 +25,10 @@ public class UdpClient1 {
     private static final int LOCAL_PORT = 10002;
     private static final int SERVER_PORT = 10000;
     private static final String ID = "com/zjj";
-    private static Channel channel;
     private static final InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(SERVE_IP, SERVER_PORT);
     private static final InetSocketAddress LOCAL_ADDRESS = new InetSocketAddress(LOCAL_IP, LOCAL_PORT);
     private static final Map<String, String> ADDRESS_MAP = new ConcurrentHashMap<>();
+    private static Channel channel;
 
     public static void main(String[] args) {
         NioEventLoopGroup group = new NioEventLoopGroup();
