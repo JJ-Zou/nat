@@ -24,7 +24,7 @@ public class NatClientApplication implements CommandLineRunner {
     private IpAddrHolder ipAddrHolder;
     @Resource(name = "udpClient")
     private NettyClient nettyClient;
-    @Value("#{'${nat.oppositeIds}'.split(',')}")
+    @Value("#{'${nat.oppositeIds:}'.split(',')}")
     private Set<String> oppositeIds;
 
     public static void main(String[] args) {
@@ -35,9 +35,8 @@ public class NatClientApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         nettyClient.doBind();
         log.info("本机ID: {}", nettyClient.getLocalId());
-        if (oppositeIds != null && !oppositeIds.isEmpty()) {
+        if (oppositeIds != null && !oppositeIds.isEmpty() && !oppositeIds.contains("")) {
             ipAddrHolder.setAllThrough(oppositeIds);
-
         }
         Set<String> oppositeIds = ipAddrHolder.getThroughIds();
         long l1;
