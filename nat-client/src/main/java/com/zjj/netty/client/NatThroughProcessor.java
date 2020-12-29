@@ -7,9 +7,11 @@ import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.socket.DatagramPacket;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -18,6 +20,12 @@ public class NatThroughProcessor extends AbstractIpAddrHolder {
 
     private static final Map<String, String> PUBLIC_ADDR_MAP = new ConcurrentHashMap<>();
     private static final Map<String, String> PRIVATE_ADDR_MAP = new ConcurrentHashMap<>();
+
+    public NatThroughProcessor(@Value("#{'${nat.oppositeIds:}'.split(',')}") Set<String> oppositeIds) {
+        if (oppositeIds != null && !oppositeIds.isEmpty() && !oppositeIds.contains("")) {
+            setAllThrough(oppositeIds);
+        }
+    }
 
     @Override
     public String getPriAddrStr(String id) {

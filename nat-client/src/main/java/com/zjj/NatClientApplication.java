@@ -5,7 +5,6 @@ import com.zjj.http.HttpReq;
 import com.zjj.netty.IpAddrHolder;
 import com.zjj.netty.NettyClient;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,8 +23,6 @@ public class NatClientApplication implements CommandLineRunner {
     private IpAddrHolder ipAddrHolder;
     @Resource(name = "udpClient")
     private NettyClient nettyClient;
-    @Value("#{'${nat.oppositeIds:}'.split(',')}")
-    private Set<String> oppositeIds;
 
     public static void main(String[] args) {
         SpringApplication.run(NatClientApplication.class, args);
@@ -35,14 +32,15 @@ public class NatClientApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         nettyClient.doBind();
         log.info("本机ID: {}", nettyClient.getLocalId());
-        if (oppositeIds != null && !oppositeIds.isEmpty() && !oppositeIds.contains("")) {
-            ipAddrHolder.setAllThrough(oppositeIds);
-        }
         Set<String> oppositeIds = ipAddrHolder.getThroughIds();
         long l1;
         for (String oppositeId : oppositeIds) {
             l1 = System.currentTimeMillis();
             String oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
+            if (oppositePriAddr == null) {
+                log.error("{} 未在线", oppositeId);
+                continue;
+            }
             log.info("{} 的私网地址是 {}", oppositeId, oppositePriAddr);
             ipAddrHolder.setPriAddrStr(oppositeId, oppositePriAddr);
             log.debug("获取{}的私网地址用时{}ms", oppositeId, System.currentTimeMillis() - l1);
