@@ -15,9 +15,10 @@ message MultiMessage {
     PLOT_TRACE_REDIRECT = 7;
     TRACK_TRACE = 8;
     TRACK_TRACE_REDIRECT = 9;
-    CTRL_INFO = 10;
-    SERVER_ACK = 11;
-    PSP_MESSAGE = 12;
+    BLACK_TRACE_REDIRECT = 10;
+    CTRL_INFO = 11;
+    SERVER_ACK = 12;
+    PSP_MESSAGE = 13;
   }
   MultiType multiType = 1;
   oneof MultiBody {
@@ -31,9 +32,10 @@ message MultiMessage {
     PlotTraceRedirect plotTraceRedirect = 9;
     TrackTrace trackTrace = 10;
     TrackTraceRedirect trackTraceRedirect = 11;
-    CtrlInfo ctrlInfo = 12;
-    ServerAck serverAck = 13;
-    P2PMessage p2PMessage = 14;
+    BlackTraceRedirect blackTraceRedirect = 12;
+    CtrlInfo ctrlInfo = 13;
+    ServerAck serverAck = 14;
+    P2PMessage p2PMessage = 15;
   }
 }
 
@@ -94,6 +96,12 @@ message TrackTraceRedirect {
   FrameHead frameHead = 1;
   repeated Track tracks = 2;
   string to = 3;
+}
+
+message BlackTraceRedirect {
+  string from = 1;
+  string to = 2;
+  bytes data = 3;
 }
 
 message FrameHead {

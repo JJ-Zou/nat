@@ -1,5 +1,7 @@
 package com.zjj.utils;
 
+import com.google.protobuf.ByteString;
+
 import static com.zjj.proto.CtrlMessage.*;
 
 public class ProtoUtils {
@@ -317,5 +319,24 @@ public class ProtoUtils {
      */
     public static MultiMessage createMultiFromTrackTrace(TrackTrace trackTrace, String toId) {
         return createMultiFromTrackTraceRedirect(createRedirectFromTrackTrace(trackTrace, toId));
+    }
+
+    public static BlackTraceRedirect createRedirectFromBlack(String from, String to, byte[] data) {
+        return BlackTraceRedirect.newBuilder()
+                .setFrom(from)
+                .setTo(to)
+                .setData(ByteString.copyFrom(data))
+                .build();
+    }
+
+    public static MultiMessage createMultiFromBlackRedirect(BlackTraceRedirect blackTraceRedirect) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.BLACK_TRACE_REDIRECT)
+                .setBlackTraceRedirect(blackTraceRedirect)
+                .build();
+    }
+
+    public static MultiMessage createMultiFromBlackTrace(String from, String to, byte[] data) {
+        return createMultiFromBlackRedirect(createRedirectFromBlack(from, to, data));
     }
 }

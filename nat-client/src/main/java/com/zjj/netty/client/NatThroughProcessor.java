@@ -39,18 +39,28 @@ public class NatThroughProcessor extends AbstractIpAddrHolder {
 
     @Override
     public void setPriAddrStr(String id, String addrStr) {
+        if (addrStr == null) {
+            return;
+        }
         PRIVATE_ADDR_MAP.put(id, addrStr);
     }
 
     @Override
     public void setPubAddrStr(String id, String addrStr) {
+        if (addrStr == null) {
+            return;
+        }
         PUBLIC_ADDR_MAP.put(id, addrStr);
     }
 
     @Override
     public void attemptNatConnect(NettyClient nettyClient, String oppositeId) {
-        attemptPrivateConnect(nettyClient, oppositeId);
-        attemptPublicConnect(nettyClient, oppositeId);
+        if (PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
+            attemptPrivateConnect(nettyClient, oppositeId);
+        }
+        if (PUBLIC_ADDR_MAP.containsKey(oppositeId)) {
+            attemptPublicConnect(nettyClient, oppositeId);
+        }
     }
 
     public void attemptPrivateConnect(NettyClient nettyClient, String oppositeId) {

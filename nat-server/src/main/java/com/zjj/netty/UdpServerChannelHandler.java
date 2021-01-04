@@ -165,6 +165,20 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                     }
                 });
                 break;
+            case BLACK_TRACE_REDIRECT:
+                BlackTraceRedirect blackTraceRedirect = multiMessage.getBlackTraceRedirect();
+                String blackTraceRectTo = blackTraceRedirect.getTo();
+                String blackRectToAddrStr = PUBLIC_ADDR_MAP.get(blackTraceRectTo);
+                DatagramPacket blackRectToPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
+                        InetUtils.toInetSocketAddress(blackRectToAddrStr));
+                channel.writeAndFlush(blackRectToPacket).addListener(f -> {
+                    if (f.isSuccess()) {
+                        log.debug("转发黑软件航迹给id: {} 地址为 {}", blackTraceRectTo, blackRectToAddrStr);
+                    } else {
+                        log.error("转发航迹失败");
+                    }
+                });
+                break;
             case CTRL_INFO:
                 processCtrlInfo(multiMessage.getCtrlInfo(), addressString, channel);
                 break;

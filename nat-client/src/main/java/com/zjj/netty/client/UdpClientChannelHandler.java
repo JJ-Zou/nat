@@ -58,11 +58,44 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         Channel channel = ctx.channel();
         String oppositeAddrStr = InetUtils.toAddressString(msg.sender());
         ByteBuf content = msg.content();
+        if (content.getUnsignedShortLE(0) == 0xaaaa) {
+            byte[] data = new byte[content.readableBytes()];
+            content.readBytes(data);
+            Set<String> throughIds = ipAddrHolder.getThroughIds();
+            for (String throughId : throughIds) {
+                String throughIpAddrStr = ipAddrHolder.getThrough(throughId);
+                ByteBuf byteBuf = Unpooled.wrappedBuffer(
+                        ProtoUtils.createMultiFromBlackTrace(nettyClient.getLocalId(), throughId, data)
+                                .toByteArray());
+                if (!Objects.equals(throughIpAddrStr, Constants.NONE)) {
+                    DatagramPacket redirectPacket = new DatagramPacket(byteBuf,
+                            InetUtils.toInetSocketAddress(throughIpAddrStr));
+                    channel.writeAndFlush(redirectPacket).addListener(f -> {
+                        if (f.isSuccess()) {
+                            log.debug("给id: {} 的地址 {} 转发黑软件航迹", throughId, throughIpAddrStr);
+                        } else {
+                            log.error("转发失败");
+                        }
+                    });
+                } else {
+                    DatagramPacket redirectPacket = new DatagramPacket(byteBuf,
+                            nettyClient.getServerAddress());
+                    channel.writeAndFlush(redirectPacket).addListener(f -> {
+                        if (f.isSuccess()) {
+                            log.debug("请求服务器转发id: {} 的消息: 给id: {} 转发黑软件航迹", nettyClient.getLocalId(), throughId);
+                        } else {
+                            log.error("请求失败");
+                        }
+                    });
+                }
+            }
+            return;
+        }
         MultiMessage multiMessage;
         try {
             multiMessage = MultiMessage.parseFrom(content.nioBuffer());
         } catch (InvalidProtocolBufferException e) {
-            log.error("非protoBuf消息: {}", content.toString(CharsetUtil.UTF_8));
+            log.info("非protoBuf消息: {}", content.toString(CharsetUtil.UTF_8));
             return;
         }
         switch (multiMessage.getMultiType()) {
@@ -208,6 +241,19 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case TRACK_TRACE_REDIRECT:
                 TrackTraceRedirect trackTraceRedirect = multiMessage.getTrackTraceRedirect();
                 log.info("\n{}", trackTraceRedirect);
+                break;
+            case BLACK_TRACE_REDIRECT:
+                BlackTraceRedirect blackTraceRedirect = multiMessage.getBlackTraceRedirect();
+                ByteBuf byteBuf = Unpooled.wrappedBuffer(blackTraceRedirect.getData().toByteArray());
+                InetSocketAddress blackAddress = new InetSocketAddress(nettyClient.getLocalAddress().getHostString(), 6000);
+                DatagramPacket packet = new DatagramPacket(byteBuf, blackAddress);
+                channel.writeAndFlush(packet).addListener(f -> {
+                    if (f.isSuccess()) {
+                        log.debug("给黑软件地址 {} 转发航迹", blackAddress);
+                    } else {
+                        log.error("转发失败");
+                    }
+                });
                 break;
             case PSP_MESSAGE:
                 processP2pMessage(multiMessage.getP2PMessage(), oppositeAddrStr, channel);
