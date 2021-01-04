@@ -1,12 +1,15 @@
 package com.zjj.netty;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractClient implements NettyClient {
 
     private String localId;
     private InetSocketAddress localAddress;
     private InetSocketAddress serverAddress;
+
     public AbstractClient(String localId, String localIp, int localPort, String serverIp, int serverPort) {
         this.localId = localId;
         this.localAddress = new InetSocketAddress(localIp, localPort);
@@ -27,4 +30,6 @@ public abstract class AbstractClient implements NettyClient {
     public String getLocalId() {
         return localId;
     }
+
+
 }

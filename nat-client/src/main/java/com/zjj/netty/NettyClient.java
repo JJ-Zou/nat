@@ -20,4 +20,7 @@ public interface NettyClient {
 
     void attemptNatConnect(String oppositeId);
 
+    void putThread(String id, Thread t);
+
+    Thread getThread(String id);
 }

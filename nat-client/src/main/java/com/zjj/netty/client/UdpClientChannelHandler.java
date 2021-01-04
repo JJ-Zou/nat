@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.locks.LockSupport;
 
 import static com.zjj.proto.CtrlMessage.*;
 
@@ -100,6 +101,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 log.debug("{} 到 {} 穿透成功!", synAck.getTo(), oppositeId);
                 log.debug("穿透成功的对方id: {} 的穿透地址为 {}", oppositeId, oppositeAddrStr);
                 ipAddrHolder.setThrough(oppositeId, oppositeAddrStr);
+                LockSupport.unpark(nettyClient.getThread(oppositeId));
                 DatagramPacket ackPacket
                         = new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiAck(synAck.getTo(), oppositeId).toByteArray()),
                         InetUtils.toInetSocketAddress(oppositeAddrStr));

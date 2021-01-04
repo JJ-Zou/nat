@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.LockSupport;
 
 @Slf4j
 @Component()
@@ -23,6 +26,8 @@ public class UdpClient extends AbstractClient {
     private final NioEventLoopGroup group = new NioEventLoopGroup();
 
     private Channel channel;
+
+    private static final Map<String, Thread> THREAD_MAP = new ConcurrentHashMap<>();
 
     @Resource(name = "natThroughProcessor")
     private IpAddrHolder ipAddrHolder;
@@ -69,6 +74,18 @@ public class UdpClient extends AbstractClient {
     public void attemptNatConnect(String oppositeId) {
         ipAddrHolder.setThrough(oppositeId, Constants.NONE);
         ipAddrHolder.attemptNatConnect(this, oppositeId);
+        putThread(oppositeId, Thread.currentThread());
+        LockSupport.parkNanos(1_000_000_000L);
+    }
+
+    @Override
+    public void putThread(String id, Thread t) {
+        THREAD_MAP.put(id, t);
+    }
+
+    @Override
+    public Thread getThread(String id) {
+        return THREAD_MAP.get(id);
     }
 
 }
