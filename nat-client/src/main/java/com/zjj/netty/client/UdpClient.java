@@ -23,12 +23,9 @@ import java.util.concurrent.locks.LockSupport;
 @Slf4j
 @Component()
 public class UdpClient extends AbstractClient {
-    private final NioEventLoopGroup group = new NioEventLoopGroup();
-
-    private Channel channel;
-
     private static final Map<String, Thread> THREAD_MAP = new ConcurrentHashMap<>();
-
+    private final NioEventLoopGroup group = new NioEventLoopGroup();
+    private Channel channel;
     @Resource(name = "natThroughProcessor")
     private IpAddrHolder ipAddrHolder;
 

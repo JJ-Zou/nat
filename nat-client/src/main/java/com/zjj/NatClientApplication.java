@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.concurrent.locks.LockSupport;
 
 @Slf4j
 @SpringBootApplication
