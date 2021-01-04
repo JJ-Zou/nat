@@ -38,7 +38,7 @@ public class NatClientApplication implements CommandLineRunner {
             l1 = System.currentTimeMillis();
             String oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
             if (oppositePriAddr == null) {
-                log.error("{} 未在线", oppositeId);
+                log.info("{} 未在线", oppositeId);
                 continue;
             }
             log.info("{} 的私网地址是 {}", oppositeId, oppositePriAddr);
