@@ -13,6 +13,7 @@ public abstract class AbstractClient implements NettyClient {
     private String localId;
     private InetSocketAddress localAddress;
     private InetSocketAddress serverAddress;
+
     public AbstractClient() {
         this.localId = RandomUtil.randomString(8);
         this.localAddress = new InetSocketAddress(InetUtils.getLocalAddress(), NetUtil.getUsableLocalPort());

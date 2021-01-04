@@ -282,6 +282,7 @@ public final class CtrlMessage {
     getDescriptor() {
         return descriptor;
     }
+
     /**
      * Protobuf enum {@code InetType}
      */
@@ -391,6 +392,7 @@ public final class CtrlMessage {
 
         // @@protoc_insertion_point(enum_scope:InetType)
     }
+
     public interface MultiMessageOrBuilder extends
             // @@protoc_insertion_point(interface_extends:MultiMessage)
             com.google.protobuf.MessageOrBuilder {
@@ -658,6 +660,7 @@ public final class CtrlMessage {
 
         public com.zjj.proto.CtrlMessage.MultiMessage.MultiBodyCase getMultiBodyCase();
     }
+
     public interface InetCommandOrBuilder extends
             // @@protoc_insertion_point(interface_extends:InetCommand)
             com.google.protobuf.MessageOrBuilder {
@@ -713,6 +716,7 @@ public final class CtrlMessage {
          */
         com.zjj.proto.CtrlMessage.InetType getInetType();
     }
+
     public interface ReqAddrOrBuilder extends
             // @@protoc_insertion_point(interface_extends:ReqAddr)
             com.google.protobuf.MessageOrBuilder {
@@ -732,6 +736,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getIdBytes();
     }
+
     public interface SynOrBuilder extends
             // @@protoc_insertion_point(interface_extends:Syn)
             com.google.protobuf.MessageOrBuilder {
@@ -766,6 +771,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getToBytes();
     }
+
     public interface SynAckOrBuilder extends
             // @@protoc_insertion_point(interface_extends:SynAck)
             com.google.protobuf.MessageOrBuilder {
@@ -800,6 +806,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getToBytes();
     }
+
     public interface AckOrBuilder extends
             // @@protoc_insertion_point(interface_extends:Ack)
             com.google.protobuf.MessageOrBuilder {
@@ -834,6 +841,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getToBytes();
     }
+
     public interface ReqRedirectOrBuilder extends
             // @@protoc_insertion_point(interface_extends:ReqRedirect)
             com.google.protobuf.MessageOrBuilder {
@@ -883,6 +891,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getFromAddrBytes();
     }
+
     public interface PlotTraceOrBuilder extends
             // @@protoc_insertion_point(interface_extends:PlotTrace)
             com.google.protobuf.MessageOrBuilder {
@@ -934,6 +943,7 @@ public final class CtrlMessage {
         com.zjj.proto.CtrlMessage.PlotOrBuilder getPlotsOrBuilder(
                 int index);
     }
+
     public interface PlotTraceRedirectOrBuilder extends
             // @@protoc_insertion_point(interface_extends:PlotTraceRedirect)
             com.google.protobuf.MessageOrBuilder {
@@ -1000,6 +1010,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getToBytes();
     }
+
     public interface TrackTraceOrBuilder extends
             // @@protoc_insertion_point(interface_extends:TrackTrace)
             com.google.protobuf.MessageOrBuilder {
@@ -1051,6 +1062,7 @@ public final class CtrlMessage {
         com.zjj.proto.CtrlMessage.TrackOrBuilder getTracksOrBuilder(
                 int index);
     }
+
     public interface TrackTraceRedirectOrBuilder extends
             // @@protoc_insertion_point(interface_extends:TrackTraceRedirect)
             com.google.protobuf.MessageOrBuilder {
@@ -1117,6 +1129,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getToBytes();
     }
+
     public interface FrameHeadOrBuilder extends
             // @@protoc_insertion_point(interface_extends:FrameHead)
             com.google.protobuf.MessageOrBuilder {
@@ -1213,6 +1226,7 @@ public final class CtrlMessage {
          */
         double getTimestamp();
     }
+
     public interface PlotOrBuilder extends
             // @@protoc_insertion_point(interface_extends:Plot)
             com.google.protobuf.MessageOrBuilder {
@@ -1266,6 +1280,7 @@ public final class CtrlMessage {
          */
         float getPhase();
     }
+
     public interface TrackOrBuilder extends
             // @@protoc_insertion_point(interface_extends:Track)
             com.google.protobuf.MessageOrBuilder {
@@ -1361,6 +1376,7 @@ public final class CtrlMessage {
          */
         double getPhase();
     }
+
     public interface CtrlInfoOrBuilder extends
             // @@protoc_insertion_point(interface_extends:CtrlInfo)
             com.google.protobuf.MessageOrBuilder {
@@ -1424,6 +1440,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getMessageBytes();
     }
+
     public interface ServerAckOrBuilder extends
             // @@protoc_insertion_point(interface_extends:ServerAck)
             com.google.protobuf.MessageOrBuilder {
@@ -1457,6 +1474,7 @@ public final class CtrlMessage {
         com.google.protobuf.ByteString
         getMessageBytes();
     }
+
     public interface P2PMessageOrBuilder extends
             // @@protoc_insertion_point(interface_extends:P2PMessage)
             com.google.protobuf.MessageOrBuilder {
@@ -5367,6 +5385,7 @@ public final class CtrlMessage {
         private int port_;
         private int inetType_;
         private byte memoizedIsInitialized = -1;
+
         // Use InetCommand.newBuilder() to construct.
         private InetCommand(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
@@ -6295,6 +6314,7 @@ public final class CtrlMessage {
         private ReqAddr() {
             id_ = "";
         }
+
         private ReqAddr(
                 com.google.protobuf.CodedInputStream input,
                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6882,6 +6902,7 @@ public final class CtrlMessage {
         private volatile java.lang.Object from_;
         private volatile java.lang.Object to_;
         private byte memoizedIsInitialized = -1;
+
         // Use Syn.newBuilder() to construct.
         private Syn(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
@@ -7626,6 +7647,7 @@ public final class CtrlMessage {
         private volatile java.lang.Object from_;
         private volatile java.lang.Object to_;
         private byte memoizedIsInitialized = -1;
+
         // Use SynAck.newBuilder() to construct.
         private SynAck(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
@@ -8370,6 +8392,7 @@ public final class CtrlMessage {
         private volatile java.lang.Object from_;
         private volatile java.lang.Object to_;
         private byte memoizedIsInitialized = -1;
+
         // Use Ack.newBuilder() to construct.
         private Ack(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
@@ -9127,6 +9150,7 @@ public final class CtrlMessage {
             to_ = "";
             fromAddr_ = "";
         }
+
         private ReqRedirect(
                 com.google.protobuf.CodedInputStream input,
                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -10008,6 +10032,7 @@ public final class CtrlMessage {
         private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
         private java.util.List<com.zjj.proto.CtrlMessage.Plot> plots_;
         private byte memoizedIsInitialized = -1;
+
         // Use PlotTrace.newBuilder() to construct.
         private PlotTrace(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
@@ -12197,6 +12222,7 @@ public final class CtrlMessage {
         private com.zjj.proto.CtrlMessage.FrameHead frameHead_;
         private java.util.List<com.zjj.proto.CtrlMessage.Track> tracks_;
         private byte memoizedIsInitialized = -1;
+
         // Use TrackTrace.newBuilder() to construct.
         private TrackTrace(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
@@ -14415,6 +14441,7 @@ public final class CtrlMessage {
         private FrameHead() {
             nodeId_ = "";
         }
+
         private FrameHead(
                 com.google.protobuf.CodedInputStream input,
                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -15788,6 +15815,7 @@ public final class CtrlMessage {
 
         private Plot() {
         }
+
         private Plot(
                 com.google.protobuf.CodedInputStream input,
                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -16748,6 +16776,7 @@ public final class CtrlMessage {
 
         private Track() {
         }
+
         private Track(
                 com.google.protobuf.CodedInputStream input,
                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -18107,6 +18136,7 @@ public final class CtrlMessage {
         private CtrlInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
         }
+
         private CtrlInfo() {
             type_ = 0;
             localId_ = "";
@@ -19238,6 +19268,7 @@ public final class CtrlMessage {
         private ServerAck(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
         }
+
         private ServerAck() {
             type_ = 0;
             message_ = "";
@@ -20063,6 +20094,7 @@ public final class CtrlMessage {
         private P2PMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
         }
+
         private P2PMessage() {
             type_ = 0;
             message_ = "";
