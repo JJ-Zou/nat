@@ -45,12 +45,15 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor executor;
 
+    private Thread sentThread;
+    private volatile boolean receivedAdrr = false;
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.debug("监听本地地址 {}",
                 InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
         ipAddrHolder.setPriAddrStr(nettyClient.getLocalId(), InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
-        sendPrivateAddr();
+        executor.execute(this::sendPrivateAddr);
     }
 
     @Override
@@ -107,6 +110,8 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
                         log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
                         ipAddrHolder.setPubAddrStr(id, publicInetAddr);
+                        receivedAdrr = true;
+                        LockSupport.unpark(sentThread);
                         break;
                     case UNRECOGNIZED:
                     default:
@@ -294,16 +299,19 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 nettyClient.getServerAddress());
         nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
             if (f.isSuccess()) {
-                if (log.isInfoEnabled()) {
-                    log.info("给 {} 发送 {} 的私网地址 {}",
-                            InetUtils.toAddressString(nettyClient.getServerAddress()),
-                            nettyClient.getLocalId(),
-                            InetUtils.toAddressString(nettyClient.getLocalAddress()));
-                }
+                log.debug("给 {} 发送 {} 的私网地址 {}",
+                        InetUtils.toAddressString(nettyClient.getServerAddress()),
+                        nettyClient.getLocalId(),
+                        InetUtils.toAddressString(nettyClient.getLocalAddress()));
             } else {
                 log.error("发送失败");
             }
         });
+        sentThread = Thread.currentThread();
+        LockSupport.parkNanos(1_000_000_000L);
+        if (!receivedAdrr) {
+            sendPrivateAddr();
+        }
     }
 
 }
