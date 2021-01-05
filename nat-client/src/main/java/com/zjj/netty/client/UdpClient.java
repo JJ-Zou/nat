@@ -1,5 +1,6 @@
 package com.zjj.netty.client;
 
+import com.zjj.config.NettyProperties;
 import com.zjj.constant.Constants;
 import com.zjj.netty.AbstractClient;
 import com.zjj.netty.IpAddrHolder;
@@ -12,6 +13,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -32,12 +34,9 @@ public class UdpClient extends AbstractClient {
     @Resource
     private UdpClientChannelHandler udpClientChannelHandler;
 
-    public UdpClient(@Value("${netty.client.id}") String localId,
-                     @Value("${netty.client.ip}") String localIp,
-                     @Value("${netty.client.port}") int localPort,
-                     @Value("${netty.server.ip}") String serverIp,
-                     @Value("${netty.server.port}") int serverPort) {
-        super(localId, localIp, localPort, serverIp, serverPort);
+    @Autowired
+    public UdpClient(NettyProperties nettyProperties) {
+        super(nettyProperties);
     }
 
     public void doBind() {

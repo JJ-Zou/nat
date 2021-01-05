@@ -1,5 +1,6 @@
 package com.zjj.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,20 +8,22 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "netty")
 public class NettyProperties {
 
+    @Autowired
     private ServerProperties serverProperties;
 
+    @Autowired
     private ClientProperties clientProperties;
 
     public ServerProperties getServerProperties() {
         return serverProperties;
     }
 
-    public void setServerProperties(ServerProperties serverProperties) {
-        this.serverProperties = serverProperties;
-    }
-
     public ClientProperties getClientProperties() {
         return clientProperties;
+    }
+
+    public void setServerProperties(ServerProperties serverProperties) {
+        this.serverProperties = serverProperties;
     }
 
     public void setClientProperties(ClientProperties clientProperties) {
@@ -29,7 +32,7 @@ public class NettyProperties {
 
     @Configuration
     @ConfigurationProperties(prefix = "netty.server")
-    static class ServerProperties {
+    public static class ServerProperties {
         private String ip;
         private int port;
 
@@ -52,7 +55,7 @@ public class NettyProperties {
 
     @Configuration
     @ConfigurationProperties(prefix = "netty.client")
-    static class ClientProperties {
+    public static class ClientProperties {
         private String id;
         private String ip;
         private int port;
