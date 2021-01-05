@@ -308,7 +308,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             }
         });
         sentThread = Thread.currentThread();
-        LockSupport.parkNanos(1_000_000_000L);
+        LockSupport.parkNanos(3_000_000_000L);
         if (!receivedAdrr) {
             sendPrivateAddr();
         }
