@@ -37,7 +37,7 @@ public abstract class AbstractIpAddrHolder implements IpAddrHolder {
 
     @Override
     public void setAllThrough(Set<String> oppositeIds) {
-        Map<String, String> collect = oppositeIds.stream().collect(Collectors.toMap(oppositeId -> oppositeId, s -> Constants.NONE));
+        Map<String, String> collect = oppositeIds.stream().filter(s -> s != null && !s.equals("")).collect(Collectors.toMap(oppositeId -> oppositeId, s -> Constants.NONE));
         throughHolder.putAll(collect);
     }
 

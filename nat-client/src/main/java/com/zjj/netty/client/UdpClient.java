@@ -14,11 +14,11 @@ import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.LockSupport;
 
@@ -72,6 +72,9 @@ public class UdpClient extends AbstractClient {
         ipAddrHolder.attemptNatConnect(this, oppositeId);
         putThread(oppositeId, Thread.currentThread());
         LockSupport.parkNanos(1_000_000_000L);
+        log.info("UDP穿透{}！",
+                Objects.equals(ipAddrHolder.getThrough(oppositeId),
+                        Constants.NONE) ? "失败" : "成功");
     }
 
     @Override

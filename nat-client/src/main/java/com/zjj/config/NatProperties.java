@@ -3,19 +3,19 @@ package com.zjj.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
+import java.util.Set;
 
 @Configuration
 @ConfigurationProperties(prefix = "nat")
 public class NatProperties {
 
-    private List<String> oppositeIds;
+    private Set<String> oppositeIds;
 
-    public List<String> getOppositeIds() {
+    public Set<String> getOppositeIds() {
         return oppositeIds;
     }
 
-    public void setOppositeIds(List<String> oppositeIds) {
+    public void setOppositeIds(Set<String> oppositeIds) {
         this.oppositeIds = oppositeIds;
     }
 }

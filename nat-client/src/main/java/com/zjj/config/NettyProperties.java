@@ -18,12 +18,12 @@ public class NettyProperties {
         return serverProperties;
     }
 
-    public ClientProperties getClientProperties() {
-        return clientProperties;
-    }
-
     public void setServerProperties(ServerProperties serverProperties) {
         this.serverProperties = serverProperties;
+    }
+
+    public ClientProperties getClientProperties() {
+        return clientProperties;
     }
 
     public void setClientProperties(ClientProperties clientProperties) {
