@@ -3,13 +3,13 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>nat</artifactId>
+        <artifactId>transmit</artifactId>
         <groupId>com.zjj</groupId>
         <version>1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>nat-redis</artifactId>
+    <artifactId>transmit-redis</artifactId>
 
     <dependencies>
         <dependency>
@@ -39,7 +39,7 @@
     </dependencies>
 
     <build>
-        <finalName>nat-redis-1-1</finalName>
+        <finalName>transmit-redis-1-1</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

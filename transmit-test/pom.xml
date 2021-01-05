@@ -3,17 +3,17 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>nat</artifactId>
+        <artifactId>transmit</artifactId>
         <groupId>com.zjj</groupId>
         <version>1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>nat-test</artifactId>
+    <artifactId>transmit-test</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.zjj</groupId>
-            <artifactId>nat-commons</artifactId>
+            <artifactId>transmit-commons</artifactId>
         </dependency>
 
         <dependency>
@@ -22,7 +22,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>nat-server-2-1</finalName>
+        <finalName>transmit-server-2-1</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

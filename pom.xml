@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zjj</groupId>
-    <artifactId>nat</artifactId>
+    <artifactId>transmit</artifactId>
     <packaging>pom</packaging>
     <version>1.1</version>
     <modules>
-        <module>nat-redis</module>
-        <module>nat-test</module>
-        <module>nat-commons</module>
-        <module>nat-server</module>
-        <module>nat-client</module>
+        <module>transmit-redis</module>
+        <module>transmit-test</module>
+        <module>transmit-commons</module>
+        <module>transmit-server</module>
+        <module>transmit-client</module>
     </modules>
 
     <properties>
@@ -64,7 +64,7 @@
             </dependency>
             <dependency>
                 <groupId>com.zjj</groupId>
-                <artifactId>nat-commons</artifactId>
+                <artifactId>transmit-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
