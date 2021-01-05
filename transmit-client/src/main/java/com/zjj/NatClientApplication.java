@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.client.ResourceAccessException;
 
 import javax.annotation.Resource;
 import java.util.Scanner;
@@ -61,7 +62,13 @@ public class NatClientApplication implements CommandLineRunner {
 
     private void natTo(String oppositeId) {
         long timeMillis = System.currentTimeMillis();
-        String oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
+        String oppositePriAddr;
+        try {
+            oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
+        } catch (ResourceAccessException e) {
+            log.error("服务器未响应...");
+            return;
+        }
         if (oppositePriAddr == null) {
             log.info("{} 未在线", oppositeId);
             return;

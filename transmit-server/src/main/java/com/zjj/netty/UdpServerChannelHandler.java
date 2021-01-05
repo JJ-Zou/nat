@@ -94,7 +94,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
             case REQ_ADDR:
                 ReqAddr reqAddr = multiMessage.getReqAddr();
                 String id = reqAddr.getId();
-                if (!PRIVATE_ADDR_MAP.containsKey(id) || PUBLIC_ADDR_MAP.containsKey(id)) {
+                if (!PRIVATE_ADDR_MAP.containsKey(id) || !PUBLIC_ADDR_MAP.containsKey(id)) {
                     log.debug("id: {} 不存在", id);
                     return;
                 }
@@ -126,6 +126,10 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
             case REQ_REDIRECT:
                 ReqRedirect reqRedirect = multiMessage.getReqRedirect();
                 String to = reqRedirect.getTo();
+                if (!PUBLIC_ADDR_MAP.containsKey(to)) {
+                    log.debug("id: {} 不存在", to);
+                    return;
+                }
                 String toInetAddrStr = PUBLIC_ADDR_MAP.get(to);
                 DatagramPacket reqRedirectPacket = new DatagramPacket(Unpooled.wrappedBuffer(multiMessage.toByteArray()),
                         InetUtils.toInetSocketAddress(toInetAddrStr));
