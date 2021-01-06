@@ -168,6 +168,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     log.debug("{} 到 {} 穿透成功!", oppositeId, ack.getTo());
                     log.debug("更新对方id: {} 的穿透地址, {} -> {}", oppositeId, ipAddrHolder.getThrough(oppositeId), oppositeAddrStr);
                     ipAddrHolder.setThrough(oppositeId, oppositeAddrStr);
+                    LockSupport.unpark(nettyClient.getThread(oppositeId));
                 } else {
                     log.debug("在收到SYN_ACK时, {} 到 {} 穿透已成功!", oppositeId, ack.getTo());
                 }
@@ -328,7 +329,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
 
     @Scheduled(initialDelay = 15000, fixedRate = 15000)
     public void sendHeartBeatToPeer() {
-        if (!ipAddrHolder.contains(nettyClient.getLocalId()) || ipAddrHolder.throughAddrMaps().isEmpty()) {
+        if (ipAddrHolder.getPubAddrStr(nettyClient.getLocalId()) == null || ipAddrHolder.throughAddrMaps().isEmpty()) {
             return;
         }
         Map<String, String> map = ipAddrHolder.throughAddrMaps();
@@ -342,7 +343,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             if (!Objects.equals(entry.getValue(), Constants.NONE)) {
                 nettyClient.getChannel().writeAndFlush(new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(entry.getValue()))).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("给id:{} 的地址 {} 发送 {} 的私网地址 {}",
+                        log.debug("给id:{} 的地址 {} 发送id: {} 的公网地址 {}",
                                 entry.getKey(),
                                 entry.getValue(),
                                 nettyClient.getLocalId(),
