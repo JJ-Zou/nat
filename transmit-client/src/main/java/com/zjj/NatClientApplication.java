@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 
 @Slf4j
 @SpringBootApplication
+@EnableScheduling
 public class NatClientApplication implements CommandLineRunner {
     @Resource
     private HttpReq httpReq;

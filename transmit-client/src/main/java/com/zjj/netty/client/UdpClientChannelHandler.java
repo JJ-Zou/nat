@@ -17,6 +17,7 @@ import io.netty.channel.socket.DatagramPacket;
 import io.netty.util.AttributeKey;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -289,7 +290,9 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     }
 
 
+    @Scheduled(initialDelay = 15000, fixedRate = 15000)
     public void sendPrivateAddr() {
+        receivedAdrr = false;
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(
                 ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
