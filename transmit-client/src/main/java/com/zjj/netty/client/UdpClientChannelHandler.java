@@ -114,9 +114,13 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         String id = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
                         log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
-                        ipAddrHolder.setPubAddrStr(id, publicInetAddr);
-                        receivedAdrr = true;
-                        LockSupport.unpark(sentThread);
+                        if (Objects.equals(id, nettyClient.getLocalId())) {
+                            ipAddrHolder.setPubAddrStr(id, publicInetAddr);
+                            receivedAdrr = true;
+                            LockSupport.unpark(sentThread);
+                        } else {
+                            log.debug("id: {} 的 心跳包, 公网地址 {} ,  Nat地址{} ", id, publicInetAddr, oppositeAddrStr);
+                        }
                         break;
                     case UNRECOGNIZED:
                     default:
@@ -324,20 +328,25 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
 
     @Scheduled(initialDelay = 15000, fixedRate = 15000)
     public void sendHeartBeatToPeer() {
+        if (!ipAddrHolder.contains(nettyClient.getLocalId()) || ipAddrHolder.throughAddrMaps().isEmpty()) {
+            return;
+        }
         Map<String, String> map = ipAddrHolder.throughAddrMaps();
+        InetSocketAddress socketAddress = InetUtils.toInetSocketAddress(ipAddrHolder.getPubAddrStr(nettyClient.getLocalId()));
         ByteBuf byteBuf = Unpooled.wrappedBuffer(
                 ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
-                        nettyClient.getLocalAddress().getHostString(),
-                        nettyClient.getLocalAddress().getPort(),
-                        false).toByteArray());
+                        socketAddress.getHostString(),
+                        socketAddress.getPort(),
+                        true).toByteArray());
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (!Objects.equals(entry.getValue(), Constants.NONE)) {
                 nettyClient.getChannel().writeAndFlush(new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(entry.getValue()))).addListener(f -> {
                     if (f.isSuccess()) {
-                        log.debug("给 {} 发送 {} 的私网地址 {}",
+                        log.debug("给id:{} 的地址 {} 发送 {} 的私网地址 {}",
+                                entry.getKey(),
                                 entry.getValue(),
                                 nettyClient.getLocalId(),
-                                InetUtils.toAddressString(nettyClient.getLocalAddress()));
+                                InetUtils.toAddressString(socketAddress));
                     } else {
                         log.error("发送失败");
                     }
