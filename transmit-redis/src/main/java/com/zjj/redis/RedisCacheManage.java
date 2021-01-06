@@ -1,15 +1,17 @@
 package com.zjj.redis;
 
 import com.zjj.constant.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@Slf4j
 public class RedisCacheManage {
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
 
@@ -17,7 +19,10 @@ public class RedisCacheManage {
         String key = Constants.PRIVATE_ADDRESS_KEY + Constants.COLON + id;
         Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(key, addrStr);
         if (result != null && result) {
-            stringRedisTemplate.expire(key, 24, TimeUnit.HOURS);
+            log.debug("插入{{}, {}} 成功", key, addrStr);
+            stringRedisTemplate.expire(key, 1, TimeUnit.HOURS);
+        } else {
+            log.debug("插入{{}, {}} 失败", key, addrStr);
         }
         return result;
     }
@@ -26,34 +31,45 @@ public class RedisCacheManage {
         String key = Constants.PUBLIC_ADDRESS_KEY + Constants.COLON + id;
         Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(key, addrStr);
         if (result != null && result) {
-            stringRedisTemplate.expire(key, 24, TimeUnit.HOURS);
+            log.debug("插入{{}, {}} 成功", key, addrStr);
+            stringRedisTemplate.expire(key, 1, TimeUnit.HOURS);
+        } else {
+            log.debug("插入{{}, {}} 失败", key, addrStr);
         }
         return result;
     }
 
     public String getPrivateAddrStr(String id) {
         String key = Constants.PRIVATE_ADDRESS_KEY + Constants.COLON + id;
-        return stringRedisTemplate.opsForValue().get(key);
+        String value = stringRedisTemplate.opsForValue().get(key);
+        log.debug("读取key: {} 的value为: {}", key, value);
+        return value;
     }
 
     public String getPublicAddrStr(String id) {
         String key = Constants.PUBLIC_ADDRESS_KEY + Constants.COLON + id;
-        return stringRedisTemplate.opsForValue().get(key);
+        String value = stringRedisTemplate.opsForValue().get(key);
+        log.debug("读取key: {} 的value为: {}", key, value);
+        return value;
     }
 
     public Boolean deletePrivateAddr(String id) {
         String key = Constants.PRIVATE_ADDRESS_KEY + Constants.COLON + id;
         if (stringRedisTemplate.opsForValue().get(key) == null) {
+            log.debug("key {} 不存在", key);
             return true;
         }
+        log.debug("删除 key {}", key);
         return stringRedisTemplate.delete(key);
     }
 
     public Boolean deletePublicAddr(String id) {
         String key = Constants.PUBLIC_ADDRESS_KEY + Constants.COLON + id;
         if (stringRedisTemplate.opsForValue().get(key) == null) {
+            log.debug("key {} 不存在", key);
             return true;
         }
+        log.debug("删除 key {}", key);
         return stringRedisTemplate.delete(key);
     }
 }
