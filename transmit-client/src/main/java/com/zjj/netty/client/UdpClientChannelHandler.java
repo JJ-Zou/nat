@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.locks.LockSupport;
@@ -106,6 +107,9 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case INET_COMMAND:
                 InetCommand inetCommand = multiMessage.getInetCommand();
                 switch (inetCommand.getInetType()) {
+                    case PRIVATE:
+                        log.debug("{}:{}", inetCommand.getHost(), inetCommand.getPort());
+                        break;
                     case PUBLIC:
                         String id = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
@@ -317,5 +321,29 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         }
     }
 
+
+    @Scheduled(initialDelay = 15000, fixedRate = 15000)
+    public void sendHeartBeatToPeer() {
+        Map<String, String> map = ipAddrHolder.throughAddrMaps();
+        ByteBuf byteBuf = Unpooled.wrappedBuffer(
+                ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
+                        nettyClient.getLocalAddress().getHostString(),
+                        nettyClient.getLocalAddress().getPort(),
+                        false).toByteArray());
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (!Objects.equals(entry.getValue(), Constants.NONE)) {
+                nettyClient.getChannel().writeAndFlush(new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(entry.getValue()))).addListener(f -> {
+                    if (f.isSuccess()) {
+                        log.debug("给 {} 发送 {} 的私网地址 {}",
+                                entry.getValue(),
+                                nettyClient.getLocalId(),
+                                InetUtils.toAddressString(nettyClient.getLocalAddress()));
+                    } else {
+                        log.error("发送失败");
+                    }
+                });
+            }
+        }
+    }
 }
 
