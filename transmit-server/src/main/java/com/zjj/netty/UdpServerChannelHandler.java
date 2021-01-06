@@ -62,15 +62,18 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                 switch (inetCommand.getInetType()) {
                     case PRIVATE:
                         String id = inetCommand.getClientId();
-                        String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        log.debug("收到id: {} 的私网地址 {} 加入缓存", id, privateInetAddr);
-                        PRIVATE_ADDR_MAP.put(id,
-                                privateInetAddr);
-                        channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
-                        log.debug("收到id: {} 的公网地址 {} 加入缓存", id, addressString);
-                        PUBLIC_ADDR_MAP.put(id,
-                                addressString);
-                        channel.eventLoop().parent().execute(() -> httpReq.addPublicAddr(id, addressString));
+                        if (!PRIVATE_ADDR_MAP.containsKey(id)) {
+                            String privateInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
+                            log.debug("收到id: {} 的私网地址 {} 加入缓存", id, privateInetAddr);
+                            PRIVATE_ADDR_MAP.put(id,
+                                    privateInetAddr);
+                            channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
+                            log.debug("收到id: {} 的公网地址 {} 加入缓存", id, addressString);
+                            PUBLIC_ADDR_MAP.put(id,
+                                    addressString);
+                            channel.eventLoop().parent().execute(() -> httpReq.addPublicAddr(id, addressString));
+
+                        }
                         DatagramPacket packet
                                 = new DatagramPacket(Unpooled.wrappedBuffer(
                                 ProtoUtils.createMultiInetCommand(id,
