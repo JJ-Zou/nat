@@ -26,4 +26,6 @@ public interface IpAddrHolder extends NatThrough {
     boolean contains(String oppositeId);
 
     Set<String> getThroughIds();
+
+    void delete(String id);
 }

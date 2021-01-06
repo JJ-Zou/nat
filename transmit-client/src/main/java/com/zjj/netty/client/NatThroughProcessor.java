@@ -53,6 +53,13 @@ public class NatThroughProcessor extends AbstractIpAddrHolder {
     }
 
     @Override
+    public void delete(String id) {
+        super.delete(id);
+        PUBLIC_ADDR_MAP.remove(id);
+        PRIVATE_ADDR_MAP.remove(id);
+    }
+
+    @Override
     public void attemptNatConnect(NettyClient nettyClient, String oppositeId) {
         if (PRIVATE_ADDR_MAP.containsKey(oppositeId)) {
             attemptPrivateConnect(nettyClient, oppositeId);

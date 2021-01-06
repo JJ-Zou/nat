@@ -50,4 +50,9 @@ public abstract class AbstractIpAddrHolder implements IpAddrHolder {
     public boolean contains(String oppositeId) {
         return throughHolder.containsKey(oppositeId);
     }
+
+    @Override
+    public void delete(String id) {
+        throughHolder.remove(id);
+    }
 }
