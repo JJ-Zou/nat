@@ -22,16 +22,16 @@ public class AddrStrController {
     public String addPrivateAddr(@RequestBody JSONObject jsonObject) {
         String clientId = jsonObject.getString(Constants.CLIENT_ID);
         String clientAddr = jsonObject.getString(Constants.CLIENT_PRIVATE_ADDRESS);
-        Boolean success = redisCacheManage.addPrivateAddrStr(clientId, clientAddr);
-        return success != null ? "OK" : "ERR";
+        redisCacheManage.addPrivateAddrStr(clientId, clientAddr);
+        return "OK";
     }
 
     @PostMapping("/addPubAddr")
     public String addPublicAddr(@RequestBody JSONObject jsonObject) {
         String clientId = jsonObject.getString(Constants.CLIENT_ID);
         String clientAddr = jsonObject.getString(Constants.CLIENT_PUBLIC_ADDRESS);
-        Boolean success = redisCacheManage.addPublicAddrStr(clientId, clientAddr);
-        return success != null && success ? "OK" : "ERR";
+        redisCacheManage.addPublicAddrStr(clientId, clientAddr);
+        return "OK";
     }
 
     @PostMapping("getPriAddr")
@@ -49,12 +49,14 @@ public class AddrStrController {
     @PostMapping("/delPriAddr")
     public String delPrivateAddr(@RequestBody JSONObject jsonObject) {
         String clientId = jsonObject.getString(Constants.CLIENT_ID);
-        return redisCacheManage.deletePrivateAddr(clientId) ? "OK" : "ERR";
+        Boolean aBoolean = redisCacheManage.deletePrivateAddr(clientId);
+        return aBoolean != null && aBoolean ? "OK" : "ERR";
     }
 
     @PostMapping("/delPubAddr")
     public String delPublicAddr(@RequestBody JSONObject jsonObject) {
         String clientId = jsonObject.getString(Constants.CLIENT_ID);
-        return redisCacheManage.deletePublicAddr(clientId) ? "OK" : "ERR";
+        Boolean aBoolean = redisCacheManage.deletePublicAddr(clientId);
+        return aBoolean != null && aBoolean ? "OK" : "ERR";
     }
 }

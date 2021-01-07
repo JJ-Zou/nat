@@ -47,9 +47,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor executor;
 
-    private Thread sentThread;
-    private volatile boolean receivedAdrr = false;
-
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.debug("监听本地地址 {}",
@@ -116,8 +113,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
                         if (Objects.equals(id, nettyClient.getLocalId())) {
                             ipAddrHolder.setPubAddrStr(id, publicInetAddr);
-                            receivedAdrr = true;
-                            LockSupport.unpark(sentThread);
                         } else {
                             log.debug("id: {} 的 心跳包, 公网地址 {} ,  Nat地址{} ", id, publicInetAddr, oppositeAddrStr);
                         }
@@ -301,7 +296,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
 
     @Scheduled(initialDelay = 15000, fixedRate = 15000)
     public void sendPrivateAddr() {
-        receivedAdrr = false;
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(
                 ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
@@ -319,11 +313,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                 log.error("发送失败");
             }
         });
-        sentThread = Thread.currentThread();
-        LockSupport.parkNanos(3_000_000_000L);
-        if (!receivedAdrr) {
-            sendPrivateAddr();
-        }
     }
 
 

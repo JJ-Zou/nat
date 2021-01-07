@@ -15,28 +15,16 @@ public class RedisCacheManage {
     private StringRedisTemplate stringRedisTemplate;
 
 
-    public Boolean addPrivateAddrStr(String id, String addrStr) {
+    public void addPrivateAddrStr(String id, String addrStr) {
         String key = Constants.PRIVATE_ADDRESS_KEY + Constants.COLON + id;
-        Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(key, addrStr);
-        if (result != null && result) {
-            log.debug("插入{{}, {}} 成功", key, addrStr);
-            stringRedisTemplate.expire(key, 1, TimeUnit.HOURS);
-        } else {
-            log.debug("插入{{}, {}} 失败", key, addrStr);
-        }
-        return result;
+        stringRedisTemplate.opsForValue().set(key, addrStr, 30L, TimeUnit.SECONDS);
+        log.debug("插入{{}, {}} 成功", key, addrStr);
     }
 
-    public Boolean addPublicAddrStr(String id, String addrStr) {
+    public void addPublicAddrStr(String id, String addrStr) {
         String key = Constants.PUBLIC_ADDRESS_KEY + Constants.COLON + id;
-        Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(key, addrStr);
-        if (result != null && result) {
-            log.debug("插入{{}, {}} 成功", key, addrStr);
-            stringRedisTemplate.expire(key, 1, TimeUnit.HOURS);
-        } else {
-            log.debug("插入{{}, {}} 失败", key, addrStr);
-        }
-        return result;
+        stringRedisTemplate.opsForValue().set(key, addrStr, 30L, TimeUnit.SECONDS);
+        log.debug("插入{{}, {}} 成功", key, addrStr);
     }
 
     public String getPrivateAddrStr(String id) {
