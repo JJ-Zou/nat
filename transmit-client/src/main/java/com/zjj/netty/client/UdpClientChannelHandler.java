@@ -294,7 +294,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     }
 
 
-    @Scheduled(initialDelay = 15000, fixedRate = 15000)
+    @Scheduled(initialDelay = 60000, fixedRate = 60000)
     public void sendPrivateAddr() {
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(
@@ -316,7 +316,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     }
 
 
-    @Scheduled(initialDelay = 15000, fixedRate = 15000)
+    @Scheduled(initialDelay = 60000, fixedRate = 60000)
     public void sendHeartBeatToPeer() {
         if (ipAddrHolder.getPubAddrStr(nettyClient.getLocalId()) == null || ipAddrHolder.throughAddrMaps().isEmpty()) {
             return;
