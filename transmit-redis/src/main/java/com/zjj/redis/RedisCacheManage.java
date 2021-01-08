@@ -17,13 +17,13 @@ public class RedisCacheManage {
 
     public void addPrivateAddrStr(String id, String addrStr) {
         String key = Constants.PRIVATE_ADDRESS_KEY + Constants.COLON + id;
-        stringRedisTemplate.opsForValue().set(key, addrStr, 30L, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(key, addrStr, 80L, TimeUnit.SECONDS);
         log.debug("插入{{}, {}} 成功", key, addrStr);
     }
 
     public void addPublicAddrStr(String id, String addrStr) {
         String key = Constants.PUBLIC_ADDRESS_KEY + Constants.COLON + id;
-        stringRedisTemplate.opsForValue().set(key, addrStr, 30L, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(key, addrStr, 80L, TimeUnit.SECONDS);
         log.debug("插入{{}, {}} 成功", key, addrStr);
     }
 
