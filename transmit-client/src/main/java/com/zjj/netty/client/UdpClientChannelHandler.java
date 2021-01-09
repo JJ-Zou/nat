@@ -110,8 +110,8 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     case PUBLIC:
                         String id = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
                         if (Objects.equals(id, nettyClient.getLocalId())) {
+                            log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
                             ipAddrHolder.setPubAddrStr(id, publicInetAddr);
                         } else {
                             log.debug("id: {} 的 心跳包, 公网地址 {} ,  Nat地址{} ", id, publicInetAddr, oppositeAddrStr);
