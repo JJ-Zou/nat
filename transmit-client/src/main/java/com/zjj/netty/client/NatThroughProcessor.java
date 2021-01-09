@@ -91,7 +91,7 @@ public class NatThroughProcessor extends AbstractIpAddrHolder {
             if (f.isSuccess()) {
                 log.debug("请求服务器转发消息让id: {} 使用地址 {} 尝试与id: {} 建立连接", oppositeId, inetAddrStr, nettyClient.getLocalId());
             } else {
-                log.error("请求发送失败");
+                log.error("请求服务器转发消息让id: {} 使用地址 {} 尝试与id: {} 建立连接失败!", oppositeId, inetAddrStr, nettyClient.getLocalId());
             }
         });
     }
@@ -107,7 +107,7 @@ public class NatThroughProcessor extends AbstractIpAddrHolder {
             if (f.isSuccess()) {
                 log.debug("请求与id: {} 的地址 {} 建立连接", oppositeId, inetAddrStr);
             } else {
-                log.error("请求发送失败");
+                log.error("请求与id: {} 的地址 {} 建立连接失败!", oppositeId, inetAddrStr);
             }
         });
     }

@@ -76,7 +76,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         if (f.isSuccess()) {
                             log.debug("给id: {} 的地址 {} 转发黑软件航迹", throughId, throughIpAddrStr);
                         } else {
-                            log.error("转发失败");
+                            log.error("给id: {} 的地址 {} 转发黑软件航迹失败!", throughId, throughIpAddrStr);
                         }
                     });
                 } else {
@@ -86,7 +86,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         if (f.isSuccess()) {
                             log.debug("请求服务器转发id: {} 的消息: 给id: {} 转发黑软件航迹", nettyClient.getLocalId(), throughId);
                         } else {
-                            log.error("请求失败");
+                            log.error("请求服务器转发id: {} 的消息: 给id: {} 转发黑软件航迹失败!", nettyClient.getLocalId(), throughId);
                         }
                     });
                 }
@@ -132,7 +132,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     if (f.isSuccess()) {
                         log.debug("给id: {} 地址为 {} 返回 SYN_ACK", syn.getFrom(), oppositeAddrStr);
                     } else {
-                        log.error("SYN_ACK 发送失败");
+                        log.error("给id: {} 地址为 {} 返回 SYN_ACK失败!", syn.getFrom(), oppositeAddrStr);
                     }
                 });
                 break;
@@ -151,7 +151,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     if (f.isSuccess()) {
                         log.debug("给id: {} 地址为 {} 返回 ACK", oppositeId, oppositeAddrStr);
                     } else {
-                        log.error("ACK 发送失败");
+                        log.error("给id: {} 地址为 {} 返回 ACK失败!", oppositeId, oppositeAddrStr);
                     }
                 });
                 break;
@@ -180,7 +180,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     if (f.isSuccess()) {
                         log.debug("请求与id: {} 的地址 {} 建立连接", from, peerAddrStr);
                     } else {
-                        log.error("请求发送失败");
+                        log.error("请求与id: {} 的地址 {} 建立连接失败!", from, peerAddrStr);
                     }
                 });
                 break;
@@ -199,7 +199,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                             if (f.isSuccess()) {
                                 log.debug("给id: {} 的地址 {} 转发点迹", throughId, throughIpAddrStr);
                             } else {
-                                log.error("转发失败");
+                                log.error("给id: {} 的地址 {} 转发点迹失败!", throughId, throughIpAddrStr);
                             }
                         });
                     } else {
@@ -208,7 +208,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                             if (f.isSuccess()) {
                                 log.debug("请求服务器转发id: {} 的消息: 给id: {} 转发点迹", nettyClient.getLocalId(), throughId);
                             } else {
-                                log.error("请求失败");
+                                log.error("请求服务器转发id: {} 的消息: 给id: {} 转发点迹失败!", nettyClient.getLocalId(), throughId);
                             }
                         });
                     }
@@ -233,7 +233,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                             if (f.isSuccess()) {
                                 log.debug("给id: {} 的地址 {} 转发航迹", throughId, throughIpAddrStr);
                             } else {
-                                log.error("转发失败");
+                                log.error("给id: {} 的地址 {} 转发航迹失败!", throughId, throughIpAddrStr);
                             }
                         });
                     } else {
@@ -242,7 +242,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                             if (f.isSuccess()) {
                                 log.debug("请求服务器转发id: {} 的消息: 给id: {} 转发航迹", nettyClient.getLocalId(), throughId);
                             } else {
-                                log.error("请求失败");
+                                log.error("请求服务器转发id: {} 的消息: 给id: {} 转发航迹失败!", nettyClient.getLocalId(), throughId);
                             }
                         });
                     }
@@ -261,7 +261,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     if (f.isSuccess()) {
                         log.debug("给黑软件地址 {} 转发航迹", blackAddress);
                     } else {
-                        log.error("转发失败");
+                        log.error("给黑软件地址 {} 转发航迹失败!", blackAddress);
                     }
                 });
                 break;
@@ -310,7 +310,10 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         nettyClient.getLocalId(),
                         InetUtils.toAddressString(nettyClient.getLocalAddress()));
             } else {
-                log.error("发送失败");
+                log.error("给 {} 发送 {} 的私网地址 {} 失败!",
+                        InetUtils.toAddressString(nettyClient.getServerAddress()),
+                        nettyClient.getLocalId(),
+                        InetUtils.toAddressString(nettyClient.getLocalAddress()));
             }
         });
     }
@@ -330,7 +333,8 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         true).toByteArray());
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (!Objects.equals(entry.getValue(), Constants.NONE)) {
-                nettyClient.getChannel().writeAndFlush(new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(entry.getValue()))).addListener(f -> {
+                DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(entry.getValue()));
+                nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
                     if (f.isSuccess()) {
                         log.debug("给id:{} 的地址 {} 发送id: {} 的公网地址 {}",
                                 entry.getKey(),
@@ -338,7 +342,11 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                                 nettyClient.getLocalId(),
                                 InetUtils.toAddressString(socketAddress));
                     } else {
-                        log.error("发送失败");
+                        log.error("给id:{} 的地址 {} 发送id: {} 的公网地址 {} 失败!",
+                                entry.getKey(),
+                                entry.getValue(),
+                                nettyClient.getLocalId(),
+                                InetUtils.toAddressString(socketAddress));
                     }
                 });
             }
