@@ -326,14 +326,14 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         }
         Map<String, String> map = ipAddrHolder.throughAddrMaps();
         InetSocketAddress socketAddress = InetUtils.toInetSocketAddress(ipAddrHolder.getPubAddrStr(nettyClient.getLocalId()));
-        ByteBuf byteBuf = Unpooled.wrappedBuffer(
-                ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
-                        socketAddress.getHostString(),
-                        socketAddress.getPort(),
-                        true).toByteArray());
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (!Objects.equals(entry.getValue(), Constants.NONE)) {
-                DatagramPacket packet = new DatagramPacket(byteBuf, InetUtils.toInetSocketAddress(entry.getValue()));
+                DatagramPacket packet = new DatagramPacket(Unpooled.wrappedBuffer(
+                        ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
+                                socketAddress.getHostString(),
+                                socketAddress.getPort(),
+                                true).toByteArray()),
+                        InetUtils.toInetSocketAddress(entry.getValue()));
                 nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
                     if (f.isSuccess()) {
                         log.debug("给id:{} 的地址 {} 发送id: {} 的公网地址 {}",
