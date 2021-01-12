@@ -152,7 +152,6 @@ message HeartBeatReq {
 message HeartBeatRes {
   int64 msgId = 1;
   string id = 2;
-  int32 code = 3;
 }
 
 message P2PMessage {

@@ -357,4 +357,14 @@ public class ProtoUtils {
                         .build())
                 .build();
     }
+
+    public static MultiMessage createMultiHeartRes(long msgId, String id) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.HEART_BEAT_RES)
+                .setHeartBeatRes(HeartBeatRes.newBuilder()
+                        .setMsgId(msgId)
+                        .setId(id)
+                        .build())
+                .build();
+    }
 }

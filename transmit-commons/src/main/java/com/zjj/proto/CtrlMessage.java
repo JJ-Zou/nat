@@ -17995,12 +17995,6 @@ public final class CtrlMessage {
      */
     com.google.protobuf.ByteString
         getIdBytes();
-
-    /**
-     * <code>int32 code = 3;</code>
-     * @return The code.
-     */
-    int getCode();
   }
   /**
    * Protobuf type {@code HeartBeatRes}
@@ -18057,11 +18051,6 @@ public final class CtrlMessage {
               java.lang.String s = input.readStringRequireUtf8();
 
               id_ = s;
-              break;
-            }
-            case 24: {
-
-              code_ = input.readInt32();
               break;
             }
             default: {
@@ -18145,17 +18134,6 @@ public final class CtrlMessage {
       }
     }
 
-    public static final int CODE_FIELD_NUMBER = 3;
-    private int code_;
-    /**
-     * <code>int32 code = 3;</code>
-     * @return The code.
-     */
-    @java.lang.Override
-    public int getCode() {
-      return code_;
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -18176,9 +18154,6 @@ public final class CtrlMessage {
       if (!getIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, id_);
       }
-      if (code_ != 0) {
-        output.writeInt32(3, code_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -18194,10 +18169,6 @@ public final class CtrlMessage {
       }
       if (!getIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, id_);
-      }
-      if (code_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, code_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -18218,8 +18189,6 @@ public final class CtrlMessage {
           != other.getMsgId()) return false;
       if (!getId()
           .equals(other.getId())) return false;
-      if (getCode()
-          != other.getCode()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -18236,8 +18205,6 @@ public final class CtrlMessage {
           getMsgId());
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + getId().hashCode();
-      hash = (37 * hash) + CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -18375,8 +18342,6 @@ public final class CtrlMessage {
 
         id_ = "";
 
-        code_ = 0;
-
         return this;
       }
 
@@ -18405,7 +18370,6 @@ public final class CtrlMessage {
         com.zjj.proto.CtrlMessage.HeartBeatRes result = new com.zjj.proto.CtrlMessage.HeartBeatRes(this);
         result.msgId_ = msgId_;
         result.id_ = id_;
-        result.code_ = code_;
         onBuilt();
         return result;
       }
@@ -18460,9 +18424,6 @@ public final class CtrlMessage {
         if (!other.getId().isEmpty()) {
           id_ = other.id_;
           onChanged();
-        }
-        if (other.getCode() != 0) {
-          setCode(other.getCode());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -18596,37 +18557,6 @@ public final class CtrlMessage {
   checkByteStringIsUtf8(value);
         
         id_ = value;
-        onChanged();
-        return this;
-      }
-
-      private int code_ ;
-      /**
-       * <code>int32 code = 3;</code>
-       * @return The code.
-       */
-      @java.lang.Override
-      public int getCode() {
-        return code_;
-      }
-      /**
-       * <code>int32 code = 3;</code>
-       * @param value The code to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCode(int value) {
-        
-        code_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 code = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCode() {
-        
-        code_ = 0;
         onChanged();
         return this;
       }
@@ -19628,14 +19558,13 @@ public final class CtrlMessage {
       "\n\022horizontalVelocity\030\010 \001(\001\022\030\n\020verticalVe" +
       "locity\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power\030\013 " +
       "\001(\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\")\n\014Heart" +
-      "BeatReq\022\r\n\005msgId\030\001 \001(\003\022\n\n\002id\030\002 \001(\t\"7\n\014He" +
-      "artBeatRes\022\r\n\005msgId\030\001 \001(\003\022\n\n\002id\030\002 \001(\t\022\014\n" +
-      "\004code\030\003 \001(\005\"t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162" +
-      "\023.P2PMessage.MsgType\022\017\n\007message\030\002 \001(\t\"2\n" +
-      "\007MsgType\022\r\n\tSAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022" +
-      "\010\n\004CHAT\020\002*#\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PU" +
-      "BLIC\020\001B\034\n\rcom.zjj.protoB\013CtrlMessageb\006pr" +
-      "oto3"
+      "BeatReq\022\r\n\005msgId\030\001 \001(\003\022\n\n\002id\030\002 \001(\t\")\n\014He" +
+      "artBeatRes\022\r\n\005msgId\030\001 \001(\003\022\n\n\002id\030\002 \001(\t\"t\n" +
+      "\nP2PMessage\022!\n\004type\030\001 \001(\0162\023.P2PMessage.M" +
+      "sgType\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\tSA" +
+      "VE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n\010I" +
+      "netType\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom." +
+      "zjj.protoB\013CtrlMessageb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -19742,7 +19671,7 @@ public final class CtrlMessage {
     internal_static_HeartBeatRes_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_HeartBeatRes_descriptor,
-        new java.lang.String[] { "MsgId", "Id", "Code", });
+        new java.lang.String[] { "MsgId", "Id", });
     internal_static_P2PMessage_descriptor =
       getDescriptor().getMessageTypes().get(17);
     internal_static_P2PMessage_fieldAccessorTable = new

@@ -264,7 +264,26 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
             case HEART_BEAT_REQ:
                 HeartBeatReq heartBeatReq = multiMessage.getHeartBeatReq();
                 String remoteId = heartBeatReq.getId();
-                log.debug("id: {} 的 心跳包, Nat地址{} ", remoteId, oppositeAddrStr);
+                log.debug("收到id: {} 的心跳包, Nat地址{} ", remoteId, oppositeAddrStr);
+                channel.writeAndFlush(new DatagramPacket(Unpooled.wrappedBuffer(ProtoUtils.createMultiHeartRes(heartBeatReq.getMsgId(), nettyClient.getLocalId()).toByteArray()),
+                        InetUtils.toInetSocketAddress(oppositeAddrStr))).addListener(f -> {
+                    if (f.isSuccess()) {
+                        log.debug("给id:{} 的地址 {} 发送id: {} 的心跳返回包",
+                                remoteId,
+                                oppositeAddrStr,
+                                nettyClient.getLocalId());
+                    } else {
+                        log.error("给id:{} 的地址 {} 发送id: {} 的心跳返回包失败!",
+                                remoteId,
+                                oppositeAddrStr,
+                                nettyClient.getLocalId());
+                    }
+                });
+                break;
+            case HEART_BEAT_RES:
+                HeartBeatRes heartBeatRes = multiMessage.getHeartBeatRes();
+                remoteId = heartBeatRes.getId();
+                log.debug("收到id: {} 的心跳返回包, Nat地址{} ", remoteId, oppositeAddrStr);
                 Thread thread = HEART_BEAT_THREAD.get(remoteId);
                 log.debug("给线程 {} 解锁", thread);
                 LockSupport.unpark(thread);
