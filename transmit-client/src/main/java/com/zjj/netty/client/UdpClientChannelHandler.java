@@ -344,7 +344,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         heartThread = Thread.currentThread();
         LockSupport.parkNanos(2_000_000_000L);
         if (System.currentTimeMillis() - start >= 2000L) {
-            log.debug("线程锁超时释放, 未收到服务器回复");
+            log.warn("线程锁超时释放, 未收到服务器回复");
         } else {
             log.debug("线程 {} 锁被释放", Thread.currentThread());
         }
@@ -381,7 +381,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     HEART_BEAT_THREAD.put(entry.getKey(), Thread.currentThread());
                     LockSupport.parkNanos(2_000_000_000L);
                     if (System.currentTimeMillis() - start >= 2000L) {
-                        log.debug("线程锁超时释放, 已失去与id: {} 连接..", entry.getKey());
+                        log.warn("线程锁超时释放, 已失去与id: {} 连接..", entry.getKey());
                         ipAddrHolder.delete(entry.getKey());
                     } else {
                         log.debug("线程 {} 锁被释放", Thread.currentThread());
