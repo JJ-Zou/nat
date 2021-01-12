@@ -54,6 +54,7 @@ public class UdpClient extends AbstractClient {
                 });
         ChannelFuture channelFuture = bootstrap.bind(getLocalAddress()).syncUninterruptibly();
         channel = channelFuture.channel();
+        udpClientChannelHandler.sendPrivateAddr();
     }
 
     public void doClose() {
@@ -75,6 +76,7 @@ public class UdpClient extends AbstractClient {
         log.info("UDP穿透{}！",
                 Objects.equals(ipAddrHolder.getThrough(oppositeId),
                         Constants.NONE) ? "失败" : "成功");
+        removeThread(oppositeId);
     }
 
     @Override
@@ -87,4 +89,8 @@ public class UdpClient extends AbstractClient {
         return THREAD_MAP.get(id);
     }
 
+    @Override
+    public void removeThread(String id) {
+        THREAD_MAP.remove(id);
+    }
 }

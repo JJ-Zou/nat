@@ -23,4 +23,6 @@ public interface NettyClient {
     void putThread(String id, Thread t);
 
     Thread getThread(String id);
+
+    void removeThread(String id);
 }

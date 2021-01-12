@@ -50,7 +50,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         log.debug("监听本地地址 {}",
                 InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
         ipAddrHolder.setPriAddrStr(nettyClient.getLocalId(), InetUtils.toAddressString((InetSocketAddress) ctx.channel().localAddress()));
-        executor.execute(this::sendPrivateAddr);
     }
 
     @Override
@@ -386,6 +385,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     } else {
                         log.debug("线程 {} 锁被释放", Thread.currentThread());
                     }
+                    HEART_BEAT_THREAD.remove(entry.getKey());
                 });
             }
         }
