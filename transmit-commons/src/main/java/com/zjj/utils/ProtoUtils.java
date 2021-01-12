@@ -2,6 +2,8 @@ package com.zjj.utils;
 
 import com.google.protobuf.ByteString;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import static com.zjj.proto.CtrlMessage.*;
 
 public class ProtoUtils {
@@ -338,5 +340,21 @@ public class ProtoUtils {
 
     public static MultiMessage createMultiFromBlackTrace(String from, String to, byte[] data) {
         return createMultiFromBlackRedirect(createRedirectFromBlack(from, to, data));
+    }
+
+    private static final AtomicLong ID = new AtomicLong(0);
+
+    private static long newId() {
+        return ID.incrementAndGet();
+    }
+
+    public static MultiMessage createMultiHeartReq(String id) {
+        return MultiMessage.newBuilder()
+                .setMultiType(MultiMessage.MultiType.HEART_BEAT_REQ)
+                .setHeartBeatReq(HeartBeatReq.newBuilder()
+                        .setMsgId(newId())
+                        .setId(id)
+                        .build())
+                .build();
     }
 }

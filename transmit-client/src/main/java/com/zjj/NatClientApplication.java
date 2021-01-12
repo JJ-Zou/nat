@@ -36,6 +36,7 @@ public class NatClientApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         nettyClient.doBind();
         log.info("本机ID: {}", nettyClient.getLocalId());
+
         Set<String> oppositeIds = ipAddrHolder.getThroughIds();
         for (String oppositeId : oppositeIds) {
             executor.execute(() -> natTo(oppositeId));

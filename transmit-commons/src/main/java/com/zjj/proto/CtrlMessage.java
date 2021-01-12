@@ -303,17 +303,47 @@ public final class CtrlMessage {
     com.zjj.proto.CtrlMessage.BlackTraceRedirectOrBuilder getBlackTraceRedirectOrBuilder();
 
     /**
-     * <code>.P2PMessage p2PMessage = 13;</code>
+     * <code>.HeartBeatReq heartBeatReq = 13;</code>
+     * @return Whether the heartBeatReq field is set.
+     */
+    boolean hasHeartBeatReq();
+    /**
+     * <code>.HeartBeatReq heartBeatReq = 13;</code>
+     * @return The heartBeatReq.
+     */
+    com.zjj.proto.CtrlMessage.HeartBeatReq getHeartBeatReq();
+    /**
+     * <code>.HeartBeatReq heartBeatReq = 13;</code>
+     */
+    com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder getHeartBeatReqOrBuilder();
+
+    /**
+     * <code>.HeartBeatRes heartBeatRes = 14;</code>
+     * @return Whether the heartBeatRes field is set.
+     */
+    boolean hasHeartBeatRes();
+    /**
+     * <code>.HeartBeatRes heartBeatRes = 14;</code>
+     * @return The heartBeatRes.
+     */
+    com.zjj.proto.CtrlMessage.HeartBeatRes getHeartBeatRes();
+    /**
+     * <code>.HeartBeatRes heartBeatRes = 14;</code>
+     */
+    com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder getHeartBeatResOrBuilder();
+
+    /**
+     * <code>.P2PMessage p2PMessage = 15;</code>
      * @return Whether the p2PMessage field is set.
      */
     boolean hasP2PMessage();
     /**
-     * <code>.P2PMessage p2PMessage = 13;</code>
+     * <code>.P2PMessage p2PMessage = 15;</code>
      * @return The p2PMessage.
      */
     com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage();
     /**
-     * <code>.P2PMessage p2PMessage = 13;</code>
+     * <code>.P2PMessage p2PMessage = 15;</code>
      */
     com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder();
 
@@ -526,8 +556,36 @@ public final class CtrlMessage {
               break;
             }
             case 106: {
-              com.zjj.proto.CtrlMessage.P2PMessage.Builder subBuilder = null;
+              com.zjj.proto.CtrlMessage.HeartBeatReq.Builder subBuilder = null;
               if (multiBodyCase_ == 13) {
+                subBuilder = ((com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_).toBuilder();
+              }
+              multiBody_ =
+                  input.readMessage(com.zjj.proto.CtrlMessage.HeartBeatReq.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_);
+                multiBody_ = subBuilder.buildPartial();
+              }
+              multiBodyCase_ = 13;
+              break;
+            }
+            case 114: {
+              com.zjj.proto.CtrlMessage.HeartBeatRes.Builder subBuilder = null;
+              if (multiBodyCase_ == 14) {
+                subBuilder = ((com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_).toBuilder();
+              }
+              multiBody_ =
+                  input.readMessage(com.zjj.proto.CtrlMessage.HeartBeatRes.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_);
+                multiBody_ = subBuilder.buildPartial();
+              }
+              multiBodyCase_ = 14;
+              break;
+            }
+            case 122: {
+              com.zjj.proto.CtrlMessage.P2PMessage.Builder subBuilder = null;
+              if (multiBodyCase_ == 15) {
                 subBuilder = ((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_).toBuilder();
               }
               multiBody_ =
@@ -536,7 +594,7 @@ public final class CtrlMessage {
                 subBuilder.mergeFrom((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
                 multiBody_ = subBuilder.buildPartial();
               }
-              multiBodyCase_ = 13;
+              multiBodyCase_ = 15;
               break;
             }
             default: {
@@ -621,9 +679,17 @@ public final class CtrlMessage {
        */
       BLACK_TRACE_REDIRECT(10),
       /**
-       * <code>PSP_MESSAGE = 11;</code>
+       * <code>HEART_BEAT_REQ = 11;</code>
        */
-      PSP_MESSAGE(11),
+      HEART_BEAT_REQ(11),
+      /**
+       * <code>HEART_BEAT_RES = 12;</code>
+       */
+      HEART_BEAT_RES(12),
+      /**
+       * <code>PSP_MESSAGE = 13;</code>
+       */
+      PSP_MESSAGE(13),
       UNRECOGNIZED(-1),
       ;
 
@@ -672,9 +738,17 @@ public final class CtrlMessage {
        */
       public static final int BLACK_TRACE_REDIRECT_VALUE = 10;
       /**
-       * <code>PSP_MESSAGE = 11;</code>
+       * <code>HEART_BEAT_REQ = 11;</code>
        */
-      public static final int PSP_MESSAGE_VALUE = 11;
+      public static final int HEART_BEAT_REQ_VALUE = 11;
+      /**
+       * <code>HEART_BEAT_RES = 12;</code>
+       */
+      public static final int HEART_BEAT_RES_VALUE = 12;
+      /**
+       * <code>PSP_MESSAGE = 13;</code>
+       */
+      public static final int PSP_MESSAGE_VALUE = 13;
 
 
       public final int getNumber() {
@@ -712,7 +786,9 @@ public final class CtrlMessage {
           case 8: return TRACK_TRACE;
           case 9: return TRACK_TRACE_REDIRECT;
           case 10: return BLACK_TRACE_REDIRECT;
-          case 11: return PSP_MESSAGE;
+          case 11: return HEART_BEAT_REQ;
+          case 12: return HEART_BEAT_RES;
+          case 13: return PSP_MESSAGE;
           default: return null;
         }
       }
@@ -785,7 +861,9 @@ public final class CtrlMessage {
       TRACKTRACE(10),
       TRACKTRACEREDIRECT(11),
       BLACKTRACEREDIRECT(12),
-      P2PMESSAGE(13),
+      HEARTBEATREQ(13),
+      HEARTBEATRES(14),
+      P2PMESSAGE(15),
       MULTIBODY_NOT_SET(0);
       private final int value;
       private MultiBodyCase(int value) {
@@ -814,7 +892,9 @@ public final class CtrlMessage {
           case 10: return TRACKTRACE;
           case 11: return TRACKTRACEREDIRECT;
           case 12: return BLACKTRACEREDIRECT;
-          case 13: return P2PMESSAGE;
+          case 13: return HEARTBEATREQ;
+          case 14: return HEARTBEATRES;
+          case 15: return P2PMESSAGE;
           case 0: return MULTIBODY_NOT_SET;
           default: return null;
         }
@@ -1190,32 +1270,94 @@ public final class CtrlMessage {
       return com.zjj.proto.CtrlMessage.BlackTraceRedirect.getDefaultInstance();
     }
 
-    public static final int P2PMESSAGE_FIELD_NUMBER = 13;
+    public static final int HEARTBEATREQ_FIELD_NUMBER = 13;
     /**
-     * <code>.P2PMessage p2PMessage = 13;</code>
+     * <code>.HeartBeatReq heartBeatReq = 13;</code>
+     * @return Whether the heartBeatReq field is set.
+     */
+    @java.lang.Override
+    public boolean hasHeartBeatReq() {
+      return multiBodyCase_ == 13;
+    }
+    /**
+     * <code>.HeartBeatReq heartBeatReq = 13;</code>
+     * @return The heartBeatReq.
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.HeartBeatReq getHeartBeatReq() {
+      if (multiBodyCase_ == 13) {
+         return (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+    }
+    /**
+     * <code>.HeartBeatReq heartBeatReq = 13;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder getHeartBeatReqOrBuilder() {
+      if (multiBodyCase_ == 13) {
+         return (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+    }
+
+    public static final int HEARTBEATRES_FIELD_NUMBER = 14;
+    /**
+     * <code>.HeartBeatRes heartBeatRes = 14;</code>
+     * @return Whether the heartBeatRes field is set.
+     */
+    @java.lang.Override
+    public boolean hasHeartBeatRes() {
+      return multiBodyCase_ == 14;
+    }
+    /**
+     * <code>.HeartBeatRes heartBeatRes = 14;</code>
+     * @return The heartBeatRes.
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.HeartBeatRes getHeartBeatRes() {
+      if (multiBodyCase_ == 14) {
+         return (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+    }
+    /**
+     * <code>.HeartBeatRes heartBeatRes = 14;</code>
+     */
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder getHeartBeatResOrBuilder() {
+      if (multiBodyCase_ == 14) {
+         return (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_;
+      }
+      return com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+    }
+
+    public static final int P2PMESSAGE_FIELD_NUMBER = 15;
+    /**
+     * <code>.P2PMessage p2PMessage = 15;</code>
      * @return Whether the p2PMessage field is set.
      */
     @java.lang.Override
     public boolean hasP2PMessage() {
-      return multiBodyCase_ == 13;
+      return multiBodyCase_ == 15;
     }
     /**
-     * <code>.P2PMessage p2PMessage = 13;</code>
+     * <code>.P2PMessage p2PMessage = 15;</code>
      * @return The p2PMessage.
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage() {
-      if (multiBodyCase_ == 13) {
+      if (multiBodyCase_ == 15) {
          return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
     }
     /**
-     * <code>.P2PMessage p2PMessage = 13;</code>
+     * <code>.P2PMessage p2PMessage = 15;</code>
      */
     @java.lang.Override
     public com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder() {
-      if (multiBodyCase_ == 13) {
+      if (multiBodyCase_ == 15) {
          return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
       }
       return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
@@ -1272,7 +1414,13 @@ public final class CtrlMessage {
         output.writeMessage(12, (com.zjj.proto.CtrlMessage.BlackTraceRedirect) multiBody_);
       }
       if (multiBodyCase_ == 13) {
-        output.writeMessage(13, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
+        output.writeMessage(13, (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_);
+      }
+      if (multiBodyCase_ == 14) {
+        output.writeMessage(14, (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_);
+      }
+      if (multiBodyCase_ == 15) {
+        output.writeMessage(15, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
       }
       unknownFields.writeTo(output);
     }
@@ -1333,7 +1481,15 @@ public final class CtrlMessage {
       }
       if (multiBodyCase_ == 13) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(13, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
+          .computeMessageSize(13, (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_);
+      }
+      if (multiBodyCase_ == 14) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(14, (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_);
+      }
+      if (multiBodyCase_ == 15) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(15, (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1398,6 +1554,14 @@ public final class CtrlMessage {
               .equals(other.getBlackTraceRedirect())) return false;
           break;
         case 13:
+          if (!getHeartBeatReq()
+              .equals(other.getHeartBeatReq())) return false;
+          break;
+        case 14:
+          if (!getHeartBeatRes()
+              .equals(other.getHeartBeatRes())) return false;
+          break;
+        case 15:
           if (!getP2PMessage()
               .equals(other.getP2PMessage())) return false;
           break;
@@ -1463,6 +1627,14 @@ public final class CtrlMessage {
           hash = (53 * hash) + getBlackTraceRedirect().hashCode();
           break;
         case 13:
+          hash = (37 * hash) + HEARTBEATREQ_FIELD_NUMBER;
+          hash = (53 * hash) + getHeartBeatReq().hashCode();
+          break;
+        case 14:
+          hash = (37 * hash) + HEARTBEATRES_FIELD_NUMBER;
+          hash = (53 * hash) + getHeartBeatRes().hashCode();
+          break;
+        case 15:
           hash = (37 * hash) + P2PMESSAGE_FIELD_NUMBER;
           hash = (53 * hash) + getP2PMessage().hashCode();
           break;
@@ -1711,6 +1883,20 @@ public final class CtrlMessage {
           }
         }
         if (multiBodyCase_ == 13) {
+          if (heartBeatReqBuilder_ == null) {
+            result.multiBody_ = multiBody_;
+          } else {
+            result.multiBody_ = heartBeatReqBuilder_.build();
+          }
+        }
+        if (multiBodyCase_ == 14) {
+          if (heartBeatResBuilder_ == null) {
+            result.multiBody_ = multiBody_;
+          } else {
+            result.multiBody_ = heartBeatResBuilder_.build();
+          }
+        }
+        if (multiBodyCase_ == 15) {
           if (p2PMessageBuilder_ == null) {
             result.multiBody_ = multiBody_;
           } else {
@@ -1812,6 +1998,14 @@ public final class CtrlMessage {
           }
           case BLACKTRACEREDIRECT: {
             mergeBlackTraceRedirect(other.getBlackTraceRedirect());
+            break;
+          }
+          case HEARTBEATREQ: {
+            mergeHeartBeatReq(other.getHeartBeatReq());
+            break;
+          }
+          case HEARTBEATRES: {
+            mergeHeartBeatRes(other.getHeartBeatRes());
             break;
           }
           case P2PMESSAGE: {
@@ -3472,35 +3666,317 @@ public final class CtrlMessage {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.HeartBeatReq, com.zjj.proto.CtrlMessage.HeartBeatReq.Builder, com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder> heartBeatReqBuilder_;
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       * @return Whether the heartBeatReq field is set.
+       */
+      @java.lang.Override
+      public boolean hasHeartBeatReq() {
+        return multiBodyCase_ == 13;
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       * @return The heartBeatReq.
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatReq getHeartBeatReq() {
+        if (heartBeatReqBuilder_ == null) {
+          if (multiBodyCase_ == 13) {
+            return (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+        } else {
+          if (multiBodyCase_ == 13) {
+            return heartBeatReqBuilder_.getMessage();
+          }
+          return com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      public Builder setHeartBeatReq(com.zjj.proto.CtrlMessage.HeartBeatReq value) {
+        if (heartBeatReqBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          multiBody_ = value;
+          onChanged();
+        } else {
+          heartBeatReqBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      public Builder setHeartBeatReq(
+          com.zjj.proto.CtrlMessage.HeartBeatReq.Builder builderForValue) {
+        if (heartBeatReqBuilder_ == null) {
+          multiBody_ = builderForValue.build();
+          onChanged();
+        } else {
+          heartBeatReqBuilder_.setMessage(builderForValue.build());
+        }
+        multiBodyCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      public Builder mergeHeartBeatReq(com.zjj.proto.CtrlMessage.HeartBeatReq value) {
+        if (heartBeatReqBuilder_ == null) {
+          if (multiBodyCase_ == 13 &&
+              multiBody_ != com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance()) {
+            multiBody_ = com.zjj.proto.CtrlMessage.HeartBeatReq.newBuilder((com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            multiBody_ = value;
+          }
+          onChanged();
+        } else {
+          if (multiBodyCase_ == 13) {
+            heartBeatReqBuilder_.mergeFrom(value);
+          }
+          heartBeatReqBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 13;
+        return this;
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      public Builder clearHeartBeatReq() {
+        if (heartBeatReqBuilder_ == null) {
+          if (multiBodyCase_ == 13) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+            onChanged();
+          }
+        } else {
+          if (multiBodyCase_ == 13) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+          }
+          heartBeatReqBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      public com.zjj.proto.CtrlMessage.HeartBeatReq.Builder getHeartBeatReqBuilder() {
+        return getHeartBeatReqFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder getHeartBeatReqOrBuilder() {
+        if ((multiBodyCase_ == 13) && (heartBeatReqBuilder_ != null)) {
+          return heartBeatReqBuilder_.getMessageOrBuilder();
+        } else {
+          if (multiBodyCase_ == 13) {
+            return (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.HeartBeatReq heartBeatReq = 13;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.HeartBeatReq, com.zjj.proto.CtrlMessage.HeartBeatReq.Builder, com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder> 
+          getHeartBeatReqFieldBuilder() {
+        if (heartBeatReqBuilder_ == null) {
+          if (!(multiBodyCase_ == 13)) {
+            multiBody_ = com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+          }
+          heartBeatReqBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.zjj.proto.CtrlMessage.HeartBeatReq, com.zjj.proto.CtrlMessage.HeartBeatReq.Builder, com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder>(
+                  (com.zjj.proto.CtrlMessage.HeartBeatReq) multiBody_,
+                  getParentForChildren(),
+                  isClean());
+          multiBody_ = null;
+        }
+        multiBodyCase_ = 13;
+        onChanged();;
+        return heartBeatReqBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.HeartBeatRes, com.zjj.proto.CtrlMessage.HeartBeatRes.Builder, com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder> heartBeatResBuilder_;
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       * @return Whether the heartBeatRes field is set.
+       */
+      @java.lang.Override
+      public boolean hasHeartBeatRes() {
+        return multiBodyCase_ == 14;
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       * @return The heartBeatRes.
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatRes getHeartBeatRes() {
+        if (heartBeatResBuilder_ == null) {
+          if (multiBodyCase_ == 14) {
+            return (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+        } else {
+          if (multiBodyCase_ == 14) {
+            return heartBeatResBuilder_.getMessage();
+          }
+          return com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      public Builder setHeartBeatRes(com.zjj.proto.CtrlMessage.HeartBeatRes value) {
+        if (heartBeatResBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          multiBody_ = value;
+          onChanged();
+        } else {
+          heartBeatResBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 14;
+        return this;
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      public Builder setHeartBeatRes(
+          com.zjj.proto.CtrlMessage.HeartBeatRes.Builder builderForValue) {
+        if (heartBeatResBuilder_ == null) {
+          multiBody_ = builderForValue.build();
+          onChanged();
+        } else {
+          heartBeatResBuilder_.setMessage(builderForValue.build());
+        }
+        multiBodyCase_ = 14;
+        return this;
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      public Builder mergeHeartBeatRes(com.zjj.proto.CtrlMessage.HeartBeatRes value) {
+        if (heartBeatResBuilder_ == null) {
+          if (multiBodyCase_ == 14 &&
+              multiBody_ != com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance()) {
+            multiBody_ = com.zjj.proto.CtrlMessage.HeartBeatRes.newBuilder((com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            multiBody_ = value;
+          }
+          onChanged();
+        } else {
+          if (multiBodyCase_ == 14) {
+            heartBeatResBuilder_.mergeFrom(value);
+          }
+          heartBeatResBuilder_.setMessage(value);
+        }
+        multiBodyCase_ = 14;
+        return this;
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      public Builder clearHeartBeatRes() {
+        if (heartBeatResBuilder_ == null) {
+          if (multiBodyCase_ == 14) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+            onChanged();
+          }
+        } else {
+          if (multiBodyCase_ == 14) {
+            multiBodyCase_ = 0;
+            multiBody_ = null;
+          }
+          heartBeatResBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      public com.zjj.proto.CtrlMessage.HeartBeatRes.Builder getHeartBeatResBuilder() {
+        return getHeartBeatResFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder getHeartBeatResOrBuilder() {
+        if ((multiBodyCase_ == 14) && (heartBeatResBuilder_ != null)) {
+          return heartBeatResBuilder_.getMessageOrBuilder();
+        } else {
+          if (multiBodyCase_ == 14) {
+            return (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_;
+          }
+          return com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.HeartBeatRes heartBeatRes = 14;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.zjj.proto.CtrlMessage.HeartBeatRes, com.zjj.proto.CtrlMessage.HeartBeatRes.Builder, com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder> 
+          getHeartBeatResFieldBuilder() {
+        if (heartBeatResBuilder_ == null) {
+          if (!(multiBodyCase_ == 14)) {
+            multiBody_ = com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+          }
+          heartBeatResBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.zjj.proto.CtrlMessage.HeartBeatRes, com.zjj.proto.CtrlMessage.HeartBeatRes.Builder, com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder>(
+                  (com.zjj.proto.CtrlMessage.HeartBeatRes) multiBody_,
+                  getParentForChildren(),
+                  isClean());
+          multiBody_ = null;
+        }
+        multiBodyCase_ = 14;
+        onChanged();;
+        return heartBeatResBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.P2PMessage, com.zjj.proto.CtrlMessage.P2PMessage.Builder, com.zjj.proto.CtrlMessage.P2PMessageOrBuilder> p2PMessageBuilder_;
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        * @return Whether the p2PMessage field is set.
        */
       @java.lang.Override
       public boolean hasP2PMessage() {
-        return multiBodyCase_ == 13;
+        return multiBodyCase_ == 15;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        * @return The p2PMessage.
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.P2PMessage getP2PMessage() {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 13) {
+          if (multiBodyCase_ == 15) {
             return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         } else {
-          if (multiBodyCase_ == 13) {
+          if (multiBodyCase_ == 15) {
             return p2PMessageBuilder_.getMessage();
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       public Builder setP2PMessage(com.zjj.proto.CtrlMessage.P2PMessage value) {
         if (p2PMessageBuilder_ == null) {
@@ -3512,11 +3988,11 @@ public final class CtrlMessage {
         } else {
           p2PMessageBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 13;
+        multiBodyCase_ = 15;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       public Builder setP2PMessage(
           com.zjj.proto.CtrlMessage.P2PMessage.Builder builderForValue) {
@@ -3526,15 +4002,15 @@ public final class CtrlMessage {
         } else {
           p2PMessageBuilder_.setMessage(builderForValue.build());
         }
-        multiBodyCase_ = 13;
+        multiBodyCase_ = 15;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       public Builder mergeP2PMessage(com.zjj.proto.CtrlMessage.P2PMessage value) {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 13 &&
+          if (multiBodyCase_ == 15 &&
               multiBody_ != com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance()) {
             multiBody_ = com.zjj.proto.CtrlMessage.P2PMessage.newBuilder((com.zjj.proto.CtrlMessage.P2PMessage) multiBody_)
                 .mergeFrom(value).buildPartial();
@@ -3543,26 +4019,26 @@ public final class CtrlMessage {
           }
           onChanged();
         } else {
-          if (multiBodyCase_ == 13) {
+          if (multiBodyCase_ == 15) {
             p2PMessageBuilder_.mergeFrom(value);
           }
           p2PMessageBuilder_.setMessage(value);
         }
-        multiBodyCase_ = 13;
+        multiBodyCase_ = 15;
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       public Builder clearP2PMessage() {
         if (p2PMessageBuilder_ == null) {
-          if (multiBodyCase_ == 13) {
+          if (multiBodyCase_ == 15) {
             multiBodyCase_ = 0;
             multiBody_ = null;
             onChanged();
           }
         } else {
-          if (multiBodyCase_ == 13) {
+          if (multiBodyCase_ == 15) {
             multiBodyCase_ = 0;
             multiBody_ = null;
           }
@@ -3571,33 +4047,33 @@ public final class CtrlMessage {
         return this;
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       public com.zjj.proto.CtrlMessage.P2PMessage.Builder getP2PMessageBuilder() {
         return getP2PMessageFieldBuilder().getBuilder();
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       @java.lang.Override
       public com.zjj.proto.CtrlMessage.P2PMessageOrBuilder getP2PMessageOrBuilder() {
-        if ((multiBodyCase_ == 13) && (p2PMessageBuilder_ != null)) {
+        if ((multiBodyCase_ == 15) && (p2PMessageBuilder_ != null)) {
           return p2PMessageBuilder_.getMessageOrBuilder();
         } else {
-          if (multiBodyCase_ == 13) {
+          if (multiBodyCase_ == 15) {
             return (com.zjj.proto.CtrlMessage.P2PMessage) multiBody_;
           }
           return com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
         }
       }
       /**
-       * <code>.P2PMessage p2PMessage = 13;</code>
+       * <code>.P2PMessage p2PMessage = 15;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.zjj.proto.CtrlMessage.P2PMessage, com.zjj.proto.CtrlMessage.P2PMessage.Builder, com.zjj.proto.CtrlMessage.P2PMessageOrBuilder> 
           getP2PMessageFieldBuilder() {
         if (p2PMessageBuilder_ == null) {
-          if (!(multiBodyCase_ == 13)) {
+          if (!(multiBodyCase_ == 15)) {
             multiBody_ = com.zjj.proto.CtrlMessage.P2PMessage.getDefaultInstance();
           }
           p2PMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3607,7 +4083,7 @@ public final class CtrlMessage {
                   isClean());
           multiBody_ = null;
         }
-        multiBodyCase_ = 13;
+        multiBodyCase_ = 15;
         onChanged();;
         return p2PMessageBuilder_;
       }
@@ -16859,6 +17335,1354 @@ public final class CtrlMessage {
 
   }
 
+  public interface HeartBeatReqOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:HeartBeatReq)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 msgId = 1;</code>
+     * @return The msgId.
+     */
+    long getMsgId();
+
+    /**
+     * <code>string id = 2;</code>
+     * @return The id.
+     */
+    java.lang.String getId();
+    /**
+     * <code>string id = 2;</code>
+     * @return The bytes for id.
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
+  }
+  /**
+   * Protobuf type {@code HeartBeatReq}
+   */
+  public static final class HeartBeatReq extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:HeartBeatReq)
+      HeartBeatReqOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use HeartBeatReq.newBuilder() to construct.
+    private HeartBeatReq(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private HeartBeatReq() {
+      id_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new HeartBeatReq();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private HeartBeatReq(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              msgId_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              id_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.zjj.proto.CtrlMessage.internal_static_HeartBeatReq_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.zjj.proto.CtrlMessage.internal_static_HeartBeatReq_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.zjj.proto.CtrlMessage.HeartBeatReq.class, com.zjj.proto.CtrlMessage.HeartBeatReq.Builder.class);
+    }
+
+    public static final int MSGID_FIELD_NUMBER = 1;
+    private long msgId_;
+    /**
+     * <code>int64 msgId = 1;</code>
+     * @return The msgId.
+     */
+    @java.lang.Override
+    public long getMsgId() {
+      return msgId_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object id_;
+    /**
+     * <code>string id = 2;</code>
+     * @return The id.
+     */
+    @java.lang.Override
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string id = 2;</code>
+     * @return The bytes for id.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (msgId_ != 0L) {
+        output.writeInt64(1, msgId_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, id_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (msgId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, msgId_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, id_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.zjj.proto.CtrlMessage.HeartBeatReq)) {
+        return super.equals(obj);
+      }
+      com.zjj.proto.CtrlMessage.HeartBeatReq other = (com.zjj.proto.CtrlMessage.HeartBeatReq) obj;
+
+      if (getMsgId()
+          != other.getMsgId()) return false;
+      if (!getId()
+          .equals(other.getId())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MSGID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMsgId());
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.zjj.proto.CtrlMessage.HeartBeatReq prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code HeartBeatReq}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:HeartBeatReq)
+        com.zjj.proto.CtrlMessage.HeartBeatReqOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.zjj.proto.CtrlMessage.internal_static_HeartBeatReq_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.zjj.proto.CtrlMessage.internal_static_HeartBeatReq_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.zjj.proto.CtrlMessage.HeartBeatReq.class, com.zjj.proto.CtrlMessage.HeartBeatReq.Builder.class);
+      }
+
+      // Construct using com.zjj.proto.CtrlMessage.HeartBeatReq.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        msgId_ = 0L;
+
+        id_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.zjj.proto.CtrlMessage.internal_static_HeartBeatReq_descriptor;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatReq getDefaultInstanceForType() {
+        return com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatReq build() {
+        com.zjj.proto.CtrlMessage.HeartBeatReq result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatReq buildPartial() {
+        com.zjj.proto.CtrlMessage.HeartBeatReq result = new com.zjj.proto.CtrlMessage.HeartBeatReq(this);
+        result.msgId_ = msgId_;
+        result.id_ = id_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.zjj.proto.CtrlMessage.HeartBeatReq) {
+          return mergeFrom((com.zjj.proto.CtrlMessage.HeartBeatReq)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.zjj.proto.CtrlMessage.HeartBeatReq other) {
+        if (other == com.zjj.proto.CtrlMessage.HeartBeatReq.getDefaultInstance()) return this;
+        if (other.getMsgId() != 0L) {
+          setMsgId(other.getMsgId());
+        }
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.zjj.proto.CtrlMessage.HeartBeatReq parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.zjj.proto.CtrlMessage.HeartBeatReq) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long msgId_ ;
+      /**
+       * <code>int64 msgId = 1;</code>
+       * @return The msgId.
+       */
+      @java.lang.Override
+      public long getMsgId() {
+        return msgId_;
+      }
+      /**
+       * <code>int64 msgId = 1;</code>
+       * @param value The msgId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMsgId(long value) {
+        
+        msgId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 msgId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMsgId() {
+        
+        msgId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object id_ = "";
+      /**
+       * <code>string id = 2;</code>
+       * @return The id.
+       */
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @return The bytes for id.
+       */
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @param value The bytes for id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:HeartBeatReq)
+    }
+
+    // @@protoc_insertion_point(class_scope:HeartBeatReq)
+    private static final com.zjj.proto.CtrlMessage.HeartBeatReq DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.zjj.proto.CtrlMessage.HeartBeatReq();
+    }
+
+    public static com.zjj.proto.CtrlMessage.HeartBeatReq getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<HeartBeatReq>
+        PARSER = new com.google.protobuf.AbstractParser<HeartBeatReq>() {
+      @java.lang.Override
+      public HeartBeatReq parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new HeartBeatReq(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<HeartBeatReq> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<HeartBeatReq> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.HeartBeatReq getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface HeartBeatResOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:HeartBeatRes)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 msgId = 1;</code>
+     * @return The msgId.
+     */
+    long getMsgId();
+
+    /**
+     * <code>string id = 2;</code>
+     * @return The id.
+     */
+    java.lang.String getId();
+    /**
+     * <code>string id = 2;</code>
+     * @return The bytes for id.
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
+
+    /**
+     * <code>int32 code = 3;</code>
+     * @return The code.
+     */
+    int getCode();
+  }
+  /**
+   * Protobuf type {@code HeartBeatRes}
+   */
+  public static final class HeartBeatRes extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:HeartBeatRes)
+      HeartBeatResOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use HeartBeatRes.newBuilder() to construct.
+    private HeartBeatRes(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private HeartBeatRes() {
+      id_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new HeartBeatRes();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private HeartBeatRes(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              msgId_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              id_ = s;
+              break;
+            }
+            case 24: {
+
+              code_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.zjj.proto.CtrlMessage.internal_static_HeartBeatRes_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.zjj.proto.CtrlMessage.internal_static_HeartBeatRes_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.zjj.proto.CtrlMessage.HeartBeatRes.class, com.zjj.proto.CtrlMessage.HeartBeatRes.Builder.class);
+    }
+
+    public static final int MSGID_FIELD_NUMBER = 1;
+    private long msgId_;
+    /**
+     * <code>int64 msgId = 1;</code>
+     * @return The msgId.
+     */
+    @java.lang.Override
+    public long getMsgId() {
+      return msgId_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object id_;
+    /**
+     * <code>string id = 2;</code>
+     * @return The id.
+     */
+    @java.lang.Override
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string id = 2;</code>
+     * @return The bytes for id.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CODE_FIELD_NUMBER = 3;
+    private int code_;
+    /**
+     * <code>int32 code = 3;</code>
+     * @return The code.
+     */
+    @java.lang.Override
+    public int getCode() {
+      return code_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (msgId_ != 0L) {
+        output.writeInt64(1, msgId_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, id_);
+      }
+      if (code_ != 0) {
+        output.writeInt32(3, code_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (msgId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, msgId_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, id_);
+      }
+      if (code_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, code_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.zjj.proto.CtrlMessage.HeartBeatRes)) {
+        return super.equals(obj);
+      }
+      com.zjj.proto.CtrlMessage.HeartBeatRes other = (com.zjj.proto.CtrlMessage.HeartBeatRes) obj;
+
+      if (getMsgId()
+          != other.getMsgId()) return false;
+      if (!getId()
+          .equals(other.getId())) return false;
+      if (getCode()
+          != other.getCode()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MSGID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMsgId());
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
+      hash = (37 * hash) + CODE_FIELD_NUMBER;
+      hash = (53 * hash) + getCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.zjj.proto.CtrlMessage.HeartBeatRes prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code HeartBeatRes}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:HeartBeatRes)
+        com.zjj.proto.CtrlMessage.HeartBeatResOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.zjj.proto.CtrlMessage.internal_static_HeartBeatRes_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.zjj.proto.CtrlMessage.internal_static_HeartBeatRes_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.zjj.proto.CtrlMessage.HeartBeatRes.class, com.zjj.proto.CtrlMessage.HeartBeatRes.Builder.class);
+      }
+
+      // Construct using com.zjj.proto.CtrlMessage.HeartBeatRes.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        msgId_ = 0L;
+
+        id_ = "";
+
+        code_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.zjj.proto.CtrlMessage.internal_static_HeartBeatRes_descriptor;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatRes getDefaultInstanceForType() {
+        return com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatRes build() {
+        com.zjj.proto.CtrlMessage.HeartBeatRes result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.zjj.proto.CtrlMessage.HeartBeatRes buildPartial() {
+        com.zjj.proto.CtrlMessage.HeartBeatRes result = new com.zjj.proto.CtrlMessage.HeartBeatRes(this);
+        result.msgId_ = msgId_;
+        result.id_ = id_;
+        result.code_ = code_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.zjj.proto.CtrlMessage.HeartBeatRes) {
+          return mergeFrom((com.zjj.proto.CtrlMessage.HeartBeatRes)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.zjj.proto.CtrlMessage.HeartBeatRes other) {
+        if (other == com.zjj.proto.CtrlMessage.HeartBeatRes.getDefaultInstance()) return this;
+        if (other.getMsgId() != 0L) {
+          setMsgId(other.getMsgId());
+        }
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
+          onChanged();
+        }
+        if (other.getCode() != 0) {
+          setCode(other.getCode());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.zjj.proto.CtrlMessage.HeartBeatRes parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.zjj.proto.CtrlMessage.HeartBeatRes) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long msgId_ ;
+      /**
+       * <code>int64 msgId = 1;</code>
+       * @return The msgId.
+       */
+      @java.lang.Override
+      public long getMsgId() {
+        return msgId_;
+      }
+      /**
+       * <code>int64 msgId = 1;</code>
+       * @param value The msgId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMsgId(long value) {
+        
+        msgId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 msgId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMsgId() {
+        
+        msgId_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object id_ = "";
+      /**
+       * <code>string id = 2;</code>
+       * @return The id.
+       */
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @return The bytes for id.
+       */
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 2;</code>
+       * @param value The bytes for id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int code_ ;
+      /**
+       * <code>int32 code = 3;</code>
+       * @return The code.
+       */
+      @java.lang.Override
+      public int getCode() {
+        return code_;
+      }
+      /**
+       * <code>int32 code = 3;</code>
+       * @param value The code to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCode(int value) {
+        
+        code_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 code = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCode() {
+        
+        code_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:HeartBeatRes)
+    }
+
+    // @@protoc_insertion_point(class_scope:HeartBeatRes)
+    private static final com.zjj.proto.CtrlMessage.HeartBeatRes DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.zjj.proto.CtrlMessage.HeartBeatRes();
+    }
+
+    public static com.zjj.proto.CtrlMessage.HeartBeatRes getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<HeartBeatRes>
+        PARSER = new com.google.protobuf.AbstractParser<HeartBeatRes>() {
+      @java.lang.Override
+      public HeartBeatRes parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new HeartBeatRes(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<HeartBeatRes> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<HeartBeatRes> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.zjj.proto.CtrlMessage.HeartBeatRes getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface P2PMessageOrBuilder extends
       // @@protoc_insertion_point(interface_extends:P2PMessage)
       com.google.protobuf.MessageOrBuilder {
@@ -17727,6 +19551,16 @@ public final class CtrlMessage {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Track_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_HeartBeatReq_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_HeartBeatReq_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_HeartBeatRes_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_HeartBeatRes_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_P2PMessage_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -17740,7 +19574,7 @@ public final class CtrlMessage {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021ctrlMessage.proto\"\317\005\n\014MultiMessage\022*\n\t" +
+      "\n\021ctrlMessage.proto\"\305\006\n\014MultiMessage\022*\n\t" +
       "multiType\030\001 \001(\0162\027.MultiMessage.MultiType" +
       "\022#\n\013inetCommand\030\002 \001(\0132\014.InetCommandH\000\022\033\n" +
       "\007reqAddr\030\003 \001(\0132\010.ReqAddrH\000\022\023\n\003syn\030\004 \001(\0132" +
@@ -17751,51 +19585,57 @@ public final class CtrlMessage {
       "raceRedirectH\000\022!\n\ntrackTrace\030\n \001(\0132\013.Tra" +
       "ckTraceH\000\0221\n\022trackTraceRedirect\030\013 \001(\0132\023." +
       "TrackTraceRedirectH\000\0221\n\022blackTraceRedire" +
-      "ct\030\014 \001(\0132\023.BlackTraceRedirectH\000\022!\n\np2PMe" +
-      "ssage\030\r \001(\0132\013.P2PMessageH\000\"\333\001\n\tMultiType" +
-      "\022\020\n\014INET_COMMAND\020\000\022\014\n\010REQ_ADDR\020\001\022\007\n\003SYN\020" +
-      "\002\022\013\n\007SYN_ACK\020\003\022\007\n\003ACK\020\004\022\020\n\014REQ_REDIRECT\020" +
-      "\005\022\016\n\nPLOT_TRACE\020\006\022\027\n\023PLOT_TRACE_REDIRECT" +
-      "\020\007\022\017\n\013TRACK_TRACE\020\010\022\030\n\024TRACK_TRACE_REDIR" +
-      "ECT\020\t\022\030\n\024BLACK_TRACE_REDIRECT\020\n\022\017\n\013PSP_M" +
-      "ESSAGE\020\013B\013\n\tMultiBody\"X\n\013InetCommand\022\020\n\010" +
-      "clientId\030\001 \001(\t\022\014\n\004host\030\002 \001(\t\022\014\n\004port\030\003 \001" +
-      "(\005\022\033\n\010inetType\030\004 \001(\0162\t.InetType\"\025\n\007ReqAd" +
-      "dr\022\n\n\002id\030\001 \001(\t\"\037\n\003Syn\022\014\n\004from\030\001 \001(\t\022\n\n\002t" +
-      "o\030\002 \001(\t\"\"\n\006SynAck\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 " +
-      "\001(\t\"\037\n\003Ack\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\"9\n\013" +
-      "ReqRedirect\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\022\020\n" +
-      "\010fromAddr\030\003 \001(\t\"@\n\tPlotTrace\022\035\n\tframeHea" +
-      "d\030\001 \001(\0132\n.FrameHead\022\024\n\005plots\030\002 \003(\0132\005.Plo" +
-      "t\"T\n\021PlotTraceRedirect\022\035\n\tframeHead\030\001 \001(" +
-      "\0132\n.FrameHead\022\024\n\005plots\030\002 \003(\0132\005.Plot\022\n\n\002t" +
-      "o\030\003 \001(\t\"C\n\nTrackTrace\022\035\n\tframeHead\030\001 \001(\013" +
-      "2\n.FrameHead\022\026\n\006tracks\030\002 \003(\0132\006.Track\"W\n\022" +
-      "TrackTraceRedirect\022\035\n\tframeHead\030\001 \001(\0132\n." +
-      "FrameHead\022\026\n\006tracks\030\002 \003(\0132\006.Track\022\n\n\002to\030" +
-      "\003 \001(\t\"<\n\022BlackTraceRedirect\022\014\n\004from\030\001 \001(" +
-      "\t\022\n\n\002to\030\002 \001(\t\022\014\n\004data\030\003 \001(\014\"\207\002\n\tFrameHea" +
-      "d\022\020\n\010magicNum\030\001 \001(\001\022\016\n\006nodeId\030\002 \001(\t\022\025\n\rr" +
-      "ecvLongitude\030\003 \001(\001\022\024\n\014recvLatitude\030\004 \001(\001" +
-      "\022\022\n\nrecvHeight\030\005 \001(\001\022\026\n\016transLongitude\030\006" +
-      " \001(\001\022\025\n\rtransLatitude\030\007 \001(\001\022\023\n\013transHeig" +
-      "ht\030\010 \001(\001\022\027\n\017signalFrequency\030\t \001(\002\022\025\n\rref" +
-      "reshPeriod\030\n \001(\001\022\020\n\010traceNum\030\013 \001(\005\022\021\n\tti" +
-      "mestamp\030\014 \001(\001\"\203\001\n\004Plot\022\025\n\rbistaticRange\030" +
-      "\001 \001(\002\022\030\n\020bistaticVelocity\030\002 \001(\002\022\017\n\007azimu" +
-      "th\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001(\002\022" +
-      "\013\n\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\363\001\n\005Track\022\020\n" +
-      "\010batchNum\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010la" +
-      "titude\030\003 \001(\001\022\016\n\006height\030\004 \001(\001\022\r\n\005range\030\005 " +
-      "\001(\001\022\020\n\010position\030\006 \001(\001\022\021\n\televation\030\007 \001(\001" +
-      "\022\032\n\022horizontalVelocity\030\010 \001(\001\022\030\n\020vertical" +
-      "Velocity\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power\030" +
-      "\013 \001(\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\"t\n\nP2P" +
-      "Message\022!\n\004type\030\001 \001(\0162\023.P2PMessage.MsgTy" +
-      "pe\022\017\n\007message\030\002 \001(\t\"2\n\007MsgType\022\r\n\tSAVE_A" +
-      "DDR\020\000\022\016\n\nHEART_BEAT\020\001\022\010\n\004CHAT\020\002*#\n\010InetT" +
-      "ype\022\013\n\007PRIVATE\020\000\022\n\n\006PUBLIC\020\001B\034\n\rcom.zjj." +
-      "protoB\013CtrlMessageb\006proto3"
+      "ct\030\014 \001(\0132\023.BlackTraceRedirectH\000\022%\n\014heart" +
+      "BeatReq\030\r \001(\0132\r.HeartBeatReqH\000\022%\n\014heartB" +
+      "eatRes\030\016 \001(\0132\r.HeartBeatResH\000\022!\n\np2PMess" +
+      "age\030\017 \001(\0132\013.P2PMessageH\000\"\203\002\n\tMultiType\022\020" +
+      "\n\014INET_COMMAND\020\000\022\014\n\010REQ_ADDR\020\001\022\007\n\003SYN\020\002\022" +
+      "\013\n\007SYN_ACK\020\003\022\007\n\003ACK\020\004\022\020\n\014REQ_REDIRECT\020\005\022" +
+      "\016\n\nPLOT_TRACE\020\006\022\027\n\023PLOT_TRACE_REDIRECT\020\007" +
+      "\022\017\n\013TRACK_TRACE\020\010\022\030\n\024TRACK_TRACE_REDIREC" +
+      "T\020\t\022\030\n\024BLACK_TRACE_REDIRECT\020\n\022\022\n\016HEART_B" +
+      "EAT_REQ\020\013\022\022\n\016HEART_BEAT_RES\020\014\022\017\n\013PSP_MES" +
+      "SAGE\020\rB\013\n\tMultiBody\"X\n\013InetCommand\022\020\n\010cl" +
+      "ientId\030\001 \001(\t\022\014\n\004host\030\002 \001(\t\022\014\n\004port\030\003 \001(\005" +
+      "\022\033\n\010inetType\030\004 \001(\0162\t.InetType\"\025\n\007ReqAddr" +
+      "\022\n\n\002id\030\001 \001(\t\"\037\n\003Syn\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030" +
+      "\002 \001(\t\"\"\n\006SynAck\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001(" +
+      "\t\"\037\n\003Ack\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\"9\n\013Re" +
+      "qRedirect\022\014\n\004from\030\001 \001(\t\022\n\n\002to\030\002 \001(\t\022\020\n\010f" +
+      "romAddr\030\003 \001(\t\"@\n\tPlotTrace\022\035\n\tframeHead\030" +
+      "\001 \001(\0132\n.FrameHead\022\024\n\005plots\030\002 \003(\0132\005.Plot\"" +
+      "T\n\021PlotTraceRedirect\022\035\n\tframeHead\030\001 \001(\0132" +
+      "\n.FrameHead\022\024\n\005plots\030\002 \003(\0132\005.Plot\022\n\n\002to\030" +
+      "\003 \001(\t\"C\n\nTrackTrace\022\035\n\tframeHead\030\001 \001(\0132\n" +
+      ".FrameHead\022\026\n\006tracks\030\002 \003(\0132\006.Track\"W\n\022Tr" +
+      "ackTraceRedirect\022\035\n\tframeHead\030\001 \001(\0132\n.Fr" +
+      "ameHead\022\026\n\006tracks\030\002 \003(\0132\006.Track\022\n\n\002to\030\003 " +
+      "\001(\t\"<\n\022BlackTraceRedirect\022\014\n\004from\030\001 \001(\t\022" +
+      "\n\n\002to\030\002 \001(\t\022\014\n\004data\030\003 \001(\014\"\207\002\n\tFrameHead\022" +
+      "\020\n\010magicNum\030\001 \001(\001\022\016\n\006nodeId\030\002 \001(\t\022\025\n\rrec" +
+      "vLongitude\030\003 \001(\001\022\024\n\014recvLatitude\030\004 \001(\001\022\022" +
+      "\n\nrecvHeight\030\005 \001(\001\022\026\n\016transLongitude\030\006 \001" +
+      "(\001\022\025\n\rtransLatitude\030\007 \001(\001\022\023\n\013transHeight" +
+      "\030\010 \001(\001\022\027\n\017signalFrequency\030\t \001(\002\022\025\n\rrefre" +
+      "shPeriod\030\n \001(\001\022\020\n\010traceNum\030\013 \001(\005\022\021\n\ttime" +
+      "stamp\030\014 \001(\001\"\203\001\n\004Plot\022\025\n\rbistaticRange\030\001 " +
+      "\001(\002\022\030\n\020bistaticVelocity\030\002 \001(\002\022\017\n\007azimuth" +
+      "\030\003 \001(\002\022\016\n\006height\030\004 \001(\002\022\r\n\005power\030\005 \001(\002\022\013\n" +
+      "\003snr\030\006 \001(\002\022\r\n\005phase\030\007 \001(\002\"\363\001\n\005Track\022\020\n\010b" +
+      "atchNum\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010lati" +
+      "tude\030\003 \001(\001\022\016\n\006height\030\004 \001(\001\022\r\n\005range\030\005 \001(" +
+      "\001\022\020\n\010position\030\006 \001(\001\022\021\n\televation\030\007 \001(\001\022\032" +
+      "\n\022horizontalVelocity\030\010 \001(\001\022\030\n\020verticalVe" +
+      "locity\030\t \001(\001\022\016\n\006course\030\n \001(\001\022\r\n\005power\030\013 " +
+      "\001(\001\022\013\n\003snr\030\014 \001(\001\022\r\n\005phase\030\r \001(\001\")\n\014Heart" +
+      "BeatReq\022\r\n\005msgId\030\001 \001(\003\022\n\n\002id\030\002 \001(\t\"7\n\014He" +
+      "artBeatRes\022\r\n\005msgId\030\001 \001(\003\022\n\n\002id\030\002 \001(\t\022\014\n" +
+      "\004code\030\003 \001(\005\"t\n\nP2PMessage\022!\n\004type\030\001 \001(\0162" +
+      "\023.P2PMessage.MsgType\022\017\n\007message\030\002 \001(\t\"2\n" +
+      "\007MsgType\022\r\n\tSAVE_ADDR\020\000\022\016\n\nHEART_BEAT\020\001\022" +
+      "\010\n\004CHAT\020\002*#\n\010InetType\022\013\n\007PRIVATE\020\000\022\n\n\006PU" +
+      "BLIC\020\001B\034\n\rcom.zjj.protoB\013CtrlMessageb\006pr" +
+      "oto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -17806,7 +19646,7 @@ public final class CtrlMessage {
     internal_static_MultiMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MultiMessage_descriptor,
-        new java.lang.String[] { "MultiType", "InetCommand", "ReqAddr", "Syn", "SynAck", "Ack", "ReqRedirect", "PlotTrace", "PlotTraceRedirect", "TrackTrace", "TrackTraceRedirect", "BlackTraceRedirect", "P2PMessage", "MultiBody", });
+        new java.lang.String[] { "MultiType", "InetCommand", "ReqAddr", "Syn", "SynAck", "Ack", "ReqRedirect", "PlotTrace", "PlotTraceRedirect", "TrackTrace", "TrackTraceRedirect", "BlackTraceRedirect", "HeartBeatReq", "HeartBeatRes", "P2PMessage", "MultiBody", });
     internal_static_InetCommand_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_InetCommand_fieldAccessorTable = new
@@ -17891,8 +19731,20 @@ public final class CtrlMessage {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Track_descriptor,
         new java.lang.String[] { "BatchNum", "Longitude", "Latitude", "Height", "Range", "Position", "Elevation", "HorizontalVelocity", "VerticalVelocity", "Course", "Power", "Snr", "Phase", });
-    internal_static_P2PMessage_descriptor =
+    internal_static_HeartBeatReq_descriptor =
       getDescriptor().getMessageTypes().get(15);
+    internal_static_HeartBeatReq_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_HeartBeatReq_descriptor,
+        new java.lang.String[] { "MsgId", "Id", });
+    internal_static_HeartBeatRes_descriptor =
+      getDescriptor().getMessageTypes().get(16);
+    internal_static_HeartBeatRes_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_HeartBeatRes_descriptor,
+        new java.lang.String[] { "MsgId", "Id", "Code", });
+    internal_static_P2PMessage_descriptor =
+      getDescriptor().getMessageTypes().get(17);
     internal_static_P2PMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_P2PMessage_descriptor,

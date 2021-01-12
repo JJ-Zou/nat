@@ -14,7 +14,6 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
-import io.netty.util.AttributeKey;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,6 +25,7 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.LockSupport;
 
 import static com.zjj.proto.CtrlMessage.*;
@@ -34,10 +34,8 @@ import static com.zjj.proto.CtrlMessage.*;
 @Component
 @ChannelHandler.Sharable
 public class UdpClientChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
-    public static final String KEY_READ_TIMESTAMP = "READ_TIMESTAMP";
-    public static final String KEY_WRITE_TIMESTAMP = "WRITE_TIMESTAMP";
-    private static final AttributeKey<Long> KEY_WRITE = AttributeKey.valueOf(KEY_WRITE_TIMESTAMP);
-    private static final AttributeKey<Long> KEY_READ = AttributeKey.valueOf(KEY_READ_TIMESTAMP);
+    private static final Map<String, Thread> HEART_BEAT_THREAD = new ConcurrentHashMap<>();
+    private Thread heartThread;
     @Resource(name = "udpClient")
     private NettyClient nettyClient;
     @Resource(name = "natThroughProcessor")
@@ -110,12 +108,10 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     case PUBLIC:
                         String id = inetCommand.getClientId();
                         String publicInetAddr = inetCommand.getHost() + ":" + inetCommand.getPort();
-                        if (Objects.equals(id, nettyClient.getLocalId())) {
-                            log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
-                            ipAddrHolder.setPubAddrStr(id, publicInetAddr);
-                        } else {
-                            log.debug("id: {} 的 心跳包, 公网地址 {} ,  Nat地址{} ", id, publicInetAddr, oppositeAddrStr);
-                        }
+                        log.debug("收到id: {} 的公网地址为 {}", id, publicInetAddr);
+                        ipAddrHolder.setPubAddrStr(id, publicInetAddr);
+                        log.debug("给线程 {} 解锁", heartThread);
+                        LockSupport.unpark(heartThread);
                         break;
                     case UNRECOGNIZED:
                     default:
@@ -265,6 +261,14 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     }
                 });
                 break;
+            case HEART_BEAT_REQ:
+                HeartBeatReq heartBeatReq = multiMessage.getHeartBeatReq();
+                String remoteId = heartBeatReq.getId();
+                log.debug("id: {} 的 心跳包, Nat地址{} ", remoteId, oppositeAddrStr);
+                Thread thread = HEART_BEAT_THREAD.get(remoteId);
+                log.debug("给线程 {} 解锁", thread);
+                LockSupport.unpark(thread);
+                break;
             case PSP_MESSAGE:
                 processP2pMessage(multiMessage.getP2PMessage(), oppositeAddrStr, channel);
                 break;
@@ -294,7 +298,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     }
 
 
-    @Scheduled(initialDelay = 60000, fixedRate = 60000)
+    @Scheduled(initialDelay = 20000, fixedRate = 60000)
     public void sendPrivateAddr() {
         DatagramPacket packet
                 = new DatagramPacket(Unpooled.wrappedBuffer(
@@ -316,37 +320,52 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                         InetUtils.toAddressString(nettyClient.getLocalAddress()));
             }
         });
+        log.debug("给线程 {} 加锁", Thread.currentThread());
+        long start = System.currentTimeMillis();
+        heartThread = Thread.currentThread();
+        LockSupport.parkNanos(2_000_000_000L);
+        if (System.currentTimeMillis() - start >= 2000L) {
+            log.debug("线程锁超时释放, 未收到服务器回复");
+        } else {
+            log.debug("线程 {} 锁被释放", Thread.currentThread());
+        }
     }
 
 
-    @Scheduled(initialDelay = 60000, fixedRate = 60000)
+    @Scheduled(initialDelay = 20000, fixedRate = 60000)
     public void sendHeartBeatToPeer() {
         if (ipAddrHolder.getPubAddrStr(nettyClient.getLocalId()) == null || ipAddrHolder.throughAddrMaps().isEmpty()) {
             return;
         }
         Map<String, String> map = ipAddrHolder.throughAddrMaps();
-        InetSocketAddress socketAddress = InetUtils.toInetSocketAddress(ipAddrHolder.getPubAddrStr(nettyClient.getLocalId()));
+        byte[] bytes = ProtoUtils.createMultiHeartReq(nettyClient.getLocalId()).toByteArray();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (!Objects.equals(entry.getValue(), Constants.NONE)) {
-                DatagramPacket packet = new DatagramPacket(Unpooled.wrappedBuffer(
-                        ProtoUtils.createMultiInetCommand(nettyClient.getLocalId(),
-                                socketAddress.getHostString(),
-                                socketAddress.getPort(),
-                                true).toByteArray()),
-                        InetUtils.toInetSocketAddress(entry.getValue()));
-                nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
-                    if (f.isSuccess()) {
-                        log.debug("给id:{} 的地址 {} 发送id: {} 的公网地址 {}",
-                                entry.getKey(),
-                                entry.getValue(),
-                                nettyClient.getLocalId(),
-                                InetUtils.toAddressString(socketAddress));
+                executor.execute(() -> {
+                    DatagramPacket packet = new DatagramPacket(Unpooled.wrappedBuffer(bytes),
+                            InetUtils.toInetSocketAddress(entry.getValue()));
+                    nettyClient.getChannel().writeAndFlush(packet).addListener(f -> {
+                        if (f.isSuccess()) {
+                            log.debug("给id:{} 的地址 {} 发送id: {} 的心跳包",
+                                    entry.getKey(),
+                                    entry.getValue(),
+                                    nettyClient.getLocalId());
+                        } else {
+                            log.error("给id:{} 的地址 {} 发送id: {} 的心跳包失败!",
+                                    entry.getKey(),
+                                    entry.getValue(),
+                                    nettyClient.getLocalId());
+                        }
+                    });
+                    log.debug("给线程 {} 加锁", Thread.currentThread());
+                    long start = System.currentTimeMillis();
+                    HEART_BEAT_THREAD.put(entry.getKey(), Thread.currentThread());
+                    LockSupport.parkNanos(2_000_000_000L);
+                    if (System.currentTimeMillis() - start >= 2000L) {
+                        log.debug("线程锁超时释放, 已失去与id: {} 连接..", entry.getKey());
+                        ipAddrHolder.delete(entry.getKey());
                     } else {
-                        log.error("给id:{} 的地址 {} 发送id: {} 的公网地址 {} 失败!",
-                                entry.getKey(),
-                                entry.getValue(),
-                                nettyClient.getLocalId(),
-                                InetUtils.toAddressString(socketAddress));
+                        log.debug("线程 {} 锁被释放", Thread.currentThread());
                     }
                 });
             }
