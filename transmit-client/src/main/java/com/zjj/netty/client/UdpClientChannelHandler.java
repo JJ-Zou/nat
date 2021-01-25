@@ -381,7 +381,7 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
                     LockSupport.parkNanos(2_000_000_000L);
                     if (System.currentTimeMillis() - start >= 2000L) {
                         log.warn("线程锁超时释放, 已失去与id: {} 连接..", entry.getKey());
-                        ipAddrHolder.delete(entry.getKey());
+                        ipAddrHolder.setThrough(entry.getKey());
                     } else {
                         log.debug("线程 {} 锁被释放", Thread.currentThread());
                     }

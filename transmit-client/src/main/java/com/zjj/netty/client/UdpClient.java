@@ -71,11 +71,14 @@ public class UdpClient extends AbstractClient {
     public void attemptNatConnect(String oppositeId) {
         ipAddrHolder.setThrough(oppositeId, Constants.NONE);
         ipAddrHolder.attemptNatConnect(this, oppositeId);
+        long start = System.currentTimeMillis();
         putThread(oppositeId, Thread.currentThread());
         LockSupport.parkNanos(3_000_000_000L);
-        log.info("UDP穿透{}！",
-                Objects.equals(ipAddrHolder.getThrough(oppositeId),
-                        Constants.NONE) ? "失败" : "成功");
+        if (System.currentTimeMillis() - start >= 3000L) {
+            log.info("UDP穿透失败!");
+        } else {
+            log.info("UDP穿透成功!");
+        }
         removeThread(oppositeId);
     }
 
