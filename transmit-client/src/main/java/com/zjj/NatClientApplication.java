@@ -44,6 +44,9 @@ public class NatClientApplication implements CommandLineRunner {
         for (String oppositeId : oppositeIds) {
             executor.execute(() -> natTo(oppositeId));
         }
+        if (args != null && args.length > 0 && "silent".equals(args[0])) {
+            return;
+        }
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();

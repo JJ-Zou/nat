@@ -1,5 +1,6 @@
 package com.zjj.config;
 
+import com.zjj.utils.InetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -69,6 +70,9 @@ public class NettyProperties {
         }
 
         public String getIp() {
+            if ("localhost".equals(ip)) {
+                ip = InetUtils.getLocalAddress();
+            }
             return ip;
         }
 
