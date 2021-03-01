@@ -1,17 +1,17 @@
-package com.zjj.service;
+package com.zjj.service.impl;
 
 import com.zjj.constant.Constants;
-import com.zjj.service.impl.AddrCacheService;
+import com.zjj.service.AddrCacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 
-@Component
+@Service
 @Slf4j
 @DubboService
 public class AddrCacheServiceImpl implements AddrCacheService {

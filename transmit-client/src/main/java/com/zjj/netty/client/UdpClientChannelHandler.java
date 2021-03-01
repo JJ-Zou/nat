@@ -2,7 +2,6 @@ package com.zjj.netty.client;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.constant.Constants;
-import com.zjj.http.HttpReq;
 import com.zjj.netty.IpAddrHolder;
 import com.zjj.netty.NettyClient;
 import com.zjj.utils.InetUtils;
@@ -40,8 +39,6 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     private NettyClient nettyClient;
     @Resource(name = "natThroughProcessor")
     private IpAddrHolder ipAddrHolder;
-    @Resource
-    private HttpReq httpReq;
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor executor;
 

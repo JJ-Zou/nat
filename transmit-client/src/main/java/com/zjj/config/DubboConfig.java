@@ -11,15 +11,14 @@ import java.util.Map;
 
 @Configuration
 public class DubboConfig {
-
     @Bean
     public ApplicationConfig applicationConfig() {
         ApplicationConfig applicationConfig = new ApplicationConfig();
-        applicationConfig.setName("cache-manager");
+        applicationConfig.setName("cache-consumer");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("qos.enable", "true");
         parameters.put("qos.accept.foreign.ip", "false");
-        parameters.put("qos.port", "22233");
+        parameters.put("qos.port", "22234");
         applicationConfig.setParameters(parameters);
         return applicationConfig;
     }
@@ -37,7 +36,8 @@ public class DubboConfig {
     public ProtocolConfig protocolConfig() {
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");
-        protocolConfig.setPort(20881);
+        protocolConfig.setHost("10.135.26.2");
+        protocolConfig.setPort(20882);
         return protocolConfig;
     }
 }

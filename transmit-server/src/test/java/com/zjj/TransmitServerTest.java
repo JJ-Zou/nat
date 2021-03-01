@@ -1,9 +1,9 @@
 package com.zjj;
 
-import com.zjj.service.impl.AddrCacheService;
-import io.netty.bootstrap.ServerBootstrap;
+import com.zjj.service.AddrCacheService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class TransmitServerTest {
-    @Resource
+    @Autowired
     private AddrCacheService addrCacheService;
 
     @Test
@@ -44,7 +44,6 @@ public class TransmitServerTest {
         countDownLatch1.await();
         System.out.println("over！");
     }
-
 
 
 }

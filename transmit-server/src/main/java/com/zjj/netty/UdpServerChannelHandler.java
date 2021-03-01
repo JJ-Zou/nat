@@ -1,7 +1,7 @@
 package com.zjj.netty;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.zjj.service.impl.AddrCacheService;
+import com.zjj.service.AddrCacheService;
 import com.zjj.utils.InetUtils;
 import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.ByteBuf;

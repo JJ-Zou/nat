@@ -1,4 +1,4 @@
-package com.zjj.service.impl;
+package com.zjj.service;
 
 
 public interface AddrCacheService {

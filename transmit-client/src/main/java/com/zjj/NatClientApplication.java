@@ -1,9 +1,11 @@
 package com.zjj;
 
-import com.zjj.http.HttpReq;
 import com.zjj.netty.IpAddrHolder;
 import com.zjj.netty.NettyClient;
+import com.zjj.service.AddrCacheService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,9 +23,10 @@ import java.util.Set;
 @Slf4j
 @SpringBootApplication
 @EnableScheduling
+@EnableDubbo
 public class NatClientApplication implements CommandLineRunner {
-    @Resource
-    private HttpReq httpReq;
+    @DubboReference
+    private AddrCacheService addrCacheService;
     @Resource(name = "natThroughProcessor")
     private IpAddrHolder ipAddrHolder;
     @Resource(name = "udpClient")
@@ -85,8 +88,8 @@ public class NatClientApplication implements CommandLineRunner {
         }
 
 
-        httpReq.delPrivateAddr(nettyClient.getLocalId());
-        httpReq.delPublicAddr(nettyClient.getLocalId());
+        addrCacheService.deletePrivateAddr(nettyClient.getLocalId());
+        addrCacheService.deletePublicAddr(nettyClient.getLocalId());
         nettyClient.doClose();
     }
 
@@ -94,7 +97,7 @@ public class NatClientApplication implements CommandLineRunner {
         long timeMillis = System.currentTimeMillis();
         String oppositePriAddr;
         try {
-            oppositePriAddr = httpReq.getPrivateAddr(oppositeId);
+            oppositePriAddr = addrCacheService.getPrivateAddrStr(oppositeId);
         } catch (ResourceAccessException e) {
             log.error("服务器未响应...");
             return;
@@ -107,7 +110,7 @@ public class NatClientApplication implements CommandLineRunner {
         ipAddrHolder.setPriAddrStr(oppositeId, oppositePriAddr);
         log.debug("获取{}的私网地址用时{}ms", oppositeId, System.currentTimeMillis() - timeMillis);
         timeMillis = System.currentTimeMillis();
-        String oppositePubAddr = httpReq.getPublicAddr(oppositeId);
+        String oppositePubAddr = addrCacheService.getPublicAddrStr(oppositeId);
         log.info("{} 的公网地址是 {}", oppositeId, oppositePubAddr);
         ipAddrHolder.setPubAddrStr(oppositeId, oppositePubAddr);
         log.debug("获取{}的公网地址用时{}ms", oppositeId, System.currentTimeMillis() - timeMillis);
