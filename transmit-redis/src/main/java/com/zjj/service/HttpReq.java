@@ -1,4 +1,4 @@
-package com.zjj.http;
+package com.zjj.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zjj.constant.Constants;

@@ -1,7 +1,7 @@
 package com.zjj.netty;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.zjj.http.HttpReq;
+import com.zjj.service.impl.AddrCacheService;
 import com.zjj.utils.InetUtils;
 import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.ByteBuf;
@@ -31,7 +31,7 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
     private static final Map<String, String> PRIVATE_ADDR_MAP = new ConcurrentHashMap<>();
 
     @Resource
-    private HttpReq httpReq;
+    private AddrCacheService addrCacheService;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -62,11 +62,11 @@ public class UdpServerChannelHandler extends SimpleChannelInboundHandler<Datagra
                         log.debug("收到id: {} 的私网地址 {} 加入缓存", id, privateInetAddr);
                         PRIVATE_ADDR_MAP.put(id,
                                 privateInetAddr);
-                        channel.eventLoop().parent().execute(() -> httpReq.addPrivateAddr(id, privateInetAddr));
+                        channel.eventLoop().parent().execute(() -> addrCacheService.addPrivateAddrStr(id, privateInetAddr));
                         log.debug("收到id: {} 的公网地址 {} 加入缓存", id, addressString);
                         PUBLIC_ADDR_MAP.put(id,
                                 addressString);
-                        channel.eventLoop().parent().execute(() -> httpReq.addPublicAddr(id, addressString));
+                        channel.eventLoop().parent().execute(() -> addrCacheService.addPublicAddrStr(id, addressString));
                         DatagramPacket packet
                                 = new DatagramPacket(Unpooled.wrappedBuffer(
                                 ProtoUtils.createMultiInetCommand(id,

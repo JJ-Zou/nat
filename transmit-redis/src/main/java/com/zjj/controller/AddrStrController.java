@@ -2,7 +2,7 @@ package com.zjj.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zjj.constant.Constants;
-import com.zjj.redis.RedisCacheManage;
+import com.zjj.service.RedisCacheManage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
