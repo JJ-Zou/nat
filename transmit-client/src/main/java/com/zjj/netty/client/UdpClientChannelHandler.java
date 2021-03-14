@@ -2,8 +2,10 @@ package com.zjj.netty.client;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.zjj.constant.Constants;
+import com.zjj.jrpc.config.spring.annotation.JRpcReference;
 import com.zjj.netty.IpAddrHolder;
 import com.zjj.netty.NettyClient;
+import com.zjj.service.AddrCacheService;
 import com.zjj.utils.InetUtils;
 import com.zjj.utils.ProtoUtils;
 import io.netty.buffer.ByteBuf;
@@ -41,6 +43,9 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
     private IpAddrHolder ipAddrHolder;
     @Resource(name = "threadPoolTaskExecutor")
     private ThreadPoolTaskExecutor executor;
+
+    @JRpcReference(protocol = "jrpc", registry = "zookeeper")
+    private AddrCacheService addrCacheService;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -312,6 +317,34 @@ public class UdpClientChannelHandler extends SimpleChannelInboundHandler<Datagra
         log.debug(p2PMessage.getMessage());
     }
 
+
+    @Scheduled(initialDelay = 20000, fixedRate = 6000)
+    public void testJRpc() {
+        try {
+            String priId = "jrpc-test1";
+            String pubId = "jrpc-test2";
+            long start = System.currentTimeMillis();
+            addrCacheService.addPrivateAddrStr(priId, priId);
+            long stop = System.currentTimeMillis();
+            log.info("addrCacheService addPrivateAddrStr({}, {}), consume: {}ms", priId, priId, stop - start);
+            addrCacheService.addPublicAddrStr(pubId, pubId);
+            log.info("addrCacheService addPublicAddrStr({}, {}), consume: {}ms", pubId, pubId, System.currentTimeMillis() - stop);
+            stop = System.currentTimeMillis();
+            String priAdd = addrCacheService.getPrivateAddrStr(priId);
+            log.info("addrCacheService getPrivateAddrStr({}) return: {}, consume: {}ms", priId, priAdd, System.currentTimeMillis() - stop);
+            stop = System.currentTimeMillis();
+            String pubAdd = addrCacheService.getPublicAddrStr(pubId);
+            log.info("addrCacheService getPublicAddrStr({}) return: {}, consume: {}ms", pubId, pubAdd, System.currentTimeMillis() - stop);
+            stop = System.currentTimeMillis();
+            Boolean delPri = addrCacheService.deletePrivateAddr(priId);
+            log.info("addrCacheService deletePrivateAddr({}) return: {}, consume: {}ms", priId, delPri, System.currentTimeMillis() - stop);
+            stop = System.currentTimeMillis();
+            Boolean delPub = addrCacheService.deletePublicAddr(pubId);
+            log.info("addrCacheService deletePublicAddr({}) return: {}, consume: {}ms", pubId, delPub, System.currentTimeMillis() - stop);
+        } catch (Exception e) {
+            log.error("rpc error");
+        }
+    }
 
     @Scheduled(initialDelay = 20000, fixedRate = 60000)
     public void sendPrivateAddr() {
