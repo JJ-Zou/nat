@@ -21,12 +21,8 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-recipes</artifactId>
+            <groupId>com.zjj.jrpc</groupId>
+            <artifactId>jrpc-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zjj</groupId>

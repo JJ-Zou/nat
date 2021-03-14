@@ -1,9 +1,9 @@
 package com.zjj.service.impl;
 
 import com.zjj.constant.Constants;
+import com.zjj.jrpc.config.spring.annotation.JRpcService;
 import com.zjj.service.AddrCacheService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-@DubboService
+@JRpcService(exportProtocol = "jrpc:20881", registry = "zookeeper", exportHost = "39.105.65.104")
 public class AddrCacheServiceImpl implements AddrCacheService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;

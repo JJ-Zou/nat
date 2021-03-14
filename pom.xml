@@ -171,6 +171,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>com.zjj.jrpc</groupId>
+                <artifactId>jrpc-core</artifactId>
+                <version>1.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

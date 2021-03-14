@@ -32,17 +32,17 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-recipes</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.dubbo</groupId>-->
+        <!--            <artifactId>dubbo</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.zjj</groupId>
             <artifactId>transmit-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zjj.jrpc</groupId>
+            <artifactId>jrpc-core</artifactId>
         </dependency>
     </dependencies>
 
